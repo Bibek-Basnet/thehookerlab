@@ -38,7 +38,7 @@ export const services = {
         "Game-specific sessions",
       ],
       image: {
-        src: "/images/services/services4.jpg",
+        src: "/images/services/services2.jpg",
         alt: "A small group of hookers training together",
       },
       price: "$00",
