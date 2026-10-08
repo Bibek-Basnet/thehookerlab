@@ -288,16 +288,17 @@ export default function About() {
             >
               {about.represented.map(({ team, note, tier, logo }, i) => {
                 const style = tierStyles[tier];
+                const isFeatured = tier === "featured";
 
                 return (
                   <li
                     key={team}
                     data-about-tile
-                    className={cn("flex", tier === "featured" && "col-span-2")}
+                    className={cn("flex", isFeatured && "col-span-2")}
                   >
                     <div
                       className={cn(
-                        "flex min-h-24 w-full flex-col justify-between gap-2 p-3.5 md:min-h-28 md:p-4",
+                        "flex min-h-28 w-full flex-col justify-between gap-3 p-3.5 md:min-h-32 md:p-4",
                         style.base
                       )}
                     >
@@ -312,18 +313,34 @@ export default function About() {
                         {note && <span>{note}</span>}
                       </span>
 
-                      {/* Bottom row: logo (optional) + team name */}
-                      <div className="flex items-end gap-2.5">
+                      {/* Bottom: logo + team name */}
+                      <div
+                        className={cn(
+                          "flex items-center gap-3",
+                          isFeatured
+                            ? "flex-row"
+                            : "flex-col items-start gap-2"
+                        )}
+                      >
                         {logo && (
-                          <div className="relative h-7 w-7 shrink-0 md:h-8 md:w-8">
+                          <div
+                            className={cn(
+                              "relative shrink-0",
+                              // Bigger logos: featured gets the largest, plain slightly smaller
+                              isFeatured
+                                ? "h-12 w-12 md:h-14 md:w-14"
+                                : "h-10 w-10 md:h-11 md:w-11"
+                            )}
+                          >
                             <Image
                               src={logo}
                               alt=""
                               fill
-                              sizes="32px"
+                              sizes="(min-width: 768px) 56px, 48px"
                               className={cn(
-                                "object-contain object-left",
-                                tier === "featured" && "brightness-0 invert"
+                                "object-contain",
+                                // Force logos white on the dark featured tile
+                                isFeatured && "brightness-0 invert"
                               )}
                             />
                           </div>
