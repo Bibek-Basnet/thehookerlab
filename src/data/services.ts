@@ -80,7 +80,7 @@ export const services = {
         "Performs under pressure",
       ],
       image: {
-        src: "/images/services/services5.jpg",
+        src: "/images/services/services6.jpg",
         alt: "Representative hooker development programme",
       },
       price: "$00",
