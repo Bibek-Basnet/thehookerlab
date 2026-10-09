@@ -20,8 +20,6 @@ export const services = {
         src: "/images/services/services1.jpg",
         alt: "Kurt Eklund coaching a hooker one-on-one",
       },
-      price: "$00",
-      priceUnit: "per session",
     },
     {
       id: "small-group",
@@ -41,8 +39,6 @@ export const services = {
         src: "/images/services/services2.jpg",
         alt: "A small group of hookers training together",
       },
-      price: "$00",
-      priceUnit: "per session",
     },
     {
       id: "school-club",
@@ -62,8 +58,6 @@ export const services = {
         src: "/images/services/services3.jpg",
         alt: "Hooker coaching session with a school or club team",
       },
-      price: "$00",
-      priceUnit: "per session",
     },
     {
       id: "provincial-union",
@@ -83,8 +77,6 @@ export const services = {
         src: "/images/services/services6.jpg",
         alt: "Representative hooker development programme",
       },
-      price: "$00",
-      priceUnit: "per programme",
     },
   ],
 } as const;

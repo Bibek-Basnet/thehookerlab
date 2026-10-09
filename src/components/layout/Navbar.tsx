@@ -4,18 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { CaretDown, List, X } from "@phosphor-icons/react";
+import { List, X } from "@phosphor-icons/react";
 
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { bookCta, contact, navLinks, socialLinks } from "@/data/nav";
 
 const MotionLink = motion.create(Link);
-const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /* Desktop link: dims siblings on list hover, lifts slightly, brightens itself */
 const desktopLinkClass =
-  "group relative inline-flex items-center gap-1.5 py-2 text-[17px] font-semibold tracking-[0.005em] text-bone/85 transition-[color,transform] duration-500 ease-out group-hover/list:text-bone/45 hover:-translate-y-px hover:text-bone! focus-visible:text-bone! focus-visible:outline-none";
+  "group relative inline-flex items-center gap-1.5 normal-case py-2 text-[17px] font-semibold tracking-[0.005em] text-bone/85 transition-[color,transform] duration-500 ease-out group-hover/list:text-bone/45 hover:-translate-y-px hover:text-bone! focus-visible:text-bone! focus-visible:outline-none";
 
 /* The Strike: a tapered red slash that draws in from the left and exits to the right */
 const slashClass =
@@ -30,35 +29,12 @@ const ctaFillClass =
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   const headerRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const openServices = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setServicesOpen(true);
-  };
-
-  const scheduleCloseServices = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setServicesOpen(false), 140);
-  };
-
-  const closeAll = () => {
-    setOpen(false);
-    setServicesOpen(false);
-    setMobileServicesOpen(false);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (closeTimer.current) clearTimeout(closeTimer.current);
-    };
-  }, []);
+  const closeAll = () => setOpen(false);
 
   /* Intro animation */
   useGSAP(
@@ -140,10 +116,7 @@ export default function Navbar() {
   /* Escape to close, auto close when resizing to desktop */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        setServicesOpen(false);
-      }
+      if (e.key === "Escape") setOpen(false);
     };
     const mq = window.matchMedia("(min-width: 1024px)");
     const onChange = (e: MediaQueryListEvent) => {
@@ -213,123 +186,14 @@ export default function Navbar() {
 
             {/* Desktop links */}
             <ul className="group/list hidden items-center gap-9 lg:flex xl:gap-11">
-              {navLinks.map((item) =>
-                item.children ? (
-                  <li
-                    key={item.label}
-                    data-nav-intro
-                    className="relative"
-                    onMouseEnter={openServices}
-                    onMouseLeave={scheduleCloseServices}
-                    onBlur={(e) => {
-                      if (!e.currentTarget.contains(e.relatedTarget)) {
-                        setServicesOpen(false);
-                      }
-                    }}
-                  >
-                    <button
-                      type="button"
-                      aria-haspopup="true"
-                      aria-expanded={servicesOpen}
-                      onClick={() => setServicesOpen((v) => !v)}
-                      className={cn(
-                        desktopLinkClass,
-                        servicesOpen && "text-bone!"
-                      )}
-                    >
-                      {item.label}
-                      <CaretDown
-                        size={13}
-                        weight="bold"
-                        className={cn(
-                          "transition-transform duration-300",
-                          servicesOpen && "rotate-180"
-                        )}
-                      />
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          slashClass,
-                          servicesOpen && "origin-left scale-x-100"
-                        )}
-                      />
-                    </button>
-
-                    {/* Dropdown */}
-                    <div
-                      className={cn(
-                        "absolute left-1/2 top-full w-[390px] -translate-x-1/2 pt-5",
-                        !servicesOpen && "pointer-events-none"
-                      )}
-                    >
-                      <AnimatePresence>
-                        {servicesOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 14, scale: 0.97 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                            transition={{ duration: 0.35, ease: EASE }}
-                            className="origin-top overflow-hidden rounded-2xl border border-white/10 bg-ink/90 p-2 shadow-2xl backdrop-blur-xl"
-                          >
-                            <ul>
-                              {item.children.map((child, i) => (
-                                <motion.li
-                                  key={child.href}
-                                  initial={{ opacity: 0, x: -12 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{
-                                    duration: 0.4,
-                                    ease: EASE,
-                                    delay: 0.08 + i * 0.05,
-                                  }}
-                                >
-                                  <Link
-                                    href={child.href}
-                                    onClick={closeAll}
-                                    className="group/item relative flex items-start gap-4 rounded-xl px-4 py-3.5 transition-colors duration-300 hover:bg-white/5 focus-visible:bg-white/5 focus-visible:outline-none"
-                                  >
-                                    <span
-                                      aria-hidden="true"
-                                      className="absolute bottom-3 left-0 top-3 w-0.5 origin-center scale-y-0 bg-accent transition-transform duration-300 group-hover/item:scale-y-100 group-focus-visible/item:scale-y-100"
-                                    />
-                                    <span className="mt-0.5 font-display text-sm font-bold text-accent">
-                                      {String(i + 1).padStart(2, "0")}
-                                    </span>
-                                    <span className="flex flex-col gap-0.5">
-                                      <span className="text-base font-semibold text-bone">
-                                        {child.title}
-                                      </span>
-                                      <span className="text-sm text-mist">
-                                        {child.description}
-                                      </span>
-                                    </span>
-                                  </Link>
-                                </motion.li>
-                              ))}
-                            </ul>
-                            <div className="mt-1 border-t border-white/10 px-4 pb-2 pt-3">
-                              <Link
-                                href={item.href}
-                                onClick={closeAll}
-                                className="text-sm font-medium text-mist transition-colors duration-300 hover:text-bone"
-                              >
-                                View all services
-                              </Link>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </li>
-                ) : (
-                  <li key={item.label} data-nav-intro>
-                    <Link href={item.href} className={desktopLinkClass}>
-                      {item.label}
-                      <span aria-hidden="true" className={slashClass} />
-                    </Link>
-                  </li>
-                )
-              )}
+              {navLinks.map((item) => (
+                <li key={item.label} data-nav-intro>
+                  <Link href={item.href} className={desktopLinkClass}>
+                    {item.label}
+                    <span aria-hidden="true" className={slashClass} />
+                  </Link>
+                </li>
+              ))}
             </ul>
 
             <div className="flex items-center gap-3">
@@ -350,10 +214,7 @@ export default function Navbar() {
                 type="button"
                 data-nav-intro
                 whileTap={{ scale: 0.9 }}
-                onClick={() => {
-                  setOpen((v) => !v);
-                  setMobileServicesOpen(false);
-                }}
+                onClick={() => setOpen((v) => !v)}
                 aria-expanded={open}
                 aria-controls="mobile-menu"
                 aria-label={open ? "Close menu" : "Open menu"}
@@ -393,81 +254,22 @@ export default function Navbar() {
         )}
       >
         <ul className="flex flex-col">
-          {navLinks.map((item, i) => {
-            const index = String(i + 1).padStart(2, "0");
-            const rowClass =
-              "block w-full py-3.5 text-left font-display text-5xl font-bold leading-none tracking-tight text-bone transition-colors duration-300 hover:text-accent sm:text-6xl";
-
-            if (item.children) {
-              return (
-                <li key={item.label} className="overflow-hidden">
-                  <button
-                    type="button"
-                    aria-expanded={mobileServicesOpen}
-                    onClick={() => setMobileServicesOpen((v) => !v)}
-                    className={rowClass}
-                  >
-                    <span
-                      data-menu-line
-                      className="flex w-full items-baseline gap-5"
-                    >
-                      <span className="font-body text-sm font-medium tracking-[0.2em] text-accent">
-                        {index}
-                      </span>
-                      {item.label}
-                      <CaretDown
-                        size={22}
-                        weight="bold"
-                        className={cn(
-                          "ml-auto self-center text-mist transition-transform duration-300",
-                          mobileServicesOpen && "rotate-180 text-accent"
-                        )}
-                      />
-                    </span>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {mobileServicesOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.45, ease: EASE }}
-                        className="overflow-hidden"
-                      >
-                        <ul className="flex flex-col gap-1 pb-5 pl-12 pt-2">
-                          {item.children.map((child) => (
-                            <li key={child.href}>
-                              <Link
-                                href={child.href}
-                                onClick={closeAll}
-                                className="block py-2.5 text-lg font-medium text-mist transition-colors duration-300 hover:text-bone"
-                              >
-                                {child.title}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </li>
-              );
-            }
-
-            return (
-              <li key={item.label} className="overflow-hidden">
-                <Link href={item.href} onClick={closeAll} className={rowClass}>
-                  <span data-menu-line className="flex items-baseline gap-5">
-                    <span className="font-body text-sm font-medium tracking-[0.2em] text-accent">
-                      {index}
-                    </span>
-                    {item.label}
+          {navLinks.map((item, i) => (
+            <li key={item.label} className="overflow-hidden">
+              <Link
+                href={item.href}
+                onClick={closeAll}
+                className="block w-full py-3.5 text-left font-display normal-case text-5xl font-bold leading-none tracking-tight text-bone transition-colors duration-300 hover:text-accent sm:text-6xl"
+              >
+                <span data-menu-line className="flex items-baseline gap-5">
+                  <span className="font-body text-sm font-medium tracking-[0.2em] text-accent">
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                </Link>
-              </li>
-            );
-          })}
+                  {item.label}
+                </span>
+              </Link>
+            </li>
+          ))}
         </ul>
 
         <div className="mt-auto flex flex-col gap-7 pt-12">

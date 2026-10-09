@@ -8,7 +8,7 @@ type RepresentedTeam = {
 };
 
 export const about = {
-  eyebrow: "About Kurt",
+  eyebrow: "About your coach",
   headline: ["Toughness.", "Consistency.", "Leadership."],
   image: {
     src: "/images/about.jpg",

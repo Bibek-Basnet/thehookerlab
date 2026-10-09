@@ -182,12 +182,12 @@ export default function About() {
   );
 
   return (
-    <section
-      ref={sectionRef}
-      id="about"
-      aria-labelledby="about-heading"
-      className="relative overflow-hidden bg-paper py-16 text-ink md:py-24"
-    >
+   <section
+  ref={sectionRef}
+  id="coach"
+  aria-labelledby="about-heading"
+  className="relative overflow-hidden bg-paper py-16 text-ink md:py-24"
+>
       <div className="mx-auto grid max-w-350 gap-10 px-5 md:px-10 lg:grid-cols-12 lg:gap-14">
         {/* Portrait */}
         <div className="lg:col-span-5">

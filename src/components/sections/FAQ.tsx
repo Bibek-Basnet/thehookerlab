@@ -1,147 +1,184 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Plus } from "@phosphor-icons/react";
+import Image from "next/image";
 
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { faq } from "@/data/faq";
 
 export default function FAQ() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [openIndex, setOpenIndex] = useState(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const ready = useRef(false);
+  const [open, setOpen] = useState<string | null>(faq.items[0].id);
 
-  /* Entrance animations */
+  /* Entrance: hero timeline and parallax, then cards rise in on scroll */
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.fromTo(
-          "[data-faq-pill]",
-          { autoAlpha: 0, y: -10 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.7,
-            ease: "power3.out",
-            scrollTrigger: { trigger: "[data-faq-pill]", start: "top 90%" },
-          }
-        );
+        gsap
+          .timeline({ delay: 0.1, defaults: { ease: "power3.out" } })
+          .fromTo(
+            "[data-faq-img]",
+            { scale: 1.12 },
+            { scale: 1, duration: 2, ease: "power2.out" },
+            0
+          )
+          .fromTo(
+            "[data-faq-pill]",
+            { autoAlpha: 0, x: -20 },
+            { autoAlpha: 1, x: 0, duration: 0.7 },
+            0.1
+          )
+          .fromTo(
+            "[data-faq-word]",
+            { yPercent: 115 },
+            { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.14 },
+            0.2
+          )
+          .fromTo(
+            "[data-faq-intro]",
+            { autoAlpha: 0, y: 20 },
+            { autoAlpha: 1, y: 0, duration: 0.9 },
+            0.55
+          );
 
-        gsap.fromTo(
-          "[data-faq-word]",
-          { yPercent: 115 },
-          {
-            yPercent: 0,
-            duration: 1.1,
-            ease: "power4.out",
-            stagger: 0.14,
-            scrollTrigger: { trigger: "[data-faq-heading]", start: "top 88%" },
-          }
-        );
+        /* Background drifts slowly as the hero scrolls away */
+        gsap.to("[data-faq-bg]", {
+          yPercent: 6,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "[data-faq-hero]",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
 
-        gsap.fromTo(
-          "[data-faq-intro]",
-          { autoAlpha: 0, y: 20 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: { trigger: "[data-faq-intro]", start: "top 90%" },
-          }
-        );
+        gsap.set("[data-faq-item]", { autoAlpha: 0, y: 32 });
+        ScrollTrigger.batch("[data-faq-item]", {
+          start: "top 92%",
+          once: true,
+          onEnter: (els) =>
+            gsap.to(els, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              stagger: 0.08,
+              overwrite: true,
+              clearProps: "transform",
+            }),
+        });
 
-        gsap.fromTo(
-          "[data-faq-item]",
-          { autoAlpha: 0, y: 24 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            stagger: 0.08,
-            scrollTrigger: { trigger: "[data-faq-list]", start: "top 88%" },
-          }
-        );
       });
     },
-    { scope: sectionRef }
+    { scope: rootRef }
   );
 
-  /* Accordion: GSAP drives the height and the answer reveal */
-  const animatePanel = (index: number, open: boolean) => {
-    const panel = panelRefs.current[index];
-    if (!panel) return;
+  /* Accordion: GSAP drives the height, fade and icon turn */
+  useGSAP(
+    () => {
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      const animate = ready.current && !reduce;
 
-    const reduce = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+      const go = (
+        target: string,
+        vars: gsap.TweenVars,
+        duration: number,
+        ease = "power3.inOut"
+      ) =>
+        animate
+          ? gsap.to(target, { ...vars, duration, ease, overwrite: "auto" })
+          : gsap.set(target, vars);
 
-    gsap.killTweensOf(panel);
+      faq.items.forEach((item) => {
+        const isOpen = open === item.id;
 
-    if (open) {
-      gsap.to(panel, {
-        height: "auto",
-        autoAlpha: 1,
-        duration: reduce ? 0 : 0.5,
-        ease: "power3.out",
-        onComplete: () => ScrollTrigger.refresh(),
-      });
-
-      const answer = panel.querySelector("[data-faq-answer]");
-      if (answer && !reduce) {
-        gsap.fromTo(
-          answer,
-          { y: 10, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.5, delay: 0.08, ease: "power3.out" }
+        go(
+          `[data-faq-panel="${item.id}"]`,
+          {
+            height: isOpen ? "auto" : 0,
+            autoAlpha: isOpen ? 1 : 0,
+            onComplete: () => {
+              ScrollTrigger.refresh();
+            },
+          },
+          0.6
         );
-      }
-    } else {
-      gsap.to(panel, {
-        height: 0,
-        autoAlpha: 0,
-        duration: reduce ? 0 : 0.35,
-        ease: "power3.inOut",
-        onComplete: () => ScrollTrigger.refresh(),
+        go(
+          `[data-faq-icon="${item.id}"]`,
+          { rotate: isOpen ? 45 : 0 },
+          0.5,
+          "power3.out"
+        );
+
+        if (isOpen && animate) {
+          gsap.fromTo(
+            `[data-faq-text="${item.id}"]`,
+            { y: 12, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.5, delay: 0.18, ease: "power3.out" }
+          );
+        }
       });
-    }
-  };
 
-  const toggle = (index: number) => {
-    const willOpen = openIndex !== index;
-
-    if (openIndex !== -1 && openIndex !== index) animatePanel(openIndex, false);
-    animatePanel(index, willOpen);
-    setOpenIndex(willOpen ? index : -1);
-  };
+      ready.current = true;
+    },
+    { scope: rootRef, dependencies: [open] }
+  );
 
   return (
-    <section
-      ref={sectionRef}
-      id="faq"
-      aria-labelledby="faq-heading"
-      className="relative bg-paper py-16 text-ink md:py-24"
-    >
-      <div className="mx-auto w-full max-w-4xl px-5 md:px-10">
-        {/* Header */}
-        <div>
+    <div ref={rootRef}>
+      {/* Hero with background image */}
+      <section
+        data-faq-hero
+        aria-labelledby="faq-heading"
+        className="relative isolate flex min-h-[68svh] items-end overflow-hidden bg-ink text-bone md:min-h-[72svh]"
+      >
+        <div
+          data-faq-bg
+          aria-hidden="true"
+          className="absolute inset-x-0 -top-[8%] -z-10 h-[116%]"
+        >
+          <div data-faq-img className="absolute inset-0">
+            <Image
+              src={faq.heroImage}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              quality={85}
+              className="object-cover"
+            />
+          </div>
+        </div>
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-linear-to-t from-ink via-ink/55 to-ink/40"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-linear-to-r from-ink/60 via-transparent to-transparent"
+        />
+
+        <div className="mx-auto w-full max-w-[1400px] px-5 pb-12 pt-40 md:px-10 md:pb-20">
           <span
             data-faq-pill
-            className="inline-block rounded-full bg-ink px-5 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-bone"
+            className="inline-block rounded-full bg-bone px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.28em] text-ink"
           >
             {faq.eyebrow}
           </span>
 
-          <h2
+          <h1
             id="faq-heading"
-            data-faq-heading
-            className="mt-6 flex flex-wrap items-baseline gap-x-[0.28em] text-[clamp(2.25rem,6vw,4.25rem)] leading-none"
+            className="mt-6 flex flex-wrap items-baseline gap-x-[0.28em] text-[clamp(2.75rem,9vw,7.5rem)] leading-none"
           >
             {faq.headline.map((word, i) => (
-              <span key={word} className="inline-block overflow-hidden py-[0.08em]">
+              <span key={word} className="block overflow-hidden py-[0.08em]">
                 <span
                   data-faq-word
                   className={cn("block", i === 1 && "text-accent")}
@@ -150,85 +187,105 @@ export default function FAQ() {
                 </span>
               </span>
             ))}
-          </h2>
+          </h1>
 
-          {faq.intro && (
-            <p
-              data-faq-intro
-              className="mt-6 text-lg leading-relaxed text-ink/75 md:text-xl"
-            >
-              {faq.intro}{" "}
-              <a
-                href={faq.cta.href}
-                className="font-semibold text-ink underline decoration-ink/30 decoration-2 underline-offset-4 transition-colors duration-200 hover:text-accent hover:decoration-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
-              >
-                {faq.cta.label}
-              </a>
-            </p>
-          )}
+          <p
+            data-faq-intro
+            className="mt-5 max-w-xl text-lg leading-relaxed text-bone/80 md:text-xl"
+          >
+            {faq.intro}
+          </p>
         </div>
+      </section>
 
-        {/* Accordion */}
-        <ul data-faq-list className="mt-14 md:mt-16">
-          {faq.items.map((item, i) => {
-            const open = openIndex === i;
-            const buttonId = `faq-btn-${item.id}`;
-            const panelId = `faq-panel-${item.id}`;
+      {/* Questions */}
+      <section
+        aria-label="Frequently asked questions"
+        className="bg-paper py-14 text-ink md:py-24"
+      >
+        <div className="mx-auto max-w-4xl px-5 md:px-10">
+          {/* Questions */}
+          <ul className="space-y-3">
+            {faq.items.map((item, i) => {
+              const isOpen = open === item.id;
 
-            return (
-              <li
-                key={item.id}
-                data-faq-item
-                className="border-b border-ink/15 first:border-t"
-              >
-                <div data-open={open} className="group">
-                  <h3 className="m-0">
-                    <button
-                      id={buttonId}
-                      type="button"
-                      aria-expanded={open}
-                      aria-controls={panelId}
-                      onClick={() => toggle(i)}
-                      className="relative flex w-full items-center gap-6 py-7 text-left focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ink md:gap-10 md:py-9"
-                    >
-                      <span className="flex-1 font-display text-xl font-extrabold uppercase leading-tight tracking-tight text-ink transition-transform duration-300 group-hover:translate-x-1 md:text-[1.625rem]">
-                        {item.question}
-                      </span>
-
-                      <span className="grid size-10 shrink-0 place-items-center rounded-full border border-ink/20 text-ink transition-colors duration-300 group-hover:border-ink group-hover:bg-ink group-hover:text-bone group-data-[open=true]:border-ink group-data-[open=true]:bg-ink group-data-[open=true]:text-bone md:size-12">
-                        <Plus
-                          size={18}
-                          weight="bold"
-                          className="transition-transform duration-500 group-data-[open=true]:rotate-45"
-                        />
-                      </span>
-                    </button>
-                  </h3>
-
+              return (
+                <li key={item.id} data-faq-item>
                   <div
-                    id={panelId}
-                    ref={(el) => {
-                      panelRefs.current[i] = el;
-                    }}
-                    role="region"
-                    aria-labelledby={buttonId}
                     className={cn(
-                      "overflow-hidden",
-                      i !== 0 && "invisible h-0"
+                      "group rounded-2xl transition-[background-color,box-shadow] duration-500",
+                      isOpen
+                        ? "bg-ink text-bone"
+                        : "bg-white text-ink hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35)]"
                     )}
                   >
-                    <div data-faq-answer className="pb-9 md:pb-12">
-                      <p className="text-xl leading-relaxed text-ink md:text-2xl md:leading-[1.5]">
-                        {item.answer}
-                      </p>
+                    <h2 className="text-lg md:text-2xl">
+                      <button
+                        type="button"
+                        id={`faq-q-${item.id}`}
+                        aria-expanded={isOpen}
+                        aria-controls={`faq-a-${item.id}`}
+                        onClick={() => setOpen(isOpen ? null : item.id)}
+                        className="flex w-full items-center gap-4 rounded-2xl px-5 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:gap-5 md:px-7 md:py-6"
+                      >
+                        <span className="font-display text-base font-bold text-accent md:text-lg">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span
+                          className={cn(
+                            "flex-1 leading-tight transition-colors duration-300",
+                            !isOpen && "group-hover:text-accent"
+                          )}
+                        >
+                          {item.question}
+                        </span>
+                        <span
+                          className={cn(
+                            "grid size-10 shrink-0 place-items-center rounded-full transition-colors duration-300",
+                            isOpen
+                              ? "bg-accent text-bone"
+                              : "bg-paper text-ink group-hover:bg-accent group-hover:text-bone"
+                          )}
+                        >
+                          <svg
+                            data-faq-icon={item.id}
+                            viewBox="0 0 20 20"
+                            className="size-4"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
+                            strokeLinecap="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M10 4v12M4 10h12" />
+                          </svg>
+                        </span>
+                      </button>
+                    </h2>
+
+                    <div
+                      id={`faq-a-${item.id}`}
+                      role="region"
+                      aria-labelledby={`faq-q-${item.id}`}
+                      data-faq-panel={item.id}
+                      className="invisible h-0 overflow-hidden"
+                    >
+                      <div
+                        data-faq-text={item.id}
+                        className="px-5 pb-6 pl-[3.25rem] md:px-7 md:pb-7 md:pl-[4.25rem]"
+                      >
+                        <p className="max-w-2xl text-base leading-relaxed text-bone/80 md:text-lg">
+                          {item.answer}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    </div>
   );
 }

@@ -1,21 +1,17 @@
 "use client";
 
 import {
-  Suspense,
-  useCallback,
   useEffect,
   useRef,
   useState,
   type FormEvent,
   type ReactNode,
 } from "react";
-import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 
 import { gsap, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { contact } from "@/data/contact";
-import { workshops } from "@/data/workshops";
 import {
   MESSAGE_MAX,
   emptyEnquiry,
@@ -38,8 +34,8 @@ import {
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-const topicIds = new Set(workshops.topics.map((t) => t.id));
-const typeIds = new Set(contact.enquiryTypes.map((t) => t.id));
+/* Email is the only way to reply, so the contact method is always email */
+const initialValues: EnquiryValues = { ...emptyEnquiry, contactMethod: "email" };
 
 const fieldOrder: (keyof EnquiryValues)[] = [
   "enquiryType",
@@ -47,29 +43,12 @@ const fieldOrder: (keyof EnquiryValues)[] = [
   "email",
   "role",
   "organisation",
-  "phone",
   "message",
   "consentContact",
 ];
 
 const labelOf = (list: { id: string; label: string }[], id: string) =>
   list.find((item) => item.id === id)?.label;
-
-/* Reads links such as /?workshop=a,b&for=schools#contact and prefills the form */
-function PrefillFromUrl({
-  onPrefill,
-}: {
-  onPrefill: (params: URLSearchParams) => void;
-}) {
-  const params = useSearchParams();
-  const key = params.toString();
-
-  useEffect(() => {
-    if (key) onPrefill(new URLSearchParams(key));
-  }, [key, onPrefill]);
-
-  return null;
-}
 
 function SectionTitle({
   id,
@@ -113,12 +92,11 @@ export default function Contact() {
   const summaryRef = useRef<HTMLDivElement>(null);
   const successRef = useRef<HTMLHeadingElement>(null);
 
-  const [values, setValues] = useState<EnquiryValues>(emptyEnquiry);
+  const [values, setValues] = useState<EnquiryValues>(initialValues);
   const [errors, setErrors] = useState<EnquiryErrors>({});
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
-  const [prefilled, setPrefilled] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
 
   /* Details are open by default on larger screens */
@@ -134,53 +112,11 @@ export default function Contact() {
     setErrors((prev) => ({ ...prev, [key]: undefined }));
   };
 
-  const toggleTopic = (id: string) =>
-    set(
-      "workshopTopics",
-      values.workshopTopics.includes(id)
-        ? values.workshopTopics.filter((x) => x !== id)
-        : [...values.workshopTopics, id]
-    );
-
-  const applyPrefill = useCallback((params: URLSearchParams) => {
-    const topics = (params.get("workshop") ?? "")
-      .split(",")
-      .filter((id) => topicIds.has(id));
-    const audience = params.get("for");
-    const interest = params.get("interest");
-    const type = params.get("type");
-
-    const role = audience ? contact.roleFromAudience[audience] : undefined;
-    const interestType = interest
-      ? contact.typeFromInterest[interest]
-      : undefined;
-
-    setValues((prev) => {
-      const next = { ...prev };
-
-      if (topics.length) {
-        next.enquiryType = "workshop";
-        next.workshopTopics = topics;
-      } else if (interestType) {
-        next.enquiryType = interestType;
-      } else if (type && typeIds.has(type)) {
-        next.enquiryType = type;
-      }
-
-      if (role) next.role = role;
-      return next;
-    });
-
-    setPrefilled(Boolean(topics.length || role || interestType || type));
-  }, []);
-
   /* Conditional fields */
   const isOrgRole = requiresOrganisation(values.role);
   const showOrganisation = isOrgRole || values.role === "coach";
   const showLevel = values.role === "player" || values.role === "parent";
   const showGroupSize = contact.groupTypes.includes(values.enquiryType);
-  const showWorkshop = values.enquiryType === "workshop";
-  const phoneRequired = values.contactMethod !== "email";
 
   const errorList = fieldOrder.filter((key) => errors[key]);
 
@@ -218,9 +154,8 @@ export default function Contact() {
   };
 
   const resetForm = () => {
-    setValues(emptyEnquiry);
+    setValues(initialValues);
     setErrors({});
-    setPrefilled(false);
     setStatus("idle");
   };
 
@@ -292,10 +227,6 @@ export default function Contact() {
       aria-labelledby="contact-heading"
       className="relative bg-white py-16 text-ink md:py-28"
     >
-      <Suspense fallback={null}>
-        <PrefillFromUrl onPrefill={applyPrefill} />
-      </Suspense>
-
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
         {/* Header and form share one centred column */}
         <div className="mx-auto max-w-4xl">
@@ -323,12 +254,20 @@ export default function Contact() {
             ))}
           </h2>
 
-          <p
-            data-ct-intro
-            className="mt-5 max-w-2xl text-lg font-medium leading-relaxed text-ink/75 md:mt-6 md:text-xl"
-          >
-            {contact.intro}
-          </p>
+          <div data-ct-intro>
+            <p className="mt-5 max-w-2xl text-lg font-medium leading-relaxed text-ink/75 md:mt-6 md:text-xl">
+              {contact.intro}
+            </p>
+            <p className="mt-3 text-base font-medium text-ink/65 md:text-lg">
+              {contact.emailNote}{" "}
+              <a
+                href={`mailto:${contact.email}`}
+                className="font-semibold text-ink underline underline-offset-4 transition-colors duration-300 hover:text-accent focus-visible:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+              >
+                {contact.email}
+              </a>
+            </p>
+          </div>
 
           {/* Form card */}
           <div
@@ -370,10 +309,7 @@ export default function Contact() {
                       },
                       {
                         label: contact.success.summaryReply,
-                        value: labelOf(
-                          contact.contactMethods,
-                          values.contactMethod
-                        ),
+                        value: values.email,
                       },
                     ].map((row) => (
                       <div
@@ -383,29 +319,11 @@ export default function Contact() {
                         <dt className="text-sm font-semibold uppercase tracking-[0.18em] text-ink/60">
                           {row.label}
                         </dt>
-                        <dd className="text-lg font-semibold">{row.value}</dd>
-                      </div>
-                    ))}
-
-                    {values.workshopTopics.length > 0 && (
-                      <div className="grid gap-2 p-4 sm:grid-cols-[8rem_1fr] sm:gap-6 md:p-5">
-                        <dt className="text-sm font-semibold uppercase tracking-[0.18em] text-ink/60">
-                          {contact.success.summaryTopics}
-                        </dt>
-                        <dd>
-                          <ul className="flex flex-wrap gap-2">
-                            {values.workshopTopics.map((id) => (
-                              <li
-                                key={id}
-                                className="rounded-full bg-ink px-3.5 py-1.5 text-[15px] font-semibold text-bone"
-                              >
-                                {labelOf(workshops.topics, id)}
-                              </li>
-                            ))}
-                          </ul>
+                        <dd className="break-all text-lg font-semibold">
+                          {row.value}
                         </dd>
                       </div>
-                    )}
+                    ))}
                   </dl>
 
                   <button
@@ -435,12 +353,6 @@ export default function Contact() {
                       {contact.form.hint}
                     </p>
                   </div>
-
-                  {prefilled && (
-                    <p className="mt-6 rounded-xl bg-white px-4 py-3 text-base font-medium text-ink/80">
-                      {contact.form.prefillNote}
-                    </p>
-                  )}
 
                   {errorList.length > 0 && (
                     <div
@@ -503,37 +415,6 @@ export default function Contact() {
                         id="enq-enquiryType"
                         message={errors.enquiryType}
                       />
-
-                      <Reveal show={showWorkshop}>
-                        <div className="pt-7">
-                          <p
-                            id="enq-topics-title"
-                            className="text-base font-semibold"
-                          >
-                            {contact.fields.workshopTopics}
-                          </p>
-                          <p className="mt-1 text-[15px] font-medium text-ink/65">
-                            {contact.fields.workshopTopicsHint}
-                          </p>
-                          <div
-                            role="group"
-                            aria-labelledby="enq-topics-title"
-                            className="mt-3"
-                          >
-                            <Chips
-                              options={workshops.topics.map((t) => ({
-                                id: t.id,
-                                label: t.label,
-                              }))}
-                              role="checkbox"
-                              isActive={(id) =>
-                                values.workshopTopics.includes(id)
-                              }
-                              onSelect={toggleTopic}
-                            />
-                          </div>
-                        </div>
-                      </Reveal>
                     </div>
 
                     <Divider />
@@ -572,6 +453,7 @@ export default function Contact() {
                         <Field
                           id="enq-email"
                           label={contact.fields.email}
+                          
                           error={errors.email}
                         >
                           <input
@@ -585,7 +467,7 @@ export default function Contact() {
                             aria-invalid={errors.email ? true : undefined}
                             aria-describedby={describedBy(
                               "enq-email",
-                              undefined,
+                              "hint",
                               errors.email
                             )}
                             className={controlClass(Boolean(errors.email))}
@@ -653,57 +535,6 @@ export default function Contact() {
                             />
                           </Field>
                         </Reveal>
-
-                        <div className="sm:col-span-2">
-                          <p
-                            id="enq-method-title"
-                            className="text-base font-semibold"
-                          >
-                            {contact.fields.method}
-                          </p>
-                          <div
-                            role="radiogroup"
-                            aria-labelledby="enq-method-title"
-                            className="mt-2.5"
-                          >
-                            <Chips
-                              options={contact.contactMethods}
-                              role="radio"
-                              isActive={(id) => values.contactMethod === id}
-                              onSelect={(id) =>
-                                set(
-                                  "contactMethod",
-                                  id as EnquiryValues["contactMethod"]
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <Field
-                          id="enq-phone"
-                          label={contact.fields.phone}
-                          optional={!phoneRequired}
-                          error={errors.phone}
-                          className="sm:col-span-2 sm:max-w-[calc(50%-0.625rem)]"
-                        >
-                          <input
-                            id="enq-phone"
-                            type="tel"
-                            inputMode="tel"
-                            autoComplete="tel"
-                            value={values.phone}
-                            onChange={(e) => set("phone", e.target.value)}
-                            placeholder={contact.fields.phonePlaceholder}
-                            aria-invalid={errors.phone ? true : undefined}
-                            aria-describedby={describedBy(
-                              "enq-phone",
-                              undefined,
-                              errors.phone
-                            )}
-                            className={controlClass(Boolean(errors.phone))}
-                          />
-                        </Field>
                       </div>
                     </div>
 
@@ -881,12 +712,6 @@ export default function Contact() {
                         label={contact.fields.consent}
                         error={errors.consentContact}
                       />
-                      <CheckField
-                        id="enq-updatesOnline"
-                        checked={values.updatesOnline}
-                        onChange={(v) => set("updatesOnline", v)}
-                        label={contact.fields.updates}
-                      />
 
                       {status === "error" && (
                         <div
@@ -898,19 +723,10 @@ export default function Contact() {
                           </p>
                           <p className="mt-1.5 text-base font-medium">
                             <a
-                              href={contact.fallback[0].href}
+                              href={`mailto:${contact.email}`}
                               className="underline underline-offset-4 hover:text-accent"
                             >
-                              {contact.fallback[0].value}
-                            </a>
-                            {"   |   "}
-                            <a
-                              href={contact.fallback[1].href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="underline underline-offset-4 hover:text-accent"
-                            >
-                              WhatsApp {contact.fallback[1].value}
+                              {contact.email}
                             </a>
                           </p>
                         </div>

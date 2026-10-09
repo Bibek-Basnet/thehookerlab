@@ -11,7 +11,7 @@ export const hero = {
   },
   seoHeading: "The Hooker Lab: ",
   headline: ["Specialist Position.", "Specialist Coaching."],
-  body: "Hooker is one of the most technical positions in rugby. We develop the complete hooker, not just someone who can throw: accurate under pressure, strong at scrum time, sharp at the lineout and ready to lead. Better coaching builds better hookers.",
+  body: "Specialist hooker coaching led by professional hooker Kurt Eklund. Throwing, lineout, scrummaging, mental skills and leadership for players, schools, clubs and unions across New Zealand.",
   socials: [
     ...socialLinks,
     { label: "Email", href: `mailto:${contact.email}`, icon: SiGmail },

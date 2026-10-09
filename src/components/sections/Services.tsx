@@ -2,18 +2,14 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowRight, Check } from "@phosphor-icons/react";
+import { Check } from "@phosphor-icons/react";
 
 import { gsap, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { services } from "@/data/services";
 
 type Service = (typeof services.items)[number];
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://thehookerlab.co.nz";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -26,7 +22,6 @@ const jsonLd = {
       "@type": "Service",
       name: item.title,
       description: item.summary,
-      url: `${SITE_URL}/services/${item.id}`,
       provider: { "@type": "Organization", name: "The Hooker Lab" },
     },
   })),
@@ -92,7 +87,7 @@ function ServiceCard({ item }: { item: Service }) {
           </p>
         </div>
 
-        {/* Bottom group: checklist and footer, aligned across all cards */}
+        {/* Checklist, aligned to the bottom across all cards */}
         <div className="mt-8 lg:mt-auto lg:pt-8">
           <h4
             data-svc-fade
@@ -115,38 +110,6 @@ function ServiceCard({ item }: { item: Service }) {
               </li>
             ))}
           </ul>
-
-          <div
-            data-svc-fade
-            className="mt-8 flex items-end justify-between gap-4 border-t border-ink/10 pt-6"
-          >
-            <div>
-              <span className="block text-[11px] uppercase tracking-[0.25em] text-ink/60">
-                From
-              </span>
-              <span className="mt-1 flex items-baseline gap-2">
-                <span className="font-display text-4xl leading-none">
-                  {item.price}
-                </span>
-                <span className="text-sm text-ink/60">{item.priceUnit}</span>
-              </span>
-            </div>
-
-            <Link
-              href={`/services/${item.id}`}
-              className="inline-flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] after:absolute after:inset-0 focus-visible:outline-none"
-            >
-              View more
-              <span className="sr-only"> about {item.title}</span>
-              <motion.span
-                variants={{ rest: { x: 0 }, hover: { x: 6 } }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/25 transition-colors duration-300 group-hover:border-ink group-hover:bg-ink group-hover:text-bone"
-              >
-                <ArrowRight size={16} />
-              </motion.span>
-            </Link>
-          </div>
         </div>
       </div>
 

@@ -1,27 +1,31 @@
 import Hero from "@/components/sections/Hero";
+import Philosophy from "@/components/sections/Philosophy";
 import About from "@/components/sections/About";
 import Services from "@/components/sections/Services";
 import Expertise from "@/components/sections/Expertise";
 import Testimonials from "@/components/sections/Testimonials";
-import Workshops from "@/components/sections/Workshops";
-import OnlineProgramme from "@/components/sections/OnlineProgramme";
-import Instagram from "@/components/sections/Instagram";
-import FAQ from "@/components/sections/FAQ";
+import Instagram from "@/components/sections/Instagram";;
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <About />
+      <Philosophy />
+
+      
       <Services />
-      <Expertise />
-      <Testimonials />
-      <Workshops />
-      <OnlineProgramme />
-      <Instagram />
-      <FAQ />
+      <About />
       <Contact />
+      <Expertise />
+      
+      <Instagram />
+      <Testimonials />
+    
+      
+      
+      
+      
     </>
   );
 }

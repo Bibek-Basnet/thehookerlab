@@ -1,5 +1,5 @@
 import type { IconType } from "react-icons";
-import { SiInstagram, SiWhatsapp } from "react-icons/si";
+import { SiInstagram } from "react-icons/si";
 
 export type ServiceLink = {
   title: string;
@@ -10,7 +10,6 @@ export type ServiceLink = {
 export type NavItem = {
   label: string;
   href: string;
-  children?: readonly ServiceLink[];
 };
 
 export const serviceLinks: readonly ServiceLink[] = [
@@ -38,10 +37,10 @@ export const serviceLinks: readonly ServiceLink[] = [
 
 export const navLinks: readonly NavItem[] = [
   { label: "About", href: "/#about" },
-  { label: "Services", href: "/#programmes", children: serviceLinks },
+  { label: "Services", href: "/#programmes" },
+  { label: "Philosophy", href: "/#philosophy" },
   { label: "Expertise", href: "/#expertise" },
-  { label: "Workshops", href: "/#workshops" },
-  { label: "Online", href: "/#online" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -62,10 +61,5 @@ export const socialLinks: Social[] = [
     label: "Instagram",
     href: "https://www.instagram.com/kurteklund05/",
     icon: SiInstagram,
-  },
-  {
-    label: "WhatsApp",
-    href: "https://wa.me/64211570941",
-    icon: SiWhatsapp,
   },
 ];

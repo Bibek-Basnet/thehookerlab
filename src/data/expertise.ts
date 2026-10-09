@@ -2,7 +2,7 @@ export const expertise = {
   eyebrow: "Expertise",
   headline: { plain: "The complete", accent: "hooker." },
   intro:
-    "The Hooker Lab specialises in thirteen areas across three pillars: the throw, the scrum and the leadership that ties them together.",
+    "The Hooker Lab specialises in twelve areas across three pillars: the throw, the scrum and the leadership that ties them together.",
   pillars: [
     {
       id: "throw",
@@ -59,39 +59,47 @@ export const expertise = {
         "The technical core of the position, developed one detail at a time.",
       skills: [
         {
-          name: "Scrummaging",
-          detail: "Body position, bind and power at scrum time.",
+          name: "Body Position & Set-Up",
+          detail: "The Foundation",
           focus: [
-            "Bind, body height and spine position",
-            "Engagement and driving through the legs",
-            "Working as one unit with the front row",
+            "Stance and foot positioning",
+            "Body shape and spinal alignment",
+            "Hip height and knee bend",
+            "Shoulder position and head placement",
+            "Binding and connection with props",
           ],
         },
         {
-          name: "Hooker-specific skills",
-          detail: "The small technical details that belong to the position.",
+          name: "Connection & Force Transfer",
+          detail: "Working as One Unit",
           focus: [
-            "Scrum timing and ball striking",
-            "Ball carrying and handling around the ruck",
-            "Tackle and breakdown work for a front-row player",
+            "Binding with both props",
+            "Maintaining a tight front row",
+            "Transferring force through the body",
+            "Staying square and balanced",
+            "Working together through engagement",
           ],
         },
         {
-          name: "Position-specific training",
-          detail: "Sessions built around what hookers actually do in a match.",
+          name: "The Strike & Ball Control",
+          detail: "The Hooker's Speciality",
           focus: [
-            "Drills based on real match demands",
-            "Strength and conditioning for the position",
-            "Individual plans for each player",
+            "Timing the strike",
+            "Foot speed and accuracy",
+            "Striking without losing stability",
+            "Controlling the ball towards the number eight",
+            "Coordinating with the scrum-half",
           ],
         },
         {
-          name: "Player development",
-          detail: "Good habits built early that last from junior rugby up.",
+          name: "Pressure, Stability & Game Management",
+          detail: "Performing Under Pressure",
           focus: [
-            "Strong fundamentals for junior players",
-            "Clear next steps at every level",
-            "Habits that carry into senior rugby",
+            "Staying balanced under pressure",
+            "Maintaining body shape when fatigued",
+            "Responding to opposition tactics",
+            "Communicating with props and locks",
+            "Managing resets, penalties and referee expectations",
           ],
         },
       ],
@@ -105,21 +113,13 @@ export const expertise = {
         "Where a good hooker becomes a great one: reading, deciding and leading.",
       skills: [
         {
-          name: "Game awareness",
-          detail: "Reading the game and knowing where the ball needs to go.",
+          name: "Building routines",
+          detail: "Routines that make the throw and the scrum repeatable.",
           focus: [
-            "Reading field position and game state",
-            "Spotting space and defensive shape",
-            "Knowing where the ball needs to go next",
-          ],
-        },
-        {
-          name: "Decision-making",
-          detail: "Choosing the right option quickly and with conviction.",
-          focus: [
-            "Choosing between lineout options",
-            "Making calls under time pressure",
-            "Reviewing decisions after the match",
+            "Pre-throw and pre-scrum routines",
+            "Simple cues that sharpen focus",
+            "Resetting quickly between plays",
+            "Practising routines until they become automatic",
           ],
         },
         {

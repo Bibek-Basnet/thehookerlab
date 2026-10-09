@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,7 +17,7 @@ const legalLinks = [
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent";
 
-const link = `text-[15px] leading-snug text-bone/70 transition-colors duration-200 hover:text-accent focus-visible:text-accent ${focus}`;
+const link = `text-[15px] normal-case leading-snug text-bone/70 transition-colors duration-200 hover:text-accent focus-visible:text-accent ${focus}`;
 
 const heading =
   "font-body text-xs font-medium uppercase leading-none tracking-[0.24em] text-bone/45";
@@ -28,15 +25,8 @@ const heading =
 const iconButton =
   "grid h-10 w-10 place-items-center rounded-full border border-bone/20 text-bone transition-colors duration-200 hover:border-accent hover:bg-accent hover:text-bone focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
-const exploreLinks = navLinks.filter((l) => !l.children);
-
 export default function Footer() {
-  /* Year is set after mount so no `new Date()` ever runs during prerender */
-  const [year, setYear] = useState("");
-
-  useEffect(() => {
-    setYear(String(new Date().getFullYear()));
-  }, []);
+  const year = new Date().getFullYear();
 
   return (
     <footer className="bg-ink text-bone">
@@ -65,7 +55,7 @@ export default function Footer() {
           <nav aria-label="Explore" className="lg:col-span-2">
             <h2 className={heading}>Explore</h2>
             <ul className="mt-5 space-y-3">
-              {exploreLinks.map((l) => (
+              {navLinks.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className={link}>
                     {l.label}
@@ -75,13 +65,13 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Services */}
+          {/* Services (all point to the Programmes section) */}
           <nav aria-label="Services" className="lg:col-span-3">
             <h2 className={heading}>Services</h2>
             <ul className="mt-5 space-y-3">
               {serviceLinks.map((s) => (
-                <li key={s.href}>
-                  <Link href={s.href} className={link}>
+                <li key={s.title}>
+                  <Link href="/#programmes" className={link}>
                     {s.title}
                   </Link>
                 </li>
@@ -98,20 +88,6 @@ export default function Footer() {
                   {contact.email}
                 </a>
               </li>
-              {socialLinks
-                .filter((s) => s.label === "WhatsApp")
-                .map((s) => (
-                  <li key={s.label}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={link}
-                    >
-                      Message us on {s.label}
-                    </a>
-                  </li>
-                ))}
             </ul>
 
             <ul className="mt-5 flex gap-2.5">
@@ -155,9 +131,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-3 border-t border-bone/10 pt-6 text-sm text-bone/50 md:flex-row md:items-center md:justify-between">
-          <p>
-            &copy; {year} The Hooker Lab. All rights reserved.
-          </p>
+          <p>&copy; {year} The Hooker Lab. All rights reserved.</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {legalLinks.map((l) => (
               <li key={l.href}>

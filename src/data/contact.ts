@@ -4,27 +4,15 @@ export const contact = {
   eyebrow: "Contact",
   headline: ["Get in", "touch"],
   intro:
-    "Tell us about the player or group and what you want to achieve, and we will get back to you to talk through the next steps.",
+    "Tell us about the player or group and what you want to achieve, and we will reply by email to talk through the next steps.",
 
-  /* Shown only if a submission fails */
-  fallback: [
-    {
-      label: "Email",
-      value: "admin@thehookerlab.co.nz",
-      href: "mailto:admin@thehookerlab.co.nz",
-    },
-    {
-      label: "WhatsApp",
-      value: "+64 21 157 0941",
-      href: "https://wa.me/64211570941",
-    },
-  ],
+  /* The only way to get in touch */
+  email: "admin@thehookerlab.co.nz",
+  emailNote: "Prefer to write directly? Email us at",
 
   form: {
     title: "Send an enquiry",
     hint: "A few quick questions so we can reply properly. Anything marked optional can be skipped.",
-    prefillNote:
-      "We have filled in some options from your selection. You can change anything below.",
     typeTitle: "What is your enquiry about?",
     aboutTitle: "About you",
     detailsTitle: "More details",
@@ -35,21 +23,17 @@ export const contact = {
   },
 
   fields: {
-    workshopTopics: "Which focus areas interest you?",
-    workshopTopicsHint: "Choose as many as you like.",
     name: "Full name",
     namePlaceholder: "Your full name",
     email: "Email address",
     emailPlaceholder: "name@example.com",
+    
     role: "Who are you?",
     rolePlaceholder: "Choose one",
     rolePlayerHint:
       "Players under 18: please ask a parent or guardian to send this enquiry.",
     organisation: "School, club or organisation",
     organisationPlaceholder: "Name of your school, club or organisation",
-    method: "How would you like us to reply?",
-    phone: "Phone or WhatsApp number",
-    phonePlaceholder: "+64 21 123 4567",
     ageGroup: "Age group of the player or players",
     level: "Current playing level",
     groupSize: "Size of the group",
@@ -60,9 +44,10 @@ export const contact = {
     message: "How can we help?",
     messageHint:
       "Helpful to include: the player's age and level (or the size of your group), what you want to improve, and any dates or locations that matter.",
-    messagePlaceholder: "Tell us about the player or group and what you want to achieve.",
-    consent: "I agree that The Hooker Lab can contact me about this enquiry.",
-    updates: "Keep me posted about the online programme.",
+    messagePlaceholder:
+      "Tell us about the player or group and what you want to achieve.",
+    consent:
+      "I agree that The Hooker Lab can contact me by email about this enquiry.",
     privacy: "We will only use your details to reply to your enquiry.",
   },
 
@@ -74,14 +59,13 @@ export const contact = {
 
   success: {
     title: "Thank you,",
-    text: "Your enquiry has been sent. We will get back to you using the contact method you chose.",
+    text: "Your enquiry has been sent. We will reply to you by email.",
     summaryAbout: "About",
     summaryFrom: "From",
-    summaryReply: "Reply by",
-    summaryTopics: "Focus areas",
+    summaryReply: "Reply to",
   },
   error: {
-    text: "Your enquiry could not be sent. Please try again, or contact us directly:",
+    text: "Your enquiry could not be sent. Please try again, or email us directly:",
   },
 
   enquiryTypes: [
@@ -89,8 +73,6 @@ export const contact = {
     { id: "small-group", label: "Small group coaching" },
     { id: "school-club", label: "School or club coaching" },
     { id: "provincial", label: "Provincial or union development" },
-    { id: "workshop", label: "Hooker workshop" },
-    { id: "online", label: "Online programme" },
     { id: "other", label: "Something else" },
   ] as Option[],
 
@@ -103,12 +85,6 @@ export const contact = {
     { id: "academy", label: "Academy" },
     { id: "union", label: "Provincial union or organisation" },
     { id: "other", label: "Other" },
-  ] as Option[],
-
-  contactMethods: [
-    { id: "email", label: "Email" },
-    { id: "whatsapp", label: "WhatsApp" },
-    { id: "phone", label: "Phone call" },
   ] as Option[],
 
   ageGroups: [
@@ -144,17 +120,5 @@ export const contact = {
   /* Roles that need an organisation name */
   orgRoles: ["school", "club", "academy", "union"],
   /* Enquiry types that ask for a group size */
-  groupTypes: ["small-group", "school-club", "provincial", "workshop"],
-
-  /* Prefill maps for links from other sections */
-  roleFromAudience: {
-    schools: "school",
-    clubs: "club",
-    academies: "academy",
-    provincial: "union",
-    coaches: "coach",
-  } as Record<string, string>,
-  typeFromInterest: {
-    "online-programme": "online",
-  } as Record<string, string>,
+  groupTypes: ["small-group", "school-club", "provincial"],
 };

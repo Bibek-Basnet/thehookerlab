@@ -2,17 +2,14 @@ export const faq = {
   eyebrow: "FAQ",
   headline: ["Questions,", "answered."],
   intro: "Everything you need to know about training with The Hooker Lab.",
-  cta: {
-    prefix: "Can't find your answer?",
-    label: "Get in touch.",
-    href: "#contact",
-  },
+  /* Hero background: public/images/hero.jpg (change the extension if yours differs) */
+  heroImage: "/images/FAQ.jpeg",
   items: [
     {
       id: "who",
       question: "Who is The Hooker Lab for?",
       answer:
-        "The Hooker Lab works with hookers at every level - from school and club players learning the fundamentals, to provincial and representative players refining their craft at the highest level. If you throw, scrum or lead, the programme is built around what you actually do on the field.",
+        "The Hooker Lab works with hookers at every level, from school and club players learning the fundamentals to provincial and representative players refining their craft at the highest level. If you throw, scrum or lead, the programme is built around what you actually do on the field.",
     },
     {
       id: "one-on-one",
@@ -21,22 +18,28 @@ export const faq = {
         "Sessions are built entirely around your game. We start with an assessment of your throwing, scrummaging and decision-making, then build a plan around the specific skills and habits that will move the needle most. Every session has a clear focus and a measurable outcome.",
     },
     {
-      id: "commitment",
-      question: "What's the minimum commitment for online coaching?",
+      id: "options",
+      question: "What's the difference between the coaching options?",
       answer:
-        "Online coaching runs on a 12-week minimum commitment, then moves to a rolling monthly subscription that you can cancel any time.",
+        "Individual coaching is fully personalised, working directly with Kurt. Small group coaching puts a few hookers on the field together for quality repetitions. School and club coaching develops players and coaches within your team, and provincial and union programmes support representative environments.",
     },
     {
-      id: "tiers",
-      question: "What's the difference between the coaching tiers?",
+      id: "under-18",
+      question: "Can parents book for younger players?",
       answer:
-        "One-on-one coaching is fully personalised, session by session, working directly with Kurty. Programme coaching is a structured block for teams, clubs and schools, delivered across a set number of weeks. Online coaching is remote - video analysis, written feedback and live calls.",
+        "Yes. For players under 18 we ask that a parent or guardian sends the enquiry and gives consent. We coach players from under 12 right through to adults, with sessions matched to age and experience.",
     },
     {
-      id: "after-apply",
-      question: "What happens after I apply?",
+      id: "book",
+      question: "How do I book a session?",
       answer:
-        "You'll get a reply within 48 hours with next steps - usually a short call to understand your goals, followed by a proposed plan and start date. There's no obligation until you're ready to commit.",
+        "Send an enquiry through the contact form on the home page, or email admin@thehookerlab.co.nz. Tell us about the player or group and what you want to achieve, and we'll reply by email to plan the next steps.",
+    },
+    {
+      id: "after-enquiry",
+      question: "What happens after I send an enquiry?",
+      answer:
+        "You'll get a reply by email within 48 hours with next steps, usually a few questions to understand your goals, followed by a proposed plan and start date. There's no obligation until you're ready to commit.",
     },
     {
       id: "changes",
