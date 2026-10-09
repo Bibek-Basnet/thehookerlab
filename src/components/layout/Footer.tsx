@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -28,7 +31,12 @@ const iconButton =
 const exploreLinks = navLinks.filter((l) => !l.children);
 
 export default function Footer() {
-  const year = new Date().getFullYear();
+  /* Year is computed on the client to keep the page fully static */
+  const [year, setYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer className="bg-ink text-bone">
@@ -147,7 +155,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-3 border-t border-bone/10 pt-6 text-sm text-bone/50 md:flex-row md:items-center md:justify-between">
-          <p>&copy; {year} The Hooker Lab. All rights reserved.</p>
+          <p>
+            &copy; {year ?? new Date().getFullYear()} The Hooker Lab. All rights
+            reserved.
+          </p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {legalLinks.map((l) => (
               <li key={l.href}>
