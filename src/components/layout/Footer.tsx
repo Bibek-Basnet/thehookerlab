@@ -25,8 +25,15 @@ const heading =
 const iconButton =
   "grid h-10 w-10 place-items-center rounded-full border border-bone/20 text-bone transition-colors duration-200 hover:border-accent hover:bg-accent hover:text-bone focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
-export default function Footer() {
-  const year = new Date().getFullYear();
+/* With Cache Components, `new Date()` can't run during a normal prerender.
+   Wrapping it in a cached function lets Next.js compute it once and reuse it. */
+async function getYear() {
+  "use cache";
+  return new Date().getFullYear();
+}
+
+export default async function Footer() {
+  const year = await getYear();
 
   return (
     <footer className="bg-ink text-bone">
