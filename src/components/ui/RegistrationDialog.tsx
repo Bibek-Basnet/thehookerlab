@@ -365,7 +365,11 @@ function RegistrationForm({
                               id={inputId}
                               rows={4}
                               maxLength={step.maxLength}
-                              placeholder={step.placeholder}
+                              placeholder={
+                                "placeholder" in step
+                                  ? step.placeholder
+                                  : undefined
+                              }
                               value={asString(answers[step.id])}
                               onChange={(e) =>
                                 setAnswer(step.id, e.target.value)
@@ -390,8 +394,16 @@ function RegistrationForm({
                           <input
                             id={inputId}
                             type={step.kind}
-                            autoComplete={step.autoComplete}
-                            placeholder={step.placeholder}
+                            autoComplete={
+                              "autoComplete" in step
+                                ? step.autoComplete
+                                : undefined
+                            }
+                            placeholder={
+                              "placeholder" in step
+                                ? step.placeholder
+                                : undefined
+                            }
                             value={asString(answers[step.id])}
                             onChange={(e) => setAnswer(step.id, e.target.value)}
                             data-step-focus=""
@@ -434,7 +446,7 @@ function RegistrationForm({
                             <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ink/55">
                               {s.label}
                             </dt>
-                            <dd className="mt-1 break-words text-base font-medium leading-snug">
+                            <dd className="mt-1 wrap-break-word text-base font-medium leading-snug">
                               {display(answers[s.id])}
                             </dd>
                           </div>
@@ -655,7 +667,7 @@ export default function RegistrationDialog({
       <div className="pointer-events-none flex min-h-full items-center justify-center p-4 md:p-6">
         <div
           ref={panelRef}
-          className="pointer-events-auto relative w-full max-w-[36rem] rounded-3xl bg-white p-6 shadow-2xl md:p-8"
+          className="pointer-events-auto relative w-full max-w-xl rounded-3xl bg-white p-6 shadow-2xl md:p-8"
         >
           <button
             type="button"
