@@ -31,11 +31,11 @@ const iconButton =
 const exploreLinks = navLinks.filter((l) => !l.children);
 
 export default function Footer() {
-  /* Year is computed on the client to keep the page fully static */
-  const [year, setYear] = useState<number | null>(null);
+  /* Year is set after mount so no `new Date()` ever runs during prerender */
+  const [year, setYear] = useState("");
 
   useEffect(() => {
-    setYear(new Date().getFullYear());
+    setYear(String(new Date().getFullYear()));
   }, []);
 
   return (
@@ -156,8 +156,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-3 border-t border-bone/10 pt-6 text-sm text-bone/50 md:flex-row md:items-center md:justify-between">
           <p>
-            &copy; {year ?? new Date().getFullYear()} The Hooker Lab. All rights
-            reserved.
+            &copy; {year} The Hooker Lab. All rights reserved.
           </p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {legalLinks.map((l) => (
