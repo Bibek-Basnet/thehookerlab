@@ -7,6 +7,7 @@ import Workshops from "@/components/sections/Workshops";
 import OnlineProgramme from "@/components/sections/OnlineProgramme";
 import Instagram from "@/components/sections/Instagram";
 import FAQ from "@/components/sections/FAQ";
+import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <OnlineProgramme />
       <Instagram />
       <FAQ />
+      <Contact />
     </>
   );
 }
