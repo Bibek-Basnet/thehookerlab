@@ -3,6 +3,10 @@ import About from "@/components/sections/About";
 import Services from "@/components/sections/Services";
 import Expertise from "@/components/sections/Expertise";
 import Testimonials from "@/components/sections/Testimonials";
+import Workshops from "@/components/sections/Workshops";
+import OnlineProgramme from "@/components/sections/OnlineProgramme";
+import Instagram from "@/components/sections/Instagram";
+import FAQ from "@/components/sections/FAQ";
 
 export default function Home() {
   return (
@@ -12,6 +16,10 @@ export default function Home() {
       <Services />
       <Expertise />
       <Testimonials />
+      <Workshops />
+      <OnlineProgramme />
+      <Instagram />
+      <FAQ />
     </>
   );
 }

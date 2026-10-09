@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Jost, Big_Shoulders } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -128,9 +129,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Navbar />
-        {/* SmoothScroll provider and Navbar will be added here as we build them */}
+        {/* SmoothScroll provider will be added here as we build it */}
         <main id="main">{children}</main>
-        {/* Footer will be added here */}
+        <Footer />
       </body>
     </html>
   );

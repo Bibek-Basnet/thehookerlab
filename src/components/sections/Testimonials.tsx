@@ -47,7 +47,7 @@ export default function Testimonials() {
           ? firstCard.getBoundingClientRect().width + 24
           : CARD_STEP;
 
-        /* Master loop — slower now (160s per full cycle) */
+        /* Master loop - slower now (160s per full cycle) */
         const loop = gsap.to(el, {
           xPercent: -50,
           duration: 160,
@@ -125,7 +125,7 @@ export default function Testimonials() {
         </div>
       </div>
 
-      {/* Marquee wrapper — arrows float inside this, at each end */}
+      {/* Marquee wrapper - arrows float inside this, at each end */}
       <div className="relative mt-10 md:mt-14">
         {/* Edge fades */}
         <div
@@ -137,7 +137,7 @@ export default function Testimonials() {
           className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-white to-transparent md:w-40"
         />
 
-        {/* Left arrow — vertically centred on the cards */}
+        {/* Left arrow - vertically centred on the cards */}
         <button
           type="button"
           aria-label="Previous testimonial"
@@ -147,7 +147,7 @@ export default function Testimonials() {
           <ArrowLeft size={18} weight="bold" />
         </button>
 
-        {/* Right arrow — vertically centred on the cards */}
+        {/* Right arrow - vertically centred on the cards */}
         <button
           type="button"
           aria-label="Next testimonial"

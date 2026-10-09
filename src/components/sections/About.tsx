@@ -11,7 +11,7 @@ import { about } from "@/data/about";
 const headlineStyles = [
   "text-ink",
   "text-accent",
-  "text-transparent [-webkit-text-stroke:1.5px_var(--color-ink)]",
+  "text-ink",
 ];
 
 const tierStyles = {
@@ -326,7 +326,6 @@ export default function About() {
                           <div
                             className={cn(
                               "relative shrink-0",
-                              // Bigger logos: featured gets the largest, plain slightly smaller
                               isFeatured
                                 ? "h-12 w-12 md:h-14 md:w-14"
                                 : "h-10 w-10 md:h-11 md:w-11"
@@ -339,7 +338,6 @@ export default function About() {
                               sizes="(min-width: 768px) 56px, 48px"
                               className={cn(
                                 "object-contain",
-                                // Force logos white on the dark featured tile
                                 isFeatured && "brightness-0 invert"
                               )}
                             />
