@@ -4,7 +4,7 @@ import About from "@/components/sections/About";
 import Services from "@/components/sections/Services";
 import Expertise from "@/components/sections/Expertise";
 import Testimonials from "@/components/sections/Testimonials";
-import Instagram from "@/components/sections/Instagram";;
+import Instagram from "@/components/sections/Instagram";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
@@ -13,19 +13,12 @@ export default function Home() {
       <Hero />
       <Philosophy />
 
-      
       <Services />
-      <About />
-      <Contact />
       <Expertise />
-      
-      <Instagram />
+      <About />
       <Testimonials />
-    
-      
-      
-      
-      
+      <Instagram />
+      <Contact />
     </>
   );
 }

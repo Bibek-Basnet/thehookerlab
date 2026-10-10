@@ -14,6 +14,7 @@ const headlineStyles = [
   "text-ink",
 ];
 
+/* Every Represented card is black. Featured is simply wider and larger. */
 const tierStyles = {
   featured: {
     base: "col-span-2 bg-ink text-bone",
@@ -21,9 +22,9 @@ const tierStyles = {
     meta: "text-bone/80",
   },
   plain: {
-    base: "border border-ink/15 bg-white text-ink",
+    base: "bg-ink text-bone",
     name: "text-base md:text-lg",
-    meta: "text-ink/70",
+    meta: "text-bone/80",
   },
 } as const;
 
@@ -182,12 +183,12 @@ export default function About() {
   );
 
   return (
-   <section
-  ref={sectionRef}
-  id="coach"
-  aria-labelledby="about-heading"
-  className="relative overflow-hidden bg-paper py-16 text-ink md:py-24"
->
+    <section
+      ref={sectionRef}
+      id="about"
+      aria-labelledby="about-heading"
+      className="relative overflow-hidden bg-paper py-16 text-ink md:py-24"
+    >
       <div className="mx-auto grid max-w-350 gap-10 px-5 md:px-10 lg:grid-cols-12 lg:gap-14">
         {/* Portrait */}
         <div className="lg:col-span-5">
@@ -286,89 +287,96 @@ export default function About() {
               data-about-tiles
               className="mt-3 grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-3 lg:grid-cols-4"
             >
-              {about.represented.map(({ team, note, tier, logo }, i) => {
-                const style = tierStyles[tier];
-                const isFeatured = tier === "featured";
+              {about.represented.map(
+                ({ team, note, tier, logo, logoStyle }, i) => {
+                  const style = tierStyles[tier];
+                  const isFeatured = tier === "featured";
+                  const isTile = logoStyle === "tile";
 
-                return (
-                  <li
-                    key={team}
-                    data-about-tile
-                    className={cn("flex", isFeatured && "col-span-2")}
-                  >
-                    <div
-                      className={cn(
-                        "flex min-h-28 w-full flex-col justify-between gap-3 p-3.5 md:min-h-32 md:p-4",
-                        style.base
-                      )}
+                  return (
+                    <li
+                      key={team}
+                      data-about-tile
+                      className={cn("flex", isFeatured && "col-span-2")}
                     >
-                      {/* Top row: number + note */}
-                      <span
-                        className={cn(
-                          "flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em]",
-                          style.meta
-                        )}
-                      >
-                        <span>{String(i + 1).padStart(2, "0")}</span>
-                        {note && <span>{note}</span>}
-                      </span>
-
-                      {/* Bottom: logo + team name */}
                       <div
                         className={cn(
-                          "flex items-center gap-3",
-                          isFeatured
-                            ? "flex-row"
-                            : "flex-col items-start gap-2"
+                          "flex min-h-28 w-full flex-col justify-between gap-3 p-3.5 md:min-h-32 md:p-4",
+                          style.base
                         )}
                       >
-                        {logo && (
-                          <div
-                            className={cn(
-                              "relative shrink-0",
-                              isFeatured
-                                ? "h-12 w-12 md:h-14 md:w-14"
-                                : "h-10 w-10 md:h-11 md:w-11"
-                            )}
-                          >
-                            <Image
-                              src={logo}
-                              alt=""
-                              fill
-                              sizes="(min-width: 768px) 56px, 48px"
-                              className={cn(
-                                "object-contain",
-                                isFeatured && "brightness-0 invert"
-                              )}
-                            />
-                          </div>
-                        )}
+                        {/* Top row: number + note */}
                         <span
                           className={cn(
-                            "font-display leading-[1.05]",
-                            style.name
+                            "flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em]",
+                            style.meta
                           )}
                         >
-                          {team}
+                          <span>{String(i + 1).padStart(2, "0")}</span>
+                          {note && <span>{note}</span>}
                         </span>
+
+                        {/* Bottom: logo + team name */}
+                        <div
+                          className={cn(
+                            "flex items-center gap-3",
+                            isFeatured
+                              ? "flex-row"
+                              : "flex-col items-start gap-2"
+                          )}
+                        >
+                          {logo && (
+                            <div
+                              className={cn(
+                                "relative shrink-0",
+                                isFeatured
+                                  ? "h-12 w-12 md:h-14 md:w-14"
+                                  : "h-10 w-10 md:h-11 md:w-11",
+                                isTile && "rounded-md bg-white"
+                              )}
+                            >
+                              <Image
+                                src={logo}
+                                alt=""
+                                fill
+                                sizes="(min-width: 768px) 56px, 48px"
+                                className={cn(
+                                  "object-contain",
+                                  isTile && "p-1"
+                                )}
+                              />
+                            </div>
+                          )}
+                          <span
+                            className={cn(
+                              "font-display leading-[1.05]",
+                              style.name
+                            )}
+                          >
+                            {team}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </li>
-                );
-              })}
+                    </li>
+                  );
+                }
+              )}
             </ul>
           </div>
 
           {/* Honours */}
           <ul data-about-honours className="mt-5 flex flex-wrap gap-2.5">
-            {about.honours.map((honour) => (
+            {about.honours.map(({ title, year }) => (
               <li
-                key={honour}
+                key={title}
                 data-about-honour
                 className="flex items-center gap-2.5 rounded-full border border-ink/25 bg-white px-5 py-2.5 text-base font-semibold text-ink"
               >
                 <Trophy size={20} weight="duotone" className="text-ink" />
-                {honour}
+                <span className="font-display text-lg leading-none text-accent">
+                  {year}
+                </span>
+                {title}
               </li>
             ))}
           </ul>

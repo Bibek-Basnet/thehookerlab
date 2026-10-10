@@ -8,7 +8,7 @@ export const services = {
       format: "One-on-one",
       title: "Individual Hooker Coaching",
       summary:
-        "One-on-one specialist coaching designed around the individual player's needs, strengths and areas for improvement.",
+        "One on one specialist coaching tailor made to the individuals needs.",
       listTitle: "At a glance",
       points: [
         "Throwing technique and accuracy",

@@ -12,7 +12,7 @@ export const testimonials = {
       org: "All Blacks",
       image: "/images/greg-feek.jpeg",
       quote:
-        "I’ve known and worked with Kurty for many years. His superpower is his ability to connect with people, understand what makes each individual tick, and recognise what they need to grow and reach their potential. He combines exceptional knowledge, experiences and passion with a genuine heart for people, guiding them not only on their rugby journey but in becoming better people.",
+        "I’ve known and worked with Kurty for many years. His superpower is his ability to connect with people, understand what makes each individual tick, and recognise what they need to grow and reach their potential.",
     },
     {
       id: "t2",

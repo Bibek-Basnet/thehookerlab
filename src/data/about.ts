@@ -5,7 +5,38 @@ type RepresentedTeam = {
   note: string;
   tier: Tier;
   logo?: string;
+  /* "mono" (default): white silhouette. "tile": original colours on a small white tile. */
+  logoStyle?: "mono" | "tile";
 };
+
+type Honour = {
+  title: string;
+  year: string;
+};
+
+const represented: RepresentedTeam[] = [
+  {
+    team: "Māori All Blacks",
+    note: "Captain 2025",
+    tier: "featured",
+    logo: "/logo/maori.png",
+  },
+  {
+    team: "Bay of Plenty",
+    note: "Captain",
+    tier: "plain",
+    logo: "/logo/bay.png",
+  },
+  { team: "Blues", note: "", tier: "plain", logo: "/logo/blues.png" },
+  { team: "Auckland", note: "", tier: "plain", logo: "/logo/auckland.png" },
+  { team: "ANZAC XV", note: "", tier: "plain", logo: "/logo/anzv.avif" },
+  {
+    team: "All Blacks XV",
+    note: "",
+    tier: "plain",
+    logo: "/logo/allblack.svg",
+  },
+];
 
 export const about = {
   eyebrow: "About your coach",
@@ -22,33 +53,13 @@ export const about = {
     "Through The Hooker Lab, he now helps develop the next generation of hookers with specialist, practical coaching.",
   stats: [
     { value: 10, suffix: "+", label: "Years at the top level" },
-    { value: 7, suffix: "", label: "Sides represented" },
+    { value: represented.length, suffix: "", label: "Sides represented" },
     { value: 2, suffix: "", label: "Captaincies" },
   ],
   representedTitle: "Represented",
-  represented: [
-    {
-      team: "Māori All Blacks",
-      note: "Captain 2025",
-      tier: "featured",
-      logo: "/logo/maori.png",
-    },
-    {
-      team: "Bay of Plenty",
-      note: "Captain",
-      tier: "plain",
-      logo: "/logo/bay.png",
-    },
-    { team: "Blues", note: "", tier: "plain", logo: "/logo/blues.png" },
-    { team: "Auckland", note: "", tier: "plain", logo: "/logo/auckland.png" },
-    { team: "North Island", note: "", tier: "plain" },
-    { team: "ANZAC XV", note: "", tier: "plain", logo: "/logo/anzv.avif" },
-    {
-      team: "All Blacks XV",
-      note: "",
-      tier: "plain",
-      logo: "/logo/allblack.svg",
-    },
-  ] satisfies RepresentedTeam[],
-  honours: ["Blues Player of the Year", "Māori Player of the Year nominee"],
+  represented,
+  honours: [
+    { title: "Blues Player of the Year", year: "2022" },
+    { title: "Māori Player of the Year nominee", year: "2025" },
+  ] satisfies Honour[],
 } as const;
