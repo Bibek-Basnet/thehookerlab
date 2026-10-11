@@ -42,13 +42,14 @@ export default async function Footer() {
           {/* Brand */}
           <div className="col-span-2 lg:col-span-4">
             <Link href="/" aria-label="The Hooker Lab home" className={`inline-block ${focus}`}>
-              <Image
-                src="/logo/logo.png"
-                alt="The Hooker Lab"
-                width={200}
-                height={64}
-                className="h-12 w-auto md:h-14"
-              />
+             <Image
+  src="/logo/logo.png"
+  alt="The Hooker Lab"
+  width={200}
+  height={64}
+  className="h-12 w-auto md:h-14"
+  data-colour
+/>
             </Link>
             <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-bone/65">
               Specialist hooker coaching led by professional hooker Kurt

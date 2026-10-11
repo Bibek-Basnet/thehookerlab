@@ -2,8 +2,9 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "motion/react";
-import { Check } from "@phosphor-icons/react";
+import { ArrowRight, Check } from "@phosphor-icons/react";
 
 import { gsap, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
@@ -35,7 +36,7 @@ function ServiceCard({ item }: { item: Service }) {
       whileHover="hover"
       variants={{ rest: { y: 0 }, hover: { y: -6 } }}
       transition={{ type: "spring", stiffness: 320, damping: 24 }}
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-[1.75rem] border border-ink/10 bg-paper p-3 transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(0,0,0,0.3)]"
+      className="group relative flex h-full w-full flex-col overflow-hidden rounded-[1.75rem] border border-ink/10 bg-paper p-3 transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(0,0,0,0.3)] has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-ink"
     >
       {/* Photo */}
       <div
@@ -87,7 +88,7 @@ function ServiceCard({ item }: { item: Service }) {
           </p>
         </div>
 
-        {/* Checklist, aligned to the bottom across all cards */}
+        {/* Bottom group: checklist and link, aligned across all cards */}
         <div className="mt-8 lg:mt-auto lg:pt-8">
           <h4
             data-svc-fade
@@ -110,6 +111,29 @@ function ServiceCard({ item }: { item: Service }) {
               </li>
             ))}
           </ul>
+
+          {/* Quiet link: the whole card is clickable */}
+          <div
+            data-svc-fade
+            className="mt-7 flex items-center justify-between gap-4 border-t border-ink/10 pt-5"
+          >
+            <Link
+              href={services.cta.href}
+              className="text-[13px] font-medium uppercase tracking-[0.2em] text-ink/65 transition-colors duration-300 after:absolute after:inset-0 group-hover:text-ink focus-visible:outline-none"
+            >
+              {services.cta.label}
+              <span className="sr-only"> about {item.title}</span>
+            </Link>
+
+            <motion.span
+              aria-hidden="true"
+              variants={{ rest: { x: 0 }, hover: { x: 4 } }}
+              transition={{ type: "spring", stiffness: 400, damping: 24 }}
+              className="flex text-ink/55 transition-colors duration-300 group-hover:text-ink"
+            >
+              <ArrowRight size={16} />
+            </motion.span>
+          </div>
         </div>
       </div>
 

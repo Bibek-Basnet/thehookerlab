@@ -8,25 +8,7 @@ import { gsap, SplitText, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { about } from "@/data/about";
 
-const headlineStyles = [
-  "text-ink",
-  "text-accent",
-  "text-ink",
-];
-
-/* Every Represented card is black. Featured is simply wider and larger. */
-const tierStyles = {
-  featured: {
-    base: "col-span-2 bg-ink text-bone",
-    name: "text-xl md:text-2xl",
-    meta: "text-bone/80",
-  },
-  plain: {
-    base: "bg-ink text-bone",
-    name: "text-base md:text-lg",
-    meta: "text-bone/80",
-  },
-} as const;
+const headlineStyles = ["text-ink", "text-accent", "text-ink"];
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -185,7 +167,7 @@ export default function About() {
   return (
     <section
       ref={sectionRef}
-      id="about"
+      id="coach"
       aria-labelledby="about-heading"
       className="relative overflow-hidden bg-paper py-16 text-ink md:py-24"
     >
@@ -230,11 +212,12 @@ export default function About() {
             {about.eyebrow}
           </span>
 
-          {/* One-line headline: the only coloured element */}
+          {/* Headline: wraps on phones, one line from desktop up.
+              Its size comes from the global "section h2" rule. */}
           <h2
             id="about-heading"
             data-about-heading
-            className="mt-6 flex items-baseline gap-[0.28em] whitespace-nowrap text-[clamp(1.1rem,4.8vw,2.6rem)] leading-none lg:text-[clamp(1.75rem,2.9vw,2.6rem)]"
+            className="mt-6 flex flex-wrap items-baseline gap-x-[0.28em] leading-none lg:flex-nowrap lg:whitespace-nowrap"
           >
             {about.headline.map((word, i) => (
               <span key={word} className="block overflow-hidden py-[0.08em]">
@@ -278,89 +261,52 @@ export default function About() {
             ))}
           </dl>
 
-          {/* Represented */}
+          {/* Represented: six equal cards, no numbers */}
           <div className="mt-7">
             <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-ink/80">
               {about.representedTitle}
             </h3>
             <ul
               data-about-tiles
-              className="mt-3 grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-3 lg:grid-cols-4"
+              className="mt-3 grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-3"
             >
-              {about.represented.map(
-                ({ team, note, tier, logo, logoStyle }, i) => {
-                  const style = tierStyles[tier];
-                  const isFeatured = tier === "featured";
-                  const isTile = logoStyle === "tile";
+              {about.represented.map(({ team, note, logo, logoStyle }) => {
+                const isTile = logoStyle === "tile";
 
-                  return (
-                    <li
-                      key={team}
-                      data-about-tile
-                      className={cn("flex", isFeatured && "col-span-2")}
-                    >
-                      <div
-                        className={cn(
-                          "flex min-h-28 w-full flex-col justify-between gap-3 p-3.5 md:min-h-32 md:p-4",
-                          style.base
-                        )}
-                      >
-                        {/* Top row: number + note */}
-                        <span
-                          className={cn(
-                            "flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em]",
-                            style.meta
-                          )}
-                        >
-                          <span>{String(i + 1).padStart(2, "0")}</span>
-                          {note && <span>{note}</span>}
-                        </span>
+                return (
+                  <li key={team} data-about-tile className="flex">
+                    <div className="flex min-h-32 w-full flex-col justify-between gap-3 bg-ink p-3.5 text-bone md:min-h-36 md:p-4">
+                      {/* Captain note: keeps the same height on cards without one */}
+                      <span className="flex min-h-4 items-center text-[11px] font-semibold uppercase tracking-[0.18em] text-bone/80">
+                        {note}
+                      </span>
 
-                        {/* Bottom: logo + team name */}
-                        <div
-                          className={cn(
-                            "flex items-center gap-3",
-                            isFeatured
-                              ? "flex-row"
-                              : "flex-col items-start gap-2"
-                          )}
-                        >
-                          {logo && (
-                            <div
-                              className={cn(
-                                "relative shrink-0",
-                                isFeatured
-                                  ? "h-12 w-12 md:h-14 md:w-14"
-                                  : "h-10 w-10 md:h-11 md:w-11",
-                                isTile && "rounded-md bg-white"
-                              )}
-                            >
-                              <Image
-                                src={logo}
-                                alt=""
-                                fill
-                                sizes="(min-width: 768px) 56px, 48px"
-                                className={cn(
-                                  "object-contain",
-                                  isTile && "p-1"
-                                )}
-                              />
-                            </div>
-                          )}
-                          <span
+                      {/* Logo and team name */}
+                      <div className="flex flex-col items-start gap-2">
+                        {logo && (
+                          <div
                             className={cn(
-                              "font-display leading-[1.05]",
-                              style.name
+                              "relative h-11 w-11 shrink-0 md:h-12 md:w-12",
+                              isTile && "rounded-md bg-white"
                             )}
                           >
-                            {team}
-                          </span>
-                        </div>
+                            <Image
+                              src={logo}
+                              alt=""
+                              fill
+                              sizes="(min-width: 768px) 48px, 44px"
+                              className={cn("object-contain", isTile && "p-1")}
+                            />
+                          </div>
+                        )}
+                        <span className="font-display text-base leading-[1.05] md:text-lg">
+                          {team}
+                        </span>
                       </div>
-                    </li>
-                  );
-                }
-              )}
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

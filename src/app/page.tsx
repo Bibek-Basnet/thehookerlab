@@ -16,9 +16,10 @@ export default function Home() {
       <Services />
       <Expertise />
       <About />
+      <Contact />
       <Testimonials />
       <Instagram />
-      <Contact />
+      
     </>
   );
 }

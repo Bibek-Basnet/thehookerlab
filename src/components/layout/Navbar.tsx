@@ -173,15 +173,16 @@ export default function Navbar() {
               data-nav-intro
               className="relative block shrink-0"
             >
-              <Image
-                src="/logo/logo.png"
-                alt="The Hooker Lab"
-                width={1774}
-                height={887}
-                priority
-                sizes="(min-width: 768px) 128px, 96px"
-                className="h-12 w-auto mix-blend-screen md:h-16"
-              />
+            <Image
+  src="/logo/logo.png"
+  alt="The Hooker Lab"
+  width={1774}
+  height={887}
+  priority
+  sizes="(min-width: 768px) 128px, 96px"
+  className="h-12 w-auto mix-blend-screen md:h-16"
+  data-colour
+/>
             </Link>
 
             {/* Desktop links */}

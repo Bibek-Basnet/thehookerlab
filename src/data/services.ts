@@ -1,6 +1,7 @@
 export const services = {
   eyebrow: "Programmes",
   headline: ["Choose how", "you train."],
+  cta: { label: "Get in touch", href: "/#contact" },
   items: [
     {
       id: "individual",
@@ -60,22 +61,21 @@ export const services = {
       },
     },
     {
-      id: "provincial-union",
+      id: "online-one-on-one",
       number: "04",
-      format: "Representative rugby",
-      title: "Provincial & Union Development",
-      summary:
-        "Specialist hooker development programmes for representative and provincial rugby environments.",
-      listTitle: "At a glance",
+      format: "Online",
+      title: "Online 1-on-1 Coaching",
+      summary: "Personalised coaching over seven days.",
+      listTitle: "How it works",
       points: [
-        "Representative environments",
-        "Provincial environments",
-        "Technically strong, confident hookers",
-        "Performs under pressure",
+        "Send in your video clips",
+        "30-minute video call with Kurt",
+        "Individual feedback and areas to improve",
+        "A week to put the feedback into practice",
       ],
       image: {
-        src: "/images/services/services6.jpg",
-        alt: "Representative hooker development programme",
+        src: "/images/services/services4.jpeg",
+        alt: "Kurt Eklund providing online one-on-one coaching",
       },
     },
   ],

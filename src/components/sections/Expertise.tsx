@@ -102,14 +102,14 @@ export default function Expertise() {
                   isActive ? "h-[40rem] lg:grow-[2.6]" : "h-28 lg:grow-[1]"
                 )}
               >
-                {/* Image */}
+                {/* Image (always black and white) */}
                 <Image
                   src={pillar.image}
                   alt={pillar.alt}
                   fill
                   sizes="(min-width: 1024px) 60vw, 100vw"
                   className={cn(
-                    "-z-10 object-cover transition duration-700 motion-reduce:transition-none",
+                    "-z-10 object-cover grayscale transition duration-700 motion-reduce:transition-none",
                     isActive
                       ? "scale-100 brightness-100"
                       : "scale-110 brightness-50 group-hover/panel:brightness-75"
@@ -156,17 +156,16 @@ export default function Expertise() {
                   </span>
                 </button>
 
-                {/* Expanded state */}
+                {/* Expanded state: title at the top, skills anchored to the bottom */}
                 <div
                   className={cn(
-                    "absolute inset-0 flex flex-col justify-between p-5 text-bone transition-[opacity,visibility] duration-500 motion-reduce:transition-none lg:p-8",
+                    "absolute inset-0 flex flex-col justify-between gap-6 p-5 text-bone transition-[opacity,visibility] duration-500 motion-reduce:transition-none lg:p-8",
                     isActive
                       ? "visible opacity-100 delay-300"
                       : "invisible opacity-0"
                   )}
                 >
-                  {/* Title block - fixed height, clips cleanly, hugs top */}
-                  <div className="min-h-0 shrink-0">
+                  <div className="shrink-0">
                     <h3 className="font-display text-[clamp(2.5rem,5.5vw,5rem)] font-extrabold uppercase leading-[0.9] tracking-tight">
                       {pillar.word}
                     </h3>
@@ -175,8 +174,8 @@ export default function Expertise() {
                     </p>
                   </div>
 
-                  {/* Skills block - takes remaining space */}
-                  <div className="mt-6 grid min-h-0 flex-1 gap-3 lg:grid-cols-[14rem_1fr]">
+                  {/* Picker and detail: both hug their content, aligned to the bottom */}
+                  <div className="grid gap-4 lg:grid-cols-[14rem_1fr] lg:items-end">
                     {/* Skill picker */}
                     <ul className="flex flex-wrap content-start gap-2 lg:flex-col lg:flex-nowrap lg:gap-1.5">
                       {pillar.skills.map((s, i) => (
@@ -199,53 +198,53 @@ export default function Expertise() {
                     </ul>
 
                     {/* Skill detail */}
-                    <div className="flex min-h-0 flex-col overflow-auto rounded-2xl bg-bone/10 p-5 backdrop-blur-md md:p-6">
-                      <div className="flex items-start justify-between gap-4">
-                        <h4 className="font-display text-2xl font-extrabold uppercase leading-tight md:text-3xl">
-                          {item.name}
-                        </h4>
-                        <div className="flex shrink-0 gap-2">
-                          <button
-                            type="button"
-                            aria-label="Previous skill"
-                            onClick={() =>
-                              pick(p, (current - 1 + total) % total)
-                            }
-                            className="grid h-9 w-9 place-items-center rounded-full bg-bone/15 transition-colors duration-200 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
-                          >
-                            {chevron(true)}
-                          </button>
-                          <button
-                            type="button"
-                            aria-label="Next skill"
-                            onClick={() => pick(p, (current + 1) % total)}
-                            className="grid h-9 w-9 place-items-center rounded-full bg-bone/15 transition-colors duration-200 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
-                          >
-                            {chevron()}
-                          </button>
+                    {pillar.panel ? (
+                      <div
+                        aria-live="polite"
+                        className="rounded-2xl bg-bone/10 p-5 backdrop-blur-md md:p-6"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <h4 className="font-display text-xl font-extrabold uppercase leading-tight md:text-2xl">
+                            {item.name}
+                          </h4>
+                          <div className="flex shrink-0 gap-2">
+                            <button
+                              type="button"
+                              aria-label="Previous skill"
+                              onClick={() =>
+                                pick(p, (current - 1 + total) % total)
+                              }
+                              className="grid h-9 w-9 place-items-center rounded-full bg-bone/15 transition-colors duration-200 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+                            >
+                              {chevron(true)}
+                            </button>
+                            <button
+                              type="button"
+                              aria-label="Next skill"
+                              onClick={() => pick(p, (current + 1) % total)}
+                              className="grid h-9 w-9 place-items-center rounded-full bg-bone/15 transition-colors duration-200 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+                            >
+                              {chevron()}
+                            </button>
+                          </div>
                         </div>
-                      </div>
 
-                      <p className="mt-2 text-base font-medium leading-snug text-bone/95 md:text-lg">
+                        <p className="mt-2 text-base font-medium leading-snug text-bone/95 md:text-lg">
+                          {item.detail}
+                        </p>
+
+                        <p className="mt-4 text-sm font-semibold text-bone/75">
+                          Skill {current + 1} of {total}
+                        </p>
+                      </div>
+                    ) : (
+                      <p
+                        aria-live="polite"
+                        className="max-w-md border-l-2 border-bone/70 pl-5 text-lg font-medium leading-snug text-bone md:text-xl"
+                      >
                         {item.detail}
                       </p>
-
-                      <ul className="mt-4 space-y-2 text-[15px] font-medium leading-snug text-bone/95 md:text-base">
-                        {item.focus.map((f) => (
-                          <li key={f} className="flex gap-3">
-                            <span
-                              aria-hidden="true"
-                              className="mt-[0.55em] h-2 w-2 shrink-0 rounded-full bg-accent"
-                            />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-
-                      <p className="mt-auto pt-4 text-sm font-semibold text-bone/75">
-                        Skill {current + 1} of {total}
-                      </p>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>

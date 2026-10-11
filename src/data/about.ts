@@ -1,9 +1,6 @@
-type Tier = "featured" | "plain";
-
 type RepresentedTeam = {
   team: string;
   note: string;
-  tier: Tier;
   logo?: string;
   /* "mono" (default): white silhouette. "tile": original colours on a small white tile. */
   logoStyle?: "mono" | "tile";
@@ -18,22 +15,19 @@ const represented: RepresentedTeam[] = [
   {
     team: "Māori All Blacks",
     note: "Captain 2025",
-    tier: "featured",
     logo: "/logo/maori.png",
   },
   {
     team: "Bay of Plenty",
     note: "Captain",
-    tier: "plain",
     logo: "/logo/bay.png",
   },
-  { team: "Blues", note: "", tier: "plain", logo: "/logo/blues.png" },
-  { team: "Auckland", note: "", tier: "plain", logo: "/logo/auckland.png" },
-  { team: "ANZAC XV", note: "", tier: "plain", logo: "/logo/anzv.avif" },
+  { team: "Blues", note: "", logo: "/logo/blues.png" },
+  { team: "Auckland", note: "", logo: "/logo/auckland.png" },
+  { team: "ANZAC XV", note: "", logo: "/logo/anzv.avif" },
   {
     team: "All Blacks XV",
     note: "",
-    tier: "plain",
     logo: "/logo/allblack.svg",
   },
 ];

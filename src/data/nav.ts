@@ -36,12 +36,14 @@ export const serviceLinks: readonly ServiceLink[] = [
 ];
 
 export const navLinks: readonly NavItem[] = [
-  { label: "About", href: "/#about" },
-  { label: "Services", href: "/#programmes" },
   { label: "Philosophy", href: "/#philosophy" },
+  { label: "Services", href: "/#programmes" },
+  
   { label: "Expertise", href: "/#expertise" },
-  { label: "FAQ", href: "/faq" },
+  { label: "About", href: "/#about" },
   { label: "Contact", href: "/#contact" },
+  { label: "FAQ", href: "/faq" },
+  
 ];
 
 export const bookCta = {

@@ -124,17 +124,14 @@ function TestimonialCard({
         "focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
       )}
     >
-      {/* Photo banner */}
+      {/* Photo banner (always black and white) */}
       <div className="relative aspect-[16/10] overflow-hidden bg-ink">
         <Image
           src={t.image}
           alt={`${t.name}, ${t.role} at ${t.org}`}
           fill
           sizes="(min-width: 1280px) 20vw, 18rem"
-          className={cn(
-            "object-cover transition duration-700",
-            "grayscale-[35%] group-hover/card:scale-[1.03] group-hover/card:grayscale-0"
-          )}
+          className="object-cover grayscale transition duration-700 group-hover/card:scale-[1.03]"
           unoptimized
         />
       </div>

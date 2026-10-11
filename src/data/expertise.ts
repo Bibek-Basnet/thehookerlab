@@ -1,4 +1,25 @@
-export const expertise = {
+type Skill = {
+  name: string;
+  detail: string;
+};
+
+type Pillar = {
+  id: string;
+  image: string;
+  alt: string;
+  word: string;
+  summary: string;
+  /* true: skill detail sits in a compact card with arrows. false: plain one-liner */
+  panel: boolean;
+  skills: Skill[];
+};
+
+export const expertise: {
+  eyebrow: string;
+  headline: { plain: string; accent: string };
+  intro: string;
+  pillars: Pillar[];
+} = {
   eyebrow: "Expertise",
   headline: { plain: "The complete", accent: "hooker." },
   intro:
@@ -11,42 +32,23 @@ export const expertise = {
       word: "Throw",
       summary:
         "The skill every hooker is judged on, built on technique, timing and accuracy.",
+      panel: false,
       skills: [
         {
           name: "Hooker throwing",
           detail: "Clean, repeatable mechanics from grip to release.",
-          focus: [
-            "Grip, stance and footwork",
-            "Release and ball flight",
-            "Building a throw that repeats under fatigue",
-          ],
         },
         {
           name: "Throwing accuracy",
           detail: "Accuracy that holds when the game speeds up.",
-          focus: [
-            "Target work at different jump heights",
-            "Pressure reps with noise and contact",
-            "Tracking hit rate over a season",
-          ],
         },
         {
           name: "Lineout technique",
           detail: "Timing and delivery that give your jumpers a clean ball.",
-          focus: [
-            "Timing the throw to the jump",
-            "Calls, signals and lineout variations",
-            "Working with jumpers and lifters",
-          ],
         },
         {
           name: "Set-piece understanding",
           detail: "How the throw, the jump and the lift fit together.",
-          focus: [
-            "Each role in the lineout and why it matters",
-            "How set piece sets up the next phase",
-            "Reading the defence before the throw",
-          ],
         },
       ],
     },
@@ -57,50 +59,27 @@ export const expertise = {
       word: "Scrum",
       summary:
         "The technical core of the position, developed one detail at a time.",
+      panel: true,
       skills: [
         {
           name: "Body Position & Set-Up",
-          detail: "The Foundation",
-          focus: [
-            "Stance and foot positioning",
-            "Body shape and spinal alignment",
-            "Hip height and knee bend",
-            "Shoulder position and head placement",
-            "Binding and connection with props",
-          ],
+          detail:
+            "Build a strong, balanced and technically correct scrummaging position.",
         },
         {
           name: "Connection & Force Transfer",
-          detail: "Working as One Unit",
-          focus: [
-            "Binding with both props",
-            "Maintaining a tight front row",
-            "Transferring force through the body",
-            "Staying square and balanced",
-            "Working together through engagement",
-          ],
+          detail:
+            "Maintain tight binding and transfer power through the front row.",
         },
         {
-          name: "The Strike & Ball Control",
-          detail: "The Hooker's Speciality",
-          focus: [
-            "Timing the strike",
-            "Foot speed and accuracy",
-            "Striking without losing stability",
-            "Controlling the ball towards the number eight",
-            "Coordinating with the scrum-half",
-          ],
+          name: "Strike & Ball Control",
+          detail:
+            "Develop accurate striking technique and consistent control of the ball.",
         },
         {
           name: "Pressure, Stability & Game Management",
-          detail: "Performing Under Pressure",
-          focus: [
-            "Staying balanced under pressure",
-            "Maintaining body shape when fatigued",
-            "Responding to opposition tactics",
-            "Communicating with props and locks",
-            "Managing resets, penalties and referee expectations",
-          ],
+          detail:
+            "Stay stable under pressure and make smart decisions during the scrum.",
         },
       ],
     },
@@ -111,43 +90,23 @@ export const expertise = {
       word: "Lead",
       summary:
         "Where a good hooker becomes a great one: reading, deciding and leading.",
+      panel: false,
       skills: [
         {
           name: "Building routines",
           detail: "Routines that make the throw and the scrum repeatable.",
-          focus: [
-            "Pre-throw and pre-scrum routines",
-            "Simple cues that sharpen focus",
-            "Resetting quickly between plays",
-            "Practising routines until they become automatic",
-          ],
         },
         {
           name: "Mental skills",
           detail: "Routines and focus for the moments that matter.",
-          focus: [
-            "Pre-throw routines",
-            "Staying focused after mistakes",
-            "Preparing for big moments in a match",
-          ],
         },
         {
           name: "Confidence",
           detail: "The self-belief to throw, scrum and lead under pressure.",
-          focus: [
-            "Building belief through preparation",
-            "Handling pressure at set piece",
-            "Backing your skills when it counts",
-          ],
         },
         {
           name: "Leadership",
           detail: "Communicating and driving the team from the middle.",
-          focus: [
-            "Clear, calm communication",
-            "Setting standards for the forward pack",
-            "Leading by example in training and on match day",
-          ],
         },
       ],
     },
