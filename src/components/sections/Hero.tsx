@@ -237,7 +237,7 @@ export default function Hero() {
         <div
           data-hero-hide
           data-hero-cta
-          className="invisible mt-7 w-full sm:w-auto lg:absolute lg:bottom-24 lg:left-[58%] lg:mt-0 lg:-translate-x-1/2"
+          className="invisible mt-7 w-full sm:w-auto lg:absolute lg:bottom-24 lg:left-[66%] lg:mt-0 lg:-translate-x-1/2"
         >
           <Link href={hero.cta.href} className={ctaClass}>
             <span aria-hidden="true" className={ctaFillClass} />
