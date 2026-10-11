@@ -45,7 +45,6 @@ export default function FAQ() {
             0.55
           );
 
-        /* Background drifts slowly as the hero scrolls away */
         gsap.to("[data-faq-bg]", {
           yPercent: 6,
           ease: "none",
@@ -72,7 +71,6 @@ export default function FAQ() {
               clearProps: "transform",
             }),
         });
-
       });
     },
     { scope: rootRef }
@@ -204,7 +202,6 @@ export default function FAQ() {
         className="bg-paper py-14 text-ink md:py-24"
       >
         <div className="mx-auto max-w-4xl px-5 md:px-10">
-          {/* Questions */}
           <ul className="space-y-3">
             {faq.items.map((item, i) => {
               const isOpen = open === item.id;
@@ -219,7 +216,8 @@ export default function FAQ() {
                         : "bg-white text-ink hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35)]"
                     )}
                   >
-                    <h2 className="text-lg md:text-2xl">
+                    {/* <div> (not <h2>) so the global section h2 font-size rule doesn't apply */}
+                    <div>
                       <button
                         type="button"
                         id={`faq-q-${item.id}`}
@@ -231,9 +229,10 @@ export default function FAQ() {
                         <span className="font-display text-base font-bold text-accent md:text-lg">
                           {String(i + 1).padStart(2, "0")}
                         </span>
+                        {/* Question — display font, distinct from answer */}
                         <span
                           className={cn(
-                            "flex-1 leading-tight transition-colors duration-300",
+                            "flex-1 font-display font-bold text-lg leading-tight transition-colors duration-300 md:text-2xl",
                             !isOpen && "group-hover:text-accent"
                           )}
                         >
@@ -261,7 +260,7 @@ export default function FAQ() {
                           </svg>
                         </span>
                       </button>
-                    </h2>
+                    </div>
 
                     <div
                       id={`faq-a-${item.id}`}
@@ -274,7 +273,8 @@ export default function FAQ() {
                         data-faq-text={item.id}
                         className="px-5 pb-6 pl-[3.25rem] md:px-7 md:pb-7 md:pl-[4.25rem]"
                       >
-                        <p className="max-w-2xl text-base leading-relaxed text-bone/80 md:text-lg">
+                        {/* Answer — body font, distinct from question */}
+                        <p className="max-w-2xl font-body text-base leading-relaxed text-bone/80 md:text-lg">
                           {item.answer}
                         </p>
                       </div>

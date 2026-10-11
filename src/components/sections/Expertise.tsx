@@ -197,54 +197,45 @@ export default function Expertise() {
                       ))}
                     </ul>
 
-                    {/* Skill detail */}
-                    {pillar.panel ? (
-                      <div
-                        aria-live="polite"
-                        className="rounded-2xl bg-bone/10 p-5 backdrop-blur-md md:p-6"
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <h4 className="font-display text-xl font-extrabold uppercase leading-tight md:text-2xl">
-                            {item.name}
-                          </h4>
-                          <div className="flex shrink-0 gap-2">
-                            <button
-                              type="button"
-                              aria-label="Previous skill"
-                              onClick={() =>
-                                pick(p, (current - 1 + total) % total)
-                              }
-                              className="grid h-9 w-9 place-items-center rounded-full bg-bone/15 transition-colors duration-200 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
-                            >
-                              {chevron(true)}
-                            </button>
-                            <button
-                              type="button"
-                              aria-label="Next skill"
-                              onClick={() => pick(p, (current + 1) % total)}
-                              className="grid h-9 w-9 place-items-center rounded-full bg-bone/15 transition-colors duration-200 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
-                            >
-                              {chevron()}
-                            </button>
-                          </div>
+                    {/* Skill detail: the same glass card on every pillar */}
+                    <div
+                      aria-live="polite"
+                      className="self-start rounded-2xl bg-bone/10 p-5 backdrop-blur-md md:p-6"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <h4 className="font-display text-xl font-extrabold uppercase leading-tight md:text-2xl">
+                          {item.name}
+                        </h4>
+                        <div className="flex shrink-0 gap-2">
+                          <button
+                            type="button"
+                            aria-label="Previous skill"
+                            onClick={() =>
+                              pick(p, (current - 1 + total) % total)
+                            }
+                            className="grid h-9 w-9 place-items-center rounded-full bg-bone/15 transition-colors duration-200 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+                          >
+                            {chevron(true)}
+                          </button>
+                          <button
+                            type="button"
+                            aria-label="Next skill"
+                            onClick={() => pick(p, (current + 1) % total)}
+                            className="grid h-9 w-9 place-items-center rounded-full bg-bone/15 transition-colors duration-200 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+                          >
+                            {chevron()}
+                          </button>
                         </div>
-
-                        <p className="mt-2 text-base font-medium leading-snug text-bone/95 md:text-lg">
-                          {item.detail}
-                        </p>
-
-                        <p className="mt-4 text-sm font-semibold text-bone/75">
-                          Skill {current + 1} of {total}
-                        </p>
                       </div>
-                    ) : (
-                      <p
-                        aria-live="polite"
-                        className="max-w-md border-l-2 border-bone/70 pl-5 text-lg font-medium leading-snug text-bone md:text-xl"
-                      >
+
+                      <p className="mt-2 text-base font-medium leading-snug text-bone/95 md:text-lg">
                         {item.detail}
                       </p>
-                    )}
+
+                      <p className="mt-4 text-sm font-semibold text-bone/75">
+                        Skill {current + 1} of {total}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

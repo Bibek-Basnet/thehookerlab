@@ -32,7 +32,7 @@ export const expertise: {
       word: "Throw",
       summary:
         "The skill every hooker is judged on, built on technique, timing and accuracy.",
-      panel: false,
+      panel: true,
       skills: [
         {
           name: "Hooker throwing",
@@ -90,7 +90,7 @@ export const expertise: {
       word: "Lead",
       summary:
         "Where a good hooker becomes a great one: reading, deciding and leading.",
-      panel: false,
+      panel: true,
       skills: [
         {
           name: "Building routines",
@@ -98,7 +98,8 @@ export const expertise: {
         },
         {
           name: "Mental skills",
-          detail: "Routines and focus for the moments that matter.",
+          detail:
+            "Develop focus, confidence, resilience and decision-making under pressure.",
         },
         {
           name: "Confidence",
