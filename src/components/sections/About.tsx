@@ -167,7 +167,7 @@ export default function About() {
   return (
     <section
       ref={sectionRef}
-      id="coach"
+      id="about"
       aria-labelledby="about-heading"
       className="relative overflow-hidden bg-paper py-16 text-ink md:py-24"
     >
