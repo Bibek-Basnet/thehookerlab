@@ -156,10 +156,10 @@ export default function Expertise() {
                   </span>
                 </button>
 
-                {/* Expanded state: title at the top, skills anchored to the bottom */}
+                {/* Expanded state: content sits at the top, flows downward */}
                 <div
                   className={cn(
-                    "absolute inset-0 flex flex-col justify-between gap-6 p-5 text-bone transition-[opacity,visibility] duration-500 motion-reduce:transition-none lg:p-8",
+                    "absolute inset-0 flex flex-col gap-6 p-5 text-bone transition-[opacity,visibility] duration-500 motion-reduce:transition-none lg:p-8",
                     isActive
                       ? "visible opacity-100 delay-300"
                       : "invisible opacity-0"
@@ -174,8 +174,8 @@ export default function Expertise() {
                     </p>
                   </div>
 
-                  {/* Picker and detail: both hug their content, aligned to the bottom */}
-                  <div className="grid gap-4 lg:grid-cols-[14rem_1fr] lg:items-end">
+                  {/* Picker and detail: sit right below the summary */}
+                  <div className="grid gap-4 lg:grid-cols-[14rem_1fr]">
                     {/* Skill picker */}
                     <ul className="flex flex-wrap content-start gap-2 lg:flex-col lg:flex-nowrap lg:gap-1.5">
                       {pillar.skills.map((s, i) => (
