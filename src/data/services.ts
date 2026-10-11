@@ -4,8 +4,26 @@ export const services = {
   cta: { label: "Get in touch", href: "/#contact" },
   items: [
     {
-      id: "individual",
+      id: "online-one-on-one",
       number: "01",
+      format: "Online",
+      title: "Online 1-on-1 Coaching",
+      summary: "Personalised coaching over seven days.",
+      listTitle: "How it works",
+      points: [
+        "Send in your video clips",
+        "30-minute video call with Kurt",
+        "Feedback, tips and drills to work on",
+        "30-minute follow-up call to debrief the week and plan ahead",
+      ],
+      image: {
+        src: "/images/services/services4.jpeg",
+        alt: "Kurt Eklund providing online one-on-one coaching",
+      },
+    },
+    {
+      id: "individual",
+      number: "02",
       format: "One-on-one",
       title: "Individual Hooker Coaching",
       summary:
@@ -24,7 +42,7 @@ export const services = {
     },
     {
       id: "small-group",
-      number: "02",
+      number: "03",
       format: "Small group",
       title: "Small Group Coaching",
       summary:
@@ -43,7 +61,7 @@ export const services = {
     },
     {
       id: "school-club",
-      number: "03",
+      number: "04",
       format: "Schools and clubs",
       title: "School & Club Coaching",
       summary:
@@ -58,24 +76,6 @@ export const services = {
       image: {
         src: "/images/services/services3.jpg",
         alt: "Hooker coaching session with a school or club team",
-      },
-    },
-    {
-      id: "online-one-on-one",
-      number: "04",
-      format: "Online",
-      title: "Online 1-on-1 Coaching",
-      summary: "Personalised coaching over seven days.",
-      listTitle: "How it works",
-      points: [
-        "Send in your video clips",
-        "30-minute video call with Kurt",
-        "Individual feedback and areas to improve",
-        "A week to put the feedback into practice",
-      ],
-      image: {
-        src: "/images/services/services4.jpeg",
-        alt: "Kurt Eklund providing online one-on-one coaching",
       },
     },
   ],

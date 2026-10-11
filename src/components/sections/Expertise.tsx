@@ -102,14 +102,14 @@ export default function Expertise() {
                   isActive ? "h-[40rem] lg:grow-[2.6]" : "h-28 lg:grow-[1]"
                 )}
               >
-                {/* Image (always black and white) */}
+                {/* Image (full colour) */}
                 <Image
                   src={pillar.image}
                   alt={pillar.alt}
                   fill
                   sizes="(min-width: 1024px) 60vw, 100vw"
                   className={cn(
-                    "-z-10 object-cover grayscale transition duration-700 motion-reduce:transition-none",
+                    "-z-10 object-cover transition duration-700 motion-reduce:transition-none",
                     isActive
                       ? "scale-100 brightness-100"
                       : "scale-110 brightness-50 group-hover/panel:brightness-75"

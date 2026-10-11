@@ -172,11 +172,18 @@ export default function About() {
       className="relative overflow-hidden bg-paper py-16 text-ink md:py-24"
     >
       <div className="mx-auto grid max-w-350 gap-10 px-5 md:px-10 lg:grid-cols-12 lg:gap-14">
-        {/* Portrait */}
-        <div className="lg:col-span-5">
+        {/* Portrait column: label sits above the photo */}
+        <div className="flex flex-col lg:col-span-5">
+          <span
+            data-about-pill
+            className="mb-5 w-fit rounded-full bg-ink px-4 py-1.5 text-xs font-medium uppercase tracking-[0.28em] text-bone"
+          >
+            {about.eyebrow}
+          </span>
+
           <div
             data-about-mask
-            className="relative aspect-4/5 w-full overflow-hidden bg-ink lg:aspect-auto lg:h-full lg:min-h-135"
+            className="relative aspect-4/5 w-full flex-1 overflow-hidden bg-ink lg:aspect-auto lg:min-h-135"
           >
             <div data-about-photo className="absolute inset-0">
               <Image
@@ -205,19 +212,12 @@ export default function About() {
 
         {/* Story */}
         <div className="flex flex-col lg:col-span-7">
-          <span
-            data-about-pill
-            className="w-fit rounded-full bg-ink px-4 py-1.5 text-xs font-medium uppercase tracking-[0.28em] text-bone"
-          >
-            {about.eyebrow}
-          </span>
-
           {/* Headline: wraps on phones, one line from desktop up.
               Its size comes from the global "section h2" rule. */}
           <h2
             id="about-heading"
             data-about-heading
-            className="mt-6 flex flex-wrap items-baseline gap-x-[0.28em] leading-none lg:flex-nowrap lg:whitespace-nowrap"
+            className="flex flex-wrap items-baseline gap-x-[0.28em] leading-none lg:flex-nowrap lg:whitespace-nowrap"
           >
             {about.headline.map((word, i) => (
               <span key={word} className="block overflow-hidden py-[0.08em]">
