@@ -9,6 +9,7 @@ export const hero = {
     /* Move the focus of the crop, e.g. object-[60%_30%] */
     positionClass: "object-[50%_35%]",
   },
+    cta: { label: "Enquire now", href: "/#contact" },
   seoHeading: "The Hooker Lab: ",
   headline: ["Specialist Position.", "Specialist Coaching."],
   body: "Specialist hooker coaching led by professional hooker Kurt Eklund. Throwing, lineout, scrummaging, mental skills and leadership for players, schools, clubs and unions across New Zealand.",

@@ -2,11 +2,18 @@
 
 import { Fragment, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { gsap, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { hero } from "@/data/hero";
 import SocialDock from "@/components/ui/SocialDock";
+
+const ctaClass =
+  "group relative inline-flex w-full items-center justify-center overflow-hidden rounded-full bg-accent px-9 py-4 text-base font-semibold text-bone transition-colors duration-500 hover:text-ink focus-visible:text-ink focus-visible:outline-none sm:w-auto";
+
+const ctaFillClass =
+  "absolute inset-0 translate-y-full rounded-full bg-bone transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-focus-visible:translate-y-0";
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -29,18 +36,12 @@ export default function Hero() {
         return;
       }
 
-      gsap.set(introRef.current, {
-        opacity: 1,
-        clipPath: `circle(0% at ${focus})`,
-      });
+      gsap.set(introRef.current, { opacity: 1 });
       gsap.set(
         [headingRef.current, "[data-hero-copy]", "[data-hero-social]"],
         { autoAlpha: 1 }
       );
 
-      /* Intro: the photo fades in and settles slowly. The headline is
-         written in letter by letter, the paragraph follows word by word,
-         and the icons rise in quietly. */
       gsap
         .timeline({ delay: 0.2 })
         .fromTo(
@@ -74,6 +75,12 @@ export default function Hero() {
           1.4
         )
         .fromTo(
+          "[data-hero-cta]",
+          { autoAlpha: 0, y: 14 },
+          { autoAlpha: 1, y: 0, duration: 0.9, ease: "power3.out" },
+          1.8
+        )
+        .fromTo(
           "[data-hero-social] li",
           { autoAlpha: 0, y: 12 },
           {
@@ -86,7 +93,6 @@ export default function Hero() {
           1.9
         );
 
-      /* Once settled, the photo keeps a very slow breathing push-in */
       gsap.to(mouseRef.current, {
         scale: 1.06,
         duration: 18,
@@ -96,7 +102,6 @@ export default function Hero() {
         delay: 3,
       });
 
-      /* Scroll: the photo drifts and darkens while the text lifts away */
       gsap
         .timeline({
           defaults: { ease: "none" },
@@ -111,7 +116,6 @@ export default function Hero() {
         .to(shadeRef.current, { opacity: 0.7 }, 0)
         .to(contentRef.current, { y: -50, opacity: 0 }, 0);
 
-      /* Desktop only: soft mouse drift on the photo */
       const mm = gsap.matchMedia();
       mm.add("(min-width: 1024px) and (hover: hover)", () => {
         const xTo = gsap.quickTo(mouseRef.current, "x", {
@@ -142,7 +146,6 @@ export default function Hero() {
       aria-label="Introduction"
       className="relative h-svh min-h-[620px] overflow-hidden bg-ink"
     >
-      {/* Full-bleed photo, always black and white */}
       <div ref={introRef} className="absolute inset-0 opacity-0">
         <div ref={scrollRef} className="absolute inset-0">
           <div ref={mouseRef} className="absolute inset-0">
@@ -162,7 +165,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Shading: only the bottom edge, so the photo stays clear above it */}
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-linear-to-t from-ink/95 via-ink/55 via-28% to-transparent to-58%"
@@ -181,8 +183,6 @@ export default function Hero() {
         className="absolute inset-0 bg-ink opacity-0"
       />
 
-      {/* Content: headline and paragraph as one left-aligned group.
-          Socials sit in the bottom-right corner on desktop. */}
       <div
         ref={contentRef}
         className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-start justify-end px-5 pb-8 md:px-10 md:pb-12"
@@ -233,10 +233,22 @@ export default function Hero() {
           ))}
         </p>
 
+        {/* Enquire now — inline on mobile, absolute on desktop (moved right + up) */}
+        <div
+          data-hero-hide
+          data-hero-cta
+          className="invisible mt-7 w-full sm:w-auto lg:absolute lg:bottom-24 lg:left-[58%] lg:mt-0 lg:-translate-x-1/2"
+        >
+          <Link href={hero.cta.href} className={ctaClass}>
+            <span aria-hidden="true" className={ctaFillClass} />
+            <span className="relative">{hero.cta.label}</span>
+          </Link>
+        </div>
+
         <div
           data-hero-hide
           data-hero-social
-          className="invisible mt-7 lg:absolute lg:bottom-12 lg:right-10 lg:mt-0"
+          className="invisible mt-6 lg:absolute lg:bottom-12 lg:right-10 lg:mt-0"
         >
           <SocialDock
             items={hero.socials}
