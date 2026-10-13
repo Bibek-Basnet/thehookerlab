@@ -1,6 +1,7 @@
 import "server-only";
 import { getIronSession, type SessionOptions } from "iron-session";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
 
 export type SessionData = { userId?: number };
 
@@ -25,5 +26,8 @@ function options(): SessionOptions {
 }
 
 export async function getSession() {
+  /* iron-session reads Date.now() to check the seal's expiry; connection()
+     marks this as request-time work so prerendering never sees that call. */
+  await connection();
   return getIronSession<SessionData>(await cookies(), options());
 }
