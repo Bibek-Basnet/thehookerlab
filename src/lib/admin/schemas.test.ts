@@ -5,6 +5,7 @@ import {
   passwordSchema,
   pillarSchema,
   programSchema,
+  sectionSchema,
   settingsSchema,
 } from "@/lib/admin/schemas";
 
@@ -78,6 +79,35 @@ describe("faqSchema", () => {
   it("requires question and answer", () => {
     const r = faqSchema.safeParse({ question: "", answer: "", published: "on" });
     expect(r.success).toBe(false);
+  });
+});
+
+describe("sectionSchema", () => {
+  it("accepts a form that omits the optional fields and treats them as empty", () => {
+    const r = sectionSchema.safeParse({
+      key: "programs",
+      eyebrow: "Programmes",
+      headline: "Choose how\nyou train.",
+      ctaLabel: "Get in touch",
+      ctaHref: "/#contact",
+    });
+    expect(r.success).toBe(true);
+    if (r.success) {
+      expect(r.data.headlineAccent).toBe("");
+      expect(r.data.intro).toBe("");
+      expect(r.data.heroImage).toBe("");
+    }
+  });
+
+  it("normalises CRLF line endings from browser textareas", () => {
+    const r = sectionSchema.safeParse({
+      key: "programs",
+      eyebrow: "Programmes",
+      headline: "Choose how\r\nyou train.",
+      intro: "Line one\r\nLine two",
+    });
+    expect(r.success && r.data.headline).toBe("Choose how\nyou train.");
+    expect(r.success && r.data.intro).toBe("Line one\nLine two");
   });
 });
 

@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/* Every admin page reads the session and the database at request time, so
+   navigations into the panel block on the server by design. */
+export const instant = false;
+
 /* The session read happens at request time, so it sits inside Suspense
    rather than at the top of the layout. */
 async function Panel({ children }: { children: React.ReactNode }) {

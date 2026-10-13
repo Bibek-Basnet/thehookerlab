@@ -3,15 +3,26 @@ import { z } from "zod";
 import { INBOX_STATUSES, SECTION_KEYS } from "@/lib/db/schema";
 import { checkbox, jsonList } from "./form";
 
+/* Browser textareas submit CRLF; store LF only. */
+const lf = (s: string) => s.replace(/\r\n?/g, "\n");
+
 const str = (max: number, label = "This field") =>
   z
     .string()
     .trim()
     .min(1, `${label} is required`)
-    .max(max, `Keep it under ${max} characters`);
+    .max(max, `Keep it under ${max} characters`)
+    .transform(lf);
 
+/* Optional text: forms that omit the field entirely submit undefined, which
+   reads as "" rather than a validation error. */
 const optional = (max: number) =>
-  z.string().trim().max(max, `Keep it under ${max} characters`);
+  z
+    .string()
+    .trim()
+    .max(max, `Keep it under ${max} characters`)
+    .default("")
+    .transform(lf);
 
 const email = z
   .string()
