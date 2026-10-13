@@ -17,7 +17,7 @@ export default function LoginPage() {
           alt="The Hooker Lab"
           width={56}
           height={56}
-          className="mb-6"
+          className="mb-6 h-14 w-auto"
         />
         <h1 className="font-display text-3xl">Admin</h1>
         <p className="mt-2 text-sm text-mist">Sign in to edit the site.</p>

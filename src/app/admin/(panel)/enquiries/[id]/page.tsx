@@ -59,3 +59,6 @@ export default async function EnquiryPage({
     </>
   );
 }
+
+/* Admin pages read the session at request time; opt out of the instant-navigation check. */
+export const instant = false;

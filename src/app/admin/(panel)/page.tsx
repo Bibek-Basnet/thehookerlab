@@ -89,3 +89,6 @@ export default async function Dashboard() {
     </>
   );
 }
+
+/* Admin pages read the session at request time; opt out of the instant-navigation check. */
+export const instant = false;

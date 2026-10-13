@@ -55,3 +55,6 @@ export default async function AccountPage() {
     </>
   );
 }
+
+/* Admin pages read the session at request time; opt out of the instant-navigation check. */
+export const instant = false;

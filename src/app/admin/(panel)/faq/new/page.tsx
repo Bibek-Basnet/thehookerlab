@@ -24,3 +24,6 @@ export default async function NewFaqPage() {
     </>
   );
 }
+
+/* Admin pages read the session at request time; opt out of the instant-navigation check. */
+export const instant = false;
