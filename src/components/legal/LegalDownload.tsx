@@ -20,7 +20,6 @@ export default function LegalDownload({
     setFailed(false);
 
     try {
-      /* The PDF library loads only when someone asks for the PDF */
       const { downloadLegalPdf } = await import("@/lib/legal-pdf");
       downloadLegalPdf(slug);
     } catch {

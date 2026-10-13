@@ -34,8 +34,10 @@ import {
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-/* Email is the only way to reply, so the contact method is always email */
-const initialValues: EnquiryValues = { ...emptyEnquiry, contactMethod: "email" };
+const initialValues: EnquiryValues = {
+  ...emptyEnquiry,
+  contactMethod: "email",
+};
 
 const fieldOrder: (keyof EnquiryValues)[] = [
   "enquiryType",
@@ -99,14 +101,13 @@ export default function Contact() {
   >("idle");
   const [detailsOpen, setDetailsOpen] = useState(false);
 
-  /* Details are open by default on larger screens */
   useEffect(() => {
     if (window.matchMedia("(min-width: 768px)").matches) setDetailsOpen(true);
   }, []);
 
   const set = <K extends keyof EnquiryValues>(
     key: K,
-    value: EnquiryValues[K]
+    value: EnquiryValues[K],
   ) => {
     setValues((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => ({ ...prev, [key]: undefined }));
@@ -138,7 +139,6 @@ export default function Contact() {
       return;
     }
 
-    /* Honeypot: pretend it worked, send nothing */
     if (values.website) {
       setStatus("success");
       return;
@@ -177,7 +177,7 @@ export default function Contact() {
             duration: 0.7,
             ease: "power3.out",
             scrollTrigger: { trigger: "[data-ct-pill]", start: "top 90%" },
-          }
+          },
         );
         gsap.fromTo(
           "[data-ct-word]",
@@ -188,7 +188,7 @@ export default function Contact() {
             ease: "power4.out",
             stagger: 0.14,
             scrollTrigger: { trigger: "[data-ct-heading]", start: "top 88%" },
-          }
+          },
         );
         gsap.fromTo(
           "[data-ct-intro]",
@@ -199,7 +199,7 @@ export default function Contact() {
             duration: 0.9,
             ease: "power3.out",
             scrollTrigger: { trigger: "[data-ct-intro]", start: "top 90%" },
-          }
+          },
         );
         gsap.fromTo(
           "[data-ct-card]",
@@ -211,11 +211,11 @@ export default function Contact() {
             ease: "power3.out",
             clearProps: "transform",
             scrollTrigger: { trigger: "[data-ct-card]", start: "top 92%" },
-          }
+          },
         );
       });
     },
-    { scope: sectionRef }
+    { scope: sectionRef },
   );
 
   const firstName = values.name.trim().split(" ")[0];
@@ -228,7 +228,6 @@ export default function Contact() {
       className="relative bg-white py-16 text-ink md:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-        {/* Header and form share one centred column */}
         <div className="mx-auto max-w-4xl">
           <span
             data-ct-pill
@@ -269,7 +268,6 @@ export default function Contact() {
             </p>
           </div>
 
-          {/* Form card */}
           <div
             data-ct-card
             className="mt-10 rounded-3xl border border-ink/10 bg-paper p-5 md:mt-14 md:p-10"
@@ -301,7 +299,10 @@ export default function Contact() {
                     {[
                       {
                         label: contact.success.summaryAbout,
-                        value: labelOf(contact.enquiryTypes, values.enquiryType),
+                        value: labelOf(
+                          contact.enquiryTypes,
+                          values.enquiryType,
+                        ),
                       },
                       {
                         label: contact.success.summaryFrom,
@@ -385,7 +386,6 @@ export default function Contact() {
                   )}
 
                   <div className="mt-10 grid gap-10 md:mt-12 md:gap-12">
-                    {/* 01 Enquiry type */}
                     <div>
                       <SectionTitle
                         id="enq-type-title"
@@ -444,7 +444,7 @@ export default function Contact() {
                             aria-describedby={describedBy(
                               "enq-name",
                               undefined,
-                              errors.name
+                              errors.name,
                             )}
                             className={controlClass(Boolean(errors.name))}
                           />
@@ -453,7 +453,6 @@ export default function Contact() {
                         <Field
                           id="enq-email"
                           label={contact.fields.email}
-                          
                           error={errors.email}
                         >
                           <input
@@ -468,7 +467,7 @@ export default function Contact() {
                             aria-describedby={describedBy(
                               "enq-email",
                               "hint",
-                              errors.email
+                              errors.email,
                             )}
                             className={controlClass(Boolean(errors.email))}
                           />
@@ -495,7 +494,7 @@ export default function Contact() {
                             describedById={describedBy(
                               "enq-role",
                               values.role === "player" ? "hint" : undefined,
-                              errors.role
+                              errors.role,
                             )}
                           />
                         </Field>
@@ -527,10 +526,10 @@ export default function Contact() {
                               aria-describedby={describedBy(
                                 "enq-organisation",
                                 undefined,
-                                errors.organisation
+                                errors.organisation,
                               )}
                               className={controlClass(
-                                Boolean(errors.organisation)
+                                Boolean(errors.organisation),
                               )}
                             />
                           </Field>
@@ -567,7 +566,7 @@ export default function Contact() {
                         inert={!detailsOpen}
                         className={cn(
                           "grid transition-[grid-template-rows] duration-500 ease-out",
-                          detailsOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                          detailsOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
                         )}
                       >
                         <div className="overflow-hidden">
@@ -660,7 +659,6 @@ export default function Contact() {
 
                     <Divider />
 
-                    {/* 04 Message */}
                     <div>
                       <SectionTitle
                         id="enq-message-title"
@@ -691,11 +689,11 @@ export default function Contact() {
                           aria-describedby={describedBy(
                             "enq-message",
                             "hint",
-                            errors.message
+                            errors.message,
                           )}
                           className={cn(
                             controlClass(Boolean(errors.message)),
-                            "min-h-40 resize-y"
+                            "min-h-40 resize-y",
                           )}
                         />
                       </Field>
@@ -703,7 +701,6 @@ export default function Contact() {
 
                     <Divider />
 
-                    {/* Consent and send */}
                     <div className="grid gap-5">
                       <CheckField
                         id="enq-consentContact"
@@ -756,7 +753,6 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Honeypot: hidden from people, tempting for bots */}
                   <div
                     aria-hidden="true"
                     className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden"

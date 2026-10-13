@@ -6,7 +6,6 @@ export const hero = {
   image: {
     src: "/images/hero1.jpg",
     alt: "Rugby team performing a haka before a match, in black and white",
-    /* Move the focus of the crop, e.g. object-[60%_30%] */
     positionClass: "object-[50%_35%]",
   },
     cta: { label: "Enquire now", href: "/#contact" },

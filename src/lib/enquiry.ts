@@ -2,7 +2,6 @@ import { contact } from "@/data/contact";
 
 export type ContactMethod = "email" | "whatsapp" | "phone";
 
-/* Everything the form collects. This is also the backend contract. */
 export type EnquiryValues = {
   enquiryType: string;
   workshopTopics: string[];
@@ -20,7 +19,6 @@ export type EnquiryValues = {
   message: string;
   consentContact: boolean;
   updatesOnline: boolean;
-  /* Honeypot: real people leave this empty. Backend should drop any payload where it is filled. */
   website: string;
 };
 
@@ -99,11 +97,6 @@ export function validateEnquiry(v: EnquiryValues): EnquiryErrors {
   return e;
 }
 
-/*
-  Sends the enquiry to the backend.
-  - Endpoint: NEXT_PUBLIC_ENQUIRY_ENDPOINT (defaults to /api/enquiry)
-  - Preview without a backend: set NEXT_PUBLIC_ENQUIRY_MOCK=true in .env.local
-*/
 const ENDPOINT = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT ?? "/api/enquiry";
 
 export async function submitEnquiry(values: EnquiryValues): Promise<void> {

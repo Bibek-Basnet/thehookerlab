@@ -129,7 +129,6 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Navbar />
-        {/* SmoothScroll provider will be added here as we build it */}
         <main id="main">{children}</main>
         <Footer />
       </body>

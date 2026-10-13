@@ -4,11 +4,10 @@ import { legalDocuments } from "@/data/legal";
 import { legal } from "@/data/legal/shared";
 import { itemLabel, numberSections, type LegalSlug } from "@/lib/legal";
 
-const PT = 0.3528; /* millimetres per point */
+const PT = 0.3528;
 
 type Style = "normal" | "bold" | "italic";
 
-/* Builds the PDF from the same data as the web page and downloads it */
 export function downloadLegalPdf(slug: LegalSlug) {
   const doc = legalDocuments[slug];
   const sections = numberSections(doc.sections);
@@ -37,7 +36,7 @@ export function downloadLegalPdf(slug: LegalSlug) {
 
   const block = (
     text: string,
-    opts: { size?: number; style?: Style; after?: number } = {}
+    opts: { size?: number; style?: Style; after?: number } = {},
   ) => {
     const { size = 11, style = "normal", after = 3 } = opts;
     setFont(style, size);
@@ -88,7 +87,7 @@ export function downloadLegalPdf(slug: LegalSlug) {
     items.forEach((item, i) => {
       const itemLines = pdf.splitTextToSize(
         item,
-        contentW - labelW - itemIndent
+        contentW - labelW - itemIndent,
       ) as string[];
       ensure(h * Math.min(itemLines.length, 2));
 
@@ -103,7 +102,6 @@ export function downloadLegalPdf(slug: LegalSlug) {
     y += 2.5;
   };
 
-  /* Title block */
   block(legal.brand.toUpperCase(), { size: 9, style: "bold", after: 3 });
   block(doc.title, { size: 24, style: "bold", after: 4 });
   block(`Effective date: ${legal.effectiveDate}`, { size: 10, after: 0 });
@@ -115,7 +113,6 @@ export function downloadLegalPdf(slug: LegalSlug) {
 
   doc.intro.forEach((paragraph) => block(paragraph, { after: 4 }));
 
-  /* Contents */
   y += 3;
   block("Contents", { size: 13, style: "bold", after: 1.5 });
   sections.forEach((section) => {
@@ -123,21 +120,18 @@ export function downloadLegalPdf(slug: LegalSlug) {
   });
   y += 5;
 
-  /* Sections */
   sections.forEach((section) => {
     heading(`${section.number}.  ${section.title}`);
     section.clauses.forEach((c) => clause(c.label, c.text, c.items));
     y += 2;
   });
 
-  /* End of document */
   ensure(leading(11) * 3);
   y += 4;
   rule(0.4);
   y += 4;
   block(`End of ${doc.title}`, { size: 10, style: "bold", after: 0 });
 
-  /* Footer with page numbers on every page */
   const total = pdf.getNumberOfPages();
   for (let i = 1; i <= total; i++) {
     pdf.setPage(i);

@@ -12,15 +12,14 @@ const { items } = testimonials;
 
 type Testimonial = (typeof items)[number];
 
-/* With this many testimonials or fewer, desktop shows them all at once */
+
 const MAX_STATIC = 5;
 const showStatic = items.length <= MAX_STATIC;
 
-/* Quote is clipped to this many lines (5 lines x 1.375rem). If you change it,
-   update COLLAPSED_REM and both arbitrary classes in the quote box below. */
+
 const COLLAPSED_REM = 6.875;
 
-/* Duplicate once for a seamless loop (marquee only) */
+
 const track = [...items, ...items];
 
 const MARQUEE_QUERY = showStatic
@@ -45,7 +44,7 @@ function TestimonialCard({
   const [expanded, setExpanded] = useState(false);
   const [overflowing, setOverflowing] = useState(false);
 
-  /* Show "View more" only when the quote is longer than the collapsed height */
+  
   useEffect(() => {
     const p = textRef.current;
     const box = boxRef.current;
@@ -124,7 +123,7 @@ function TestimonialCard({
         "focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
       )}
     >
-      {/* Photo banner (full colour) */}
+      
       <div className="relative aspect-[16/10] overflow-hidden bg-ink">
         <Image
           src={t.image}
@@ -136,7 +135,7 @@ function TestimonialCard({
         />
       </div>
 
-      {/* Quote block */}
+      
       <div className="flex flex-col p-4 pt-1 md:p-5 md:pt-2">
         <span
           aria-hidden="true"
@@ -164,7 +163,7 @@ function TestimonialCard({
           </div>
         </blockquote>
 
-        {/* Always takes up its space so collapsed cards stay the same height */}
+        
         <button
           type="button"
           onClick={toggle}
@@ -200,9 +199,7 @@ export default function Testimonials() {
   const manualRef = useRef<gsap.core.Tween | null>(null);
   const openRef = useRef(0);
 
-  const CARD_STEP = 17 * 16 + 16; // fallback: 17rem card + 1rem gap
-
-  /* The sliding row pauses while any card is expanded */
+  const CARD_STEP = 17 * 16 + 16; 
   const handleExpandChange = (open: boolean) => {
     openRef.current = Math.max(0, openRef.current + (open ? 1 : -1));
 
@@ -213,7 +210,7 @@ export default function Testimonials() {
     else loop.resume();
   };
 
-  /* Header and card reveal */
+  
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
@@ -249,7 +246,7 @@ export default function Testimonials() {
     { scope: sectionRef }
   );
 
-  /* Marquee loop (not used on desktop when every testimonial fits at once) */
+  
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
@@ -264,7 +261,7 @@ export default function Testimonials() {
           ? firstCard.getBoundingClientRect().width + gap
           : CARD_STEP;
 
-        /* Master loop: 160s per full cycle */
+        
         const loop = gsap.to(el, {
           xPercent: -50,
           duration: 160,
@@ -344,9 +341,9 @@ export default function Testimonials() {
         </div>
       </div>
 
-      {/* Marquee on small screens (and on desktop with more than five), a static row otherwise */}
+      
       <div data-t-track className="relative mt-10 md:mt-14">
-        {/* Edge fades */}
+        
         <div
           aria-hidden="true"
           className={cn(

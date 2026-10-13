@@ -27,7 +27,7 @@ export const contact = {
     namePlaceholder: "Your full name",
     email: "Email address",
     emailPlaceholder: "name@example.com",
-    
+
     role: "Who are you?",
     rolePlaceholder: "Choose one",
     rolePlayerHint:
@@ -117,8 +117,7 @@ export const contact = {
     { id: "exploring", label: "Just exploring for now" },
   ] as Option[],
 
-  /* Roles that need an organisation name */
   orgRoles: ["school", "club", "academy", "union"],
-  /* Enquiry types that ask for a group size */
+
   groupTypes: ["small-group", "school-club", "provincial"],
 };

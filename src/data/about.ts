@@ -2,7 +2,6 @@ type RepresentedTeam = {
   team: string;
   note: string;
   logo?: string;
-  /* "mono" (default): white silhouette. "tile": original colours on a small white tile. */
   logoStyle?: "mono" | "tile";
 };
 

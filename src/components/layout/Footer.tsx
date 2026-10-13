@@ -1,12 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  contact,
-  navLinks,
-  serviceLinks,
-  socialLinks,
-} from "@/data/nav";
+import { contact, navLinks, serviceLinks, socialLinks } from "@/data/nav";
 
 const legalLinks = [
   { label: "Privacy Policy", href: "/privacy-policy" },
@@ -25,8 +20,6 @@ const heading =
 const iconButton =
   "grid h-10 w-10 place-items-center rounded-full border border-bone/20 text-bone transition-colors duration-200 hover:border-accent hover:bg-accent hover:text-bone focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
-/* With Cache Components, `new Date()` can't run during a normal prerender.
-   Wrapping it in a cached function lets Next.js compute it once and reuse it. */
 async function getYear() {
   "use cache";
   return new Date().getFullYear();
@@ -39,27 +32,28 @@ export default async function Footer() {
     <footer className="bg-ink text-bone">
       <div className="mx-auto w-full max-w-[1400px] px-5 py-12 md:px-10 md:py-16">
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-12 lg:gap-x-10">
-          {/* Brand */}
           <div className="col-span-2 lg:col-span-4">
-            <Link href="/" aria-label="The Hooker Lab home" className={`inline-block ${focus}`}>
-             <Image
-  src="/logo/logo.png"
-  alt="The Hooker Lab"
-  width={200}
-  height={64}
-  className="h-12 w-auto md:h-14"
-  data-colour
-/>
+            <Link
+              href="/"
+              aria-label="The Hooker Lab home"
+              className={`inline-block ${focus}`}
+            >
+              <Image
+                src="/logo/logo.png"
+                alt="The Hooker Lab"
+                width={200}
+                height={64}
+                className="h-12 w-auto md:h-14"
+                data-colour
+              />
             </Link>
             <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-bone/65">
-              Specialist hooker coaching led by professional hooker Kurt
-              Eklund. Throwing, lineout, scrummaging, mental skills and
-              leadership for players, schools, clubs and unions across New
-              Zealand.
+              Specialist hooker coaching led by professional hooker Kurt Eklund.
+              Throwing, lineout, scrummaging, mental skills and leadership for
+              players, schools, clubs and unions across New Zealand.
             </p>
           </div>
 
-          {/* Explore */}
           <nav aria-label="Explore" className="lg:col-span-2">
             <h2 className={heading}>Explore</h2>
             <ul className="mt-5 space-y-3">
@@ -73,7 +67,6 @@ export default async function Footer() {
             </ul>
           </nav>
 
-          {/* Services (all point to the Programmes section) */}
           <nav aria-label="Services" className="lg:col-span-3">
             <h2 className={heading}>Services</h2>
             <ul className="mt-5 space-y-3">
@@ -87,12 +80,14 @@ export default async function Footer() {
             </ul>
           </nav>
 
-          {/* Get in touch */}
           <div className="col-span-2 lg:col-span-3">
             <h2 className={heading}>Get in touch</h2>
             <ul className="mt-5 space-y-3">
               <li>
-                <a href={`mailto:${contact.email}`} className={`break-all ${link}`}>
+                <a
+                  href={`mailto:${contact.email}`}
+                  className={`break-all ${link}`}
+                >
                   {contact.email}
                 </a>
               </li>
@@ -137,7 +132,6 @@ export default async function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-3 border-t border-bone/10 pt-6 text-sm text-bone/50 md:flex-row md:items-center md:justify-between">
           <p>&copy; {year} The Hooker Lab. All rights reserved.</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">

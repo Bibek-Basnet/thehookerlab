@@ -13,7 +13,7 @@ export const legal = {
   lastUpdated: "11 October 2026",
   updatedISO: "2026-10-11",
 
-  /* Business decisions: Kurt should confirm each of these */
+  
   policy: {
     individualNoticeHours: 48,
     groupNoticeDays: 7,

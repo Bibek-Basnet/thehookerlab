@@ -12,11 +12,9 @@ import { bookCta, contact, navLinks, socialLinks } from "@/data/nav";
 
 const MotionLink = motion.create(Link);
 
-/* Desktop link: dims siblings on list hover, lifts slightly, brightens itself */
 const desktopLinkClass =
   "group relative inline-flex items-center gap-1.5 normal-case py-2 text-[17px] font-semibold tracking-[0.005em] text-bone/85 transition-[color,transform] duration-500 ease-out group-hover/list:text-bone/45 hover:-translate-y-px hover:text-bone! focus-visible:text-bone! focus-visible:outline-none";
 
-/* The Strike: a tapered red slash that draws in from the left and exits to the right */
 const slashClass =
   "pointer-events-none absolute -bottom-0.5 left-0 h-[3px] w-full origin-right scale-x-0 bg-accent [clip-path:polygon(0_100%,100%_0,100%_100%)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100 group-focus-visible:origin-left group-focus-visible:scale-x-100";
 
@@ -36,7 +34,6 @@ export default function Navbar() {
 
   const closeAll = () => setOpen(false);
 
-  /* Intro animation */
   useGSAP(
     () => {
       gsap.from("[data-nav-intro]", {
@@ -48,10 +45,9 @@ export default function Navbar() {
         delay: 0.2,
       });
     },
-    { scope: headerRef }
+    { scope: headerRef },
   );
 
-  /* Scrolled state (the navbar always stays visible at a fixed height) */
   useGSAP(
     () => {
       setScrolled(window.scrollY > 40);
@@ -62,10 +58,9 @@ export default function Navbar() {
         onToggle: (self) => setScrolled(self.isActive),
       });
     },
-    { scope: headerRef }
+    { scope: headerRef },
   );
 
-  /* Mobile menu timeline: clip-path wipe, mask-reveal lines, fade extras */
   useGSAP(
     () => {
       const tl = gsap.timeline({
@@ -76,24 +71,30 @@ export default function Navbar() {
       tl.fromTo(
         overlayRef.current,
         { clipPath: "inset(0% 0% 100% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.8 }
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.8 },
       )
         .fromTo(
           "[data-menu-line]",
           { yPercent: 140 },
           { yPercent: 0, duration: 0.8, ease: "power4.out", stagger: 0.07 },
-          0.35
+          0.35,
         )
         .fromTo(
           "[data-menu-fade]",
           { autoAlpha: 0, y: 16 },
-          { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.06 },
-          0.75
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power3.out",
+            stagger: 0.06,
+          },
+          0.75,
         );
 
       tlRef.current = tl;
     },
-    { scope: overlayRef }
+    { scope: overlayRef },
   );
 
   useEffect(() => {
@@ -107,13 +108,11 @@ export default function Navbar() {
     }
   }, [open]);
 
-  /* Scroll lock while the menu is open */
   useEffect(() => {
     document.documentElement.classList.toggle("overflow-hidden", open);
     return () => document.documentElement.classList.remove("overflow-hidden");
   }, [open]);
 
-  /* Escape to close, auto close when resizing to desktop */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -149,15 +148,15 @@ export default function Navbar() {
             aria-hidden="true"
             className={cn(
               "pointer-events-none absolute inset-0 bg-linear-to-b from-ink/80 to-transparent transition-opacity duration-500",
-              solid || open ? "opacity-0" : "opacity-100"
+              solid || open ? "opacity-0" : "opacity-100",
             )}
           />
-          {/* Solid blurred background after scroll */}
+
           <span
             aria-hidden="true"
             className={cn(
               "pointer-events-none absolute inset-0 border-b border-white/10 bg-ink/75 backdrop-blur-xl transition-opacity duration-500",
-              solid ? "opacity-100" : "opacity-0"
+              solid ? "opacity-100" : "opacity-0",
             )}
           />
 
@@ -165,7 +164,6 @@ export default function Navbar() {
             aria-label="Primary"
             className="relative mx-auto flex h-[72px] max-w-[1600px] items-center justify-between px-5 md:h-24 md:px-10"
           >
-            {/* Logo */}
             <Link
               href="/"
               onClick={closeAll}
@@ -173,19 +171,18 @@ export default function Navbar() {
               data-nav-intro
               className="relative block shrink-0"
             >
-            <Image
-  src="/logo/logo.png"
-  alt="The Hooker Lab"
-  width={1774}
-  height={887}
-  priority
-  sizes="(min-width: 768px) 128px, 96px"
-  className="h-12 w-auto mix-blend-screen md:h-16"
-  data-colour
-/>
+              <Image
+                src="/logo/logo.png"
+                alt="The Hooker Lab"
+                width={1774}
+                height={887}
+                priority
+                sizes="(min-width: 768px) 128px, 96px"
+                className="h-12 w-auto mix-blend-screen md:h-16"
+                data-colour
+              />
             </Link>
 
-            {/* Desktop links */}
             <ul className="group/list hidden items-center gap-9 lg:flex xl:gap-11">
               {navLinks.map((item) => (
                 <li key={item.label} data-nav-intro>
@@ -198,7 +195,6 @@ export default function Navbar() {
             </ul>
 
             <div className="flex items-center gap-3">
-              {/* Desktop CTA */}
               <div data-nav-intro className="hidden lg:block">
                 <MotionLink
                   href={bookCta.href}
@@ -210,7 +206,6 @@ export default function Navbar() {
                 </MotionLink>
               </div>
 
-              {/* Mobile toggle */}
               <motion.button
                 type="button"
                 data-nav-intro
@@ -243,7 +238,6 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile full-screen menu */}
       <div
         id="mobile-menu"
         ref={overlayRef}
@@ -251,7 +245,7 @@ export default function Navbar() {
         inert={!open}
         className={cn(
           "fixed inset-0 z-40 flex flex-col overflow-y-auto overscroll-contain bg-ink px-6 pb-10 pt-28 transition-[visibility] duration-0 md:px-10 lg:hidden",
-          open ? "visible" : "pointer-events-none invisible delay-[1000ms]"
+          open ? "visible" : "pointer-events-none invisible delay-[1000ms]",
         )}
       >
         <ul className="flex flex-col">

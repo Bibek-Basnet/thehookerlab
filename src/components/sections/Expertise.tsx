@@ -99,7 +99,7 @@ export default function Expertise() {
                 onMouseLeave={cancel}
                 className={cn(
                   "group/panel relative isolate min-w-0 overflow-hidden rounded-3xl bg-ink transition-[flex-grow,height] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none lg:h-auto lg:basis-0",
-                  isActive ? "h-[40rem] lg:grow-[2.6]" : "h-28 lg:grow-[1]"
+                  isActive ? "h-[40rem] lg:grow-[2.6]" : "h-28 lg:grow-[1]",
                 )}
               >
                 {/* Image (full colour) */}
@@ -112,7 +112,7 @@ export default function Expertise() {
                     "-z-10 object-cover transition duration-700 motion-reduce:transition-none",
                     isActive
                       ? "scale-100 brightness-100"
-                      : "scale-110 brightness-50 group-hover/panel:brightness-75"
+                      : "scale-110 brightness-50 group-hover/panel:brightness-75",
                   )}
                 />
                 <div
@@ -130,7 +130,7 @@ export default function Expertise() {
                     "absolute inset-0 flex items-center justify-between gap-4 p-5 text-left text-bone transition-[opacity,visibility] duration-300 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none lg:flex-col lg:items-start lg:p-6",
                     isActive
                       ? "pointer-events-none invisible opacity-0"
-                      : "visible cursor-pointer opacity-100 delay-200"
+                      : "visible cursor-pointer opacity-100 delay-200",
                   )}
                 >
                   <span className="order-2 grid h-11 w-11 shrink-0 place-items-center rounded-full bg-bone text-ink transition duration-300 group-hover/panel:rotate-90 group-hover/panel:bg-accent group-hover/panel:text-bone lg:order-1">
@@ -162,7 +162,7 @@ export default function Expertise() {
                     "absolute inset-0 flex flex-col gap-6 p-5 text-bone transition-[opacity,visibility] duration-500 motion-reduce:transition-none lg:p-8",
                     isActive
                       ? "visible opacity-100 delay-300"
-                      : "invisible opacity-0"
+                      : "invisible opacity-0",
                   )}
                 >
                   <div className="shrink-0">
@@ -174,9 +174,7 @@ export default function Expertise() {
                     </p>
                   </div>
 
-                  {/* Picker and detail: sit right below the summary */}
                   <div className="grid gap-4 lg:grid-cols-[14rem_1fr]">
-                    {/* Skill picker */}
                     <ul className="flex flex-wrap content-start gap-2 lg:flex-col lg:flex-nowrap lg:gap-1.5">
                       {pillar.skills.map((s, i) => (
                         <li key={s.name} className="lg:w-full">
@@ -188,7 +186,7 @@ export default function Expertise() {
                               "w-full rounded-full px-4 py-2 text-left font-display text-base font-extrabold uppercase leading-none transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone motion-reduce:transition-none md:text-lg",
                               current === i
                                 ? "bg-accent text-bone"
-                                : "bg-bone/15 text-bone hover:bg-bone/30"
+                                : "bg-bone/15 text-bone hover:bg-bone/30",
                             )}
                           >
                             {s.name}
@@ -197,7 +195,6 @@ export default function Expertise() {
                       ))}
                     </ul>
 
-                    {/* Skill detail: the same glass card on every pillar */}
                     <div
                       aria-live="polite"
                       className="self-start rounded-2xl bg-bone/10 p-5 backdrop-blur-md md:p-6"

@@ -24,7 +24,7 @@ export default function Philosophy() {
             duration: 0.7,
             ease: "power3.out",
             scrollTrigger: { trigger: "[data-ph-pill]", start: "top 90%" },
-          }
+          },
         );
         gsap.fromTo(
           "[data-ph-word]",
@@ -35,7 +35,7 @@ export default function Philosophy() {
             ease: "power4.out",
             stagger: 0.14,
             scrollTrigger: { trigger: "[data-ph-heading]", start: "top 88%" },
-          }
+          },
         );
         gsap.fromTo(
           "[data-ph-text]",
@@ -47,10 +47,9 @@ export default function Philosophy() {
             ease: "power3.out",
             stagger: 0.12,
             scrollTrigger: { trigger: "[data-ph-text]", start: "top 90%" },
-          }
+          },
         );
 
-        /* Image: mask opens upward, then drifts slightly */
         gsap.fromTo(
           "[data-ph-mask]",
           { clipPath: "inset(100% 0% 0% 0%)" },
@@ -59,7 +58,7 @@ export default function Philosophy() {
             duration: 1.3,
             ease: "power4.inOut",
             scrollTrigger: { trigger: "[data-ph-mask]", start: "top 88%" },
-          }
+          },
         );
         gsap.fromTo(
           "[data-ph-photo]",
@@ -74,7 +73,7 @@ export default function Philosophy() {
               end: "bottom 20%",
               scrub: true,
             },
-          }
+          },
         );
 
         /* Quote: the mark pops in, the lines rise from their masks, then the credit */
@@ -88,7 +87,7 @@ export default function Philosophy() {
             duration: 1,
             ease: "back.out(1.7)",
             scrollTrigger: { trigger: "[data-ph-quote]", start: "top 85%" },
-          }
+          },
         );
         gsap.fromTo(
           "[data-ph-quote-line]",
@@ -100,7 +99,7 @@ export default function Philosophy() {
             stagger: 0.16,
             delay: 0.15,
             scrollTrigger: { trigger: "[data-ph-quote]", start: "top 85%" },
-          }
+          },
         );
         gsap.fromTo(
           "[data-ph-quote-by]",
@@ -112,11 +111,11 @@ export default function Philosophy() {
             ease: "power3.out",
             delay: 0.6,
             scrollTrigger: { trigger: "[data-ph-quote]", start: "top 85%" },
-          }
+          },
         );
       });
     },
-    { scope: sectionRef }
+    { scope: sectionRef },
   );
 
   return (
@@ -127,7 +126,6 @@ export default function Philosophy() {
       className="relative overflow-hidden bg-paper-deep py-16 text-ink md:py-24"
     >
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-        {/* Header: pill and a one-line headline */}
         <header>
           <span
             data-ph-pill
@@ -157,7 +155,6 @@ export default function Philosophy() {
           </h2>
         </header>
 
-        {/* Text and image: equal height on desktop, text on top, quote on the bottom edge */}
         <div className="mt-10 grid gap-10 md:mt-14 lg:grid-cols-12 lg:items-stretch lg:gap-14">
           <div className="flex flex-col lg:col-span-6 lg:justify-between">
             <div>
@@ -181,8 +178,10 @@ export default function Philosophy() {
               </p>
             </div>
 
-            {/* The goal, as a quotation anchored to the bottom edge */}
-            <figure data-ph-quote className="group relative mt-12 lg:mt-0 lg:pt-12">
+            <figure
+              data-ph-quote
+              className="group relative mt-12 lg:mt-0 lg:pt-12"
+            >
               <span
                 aria-hidden="true"
                 className="inline-block origin-bottom-left text-accent transition-transform duration-500 ease-out group-hover:-rotate-6"
@@ -202,7 +201,7 @@ export default function Philosophy() {
                     {philosophy.goal.lines[0]}
                   </span>
                 </span>
-                {/* The red line nudges right on hover */}
+
                 <span className="block overflow-hidden whitespace-nowrap py-[0.06em] text-accent transition-transform duration-500 ease-out group-hover:translate-x-3">
                   <span data-ph-quote-line className="block">
                     {philosophy.goal.lines[1]}
@@ -219,7 +218,6 @@ export default function Philosophy() {
             </figure>
           </div>
 
-          {/* Image fills the full height of the text column on desktop */}
           <div className="lg:col-span-6 lg:flex">
             <div
               data-ph-mask
@@ -234,7 +232,7 @@ export default function Philosophy() {
                   quality={85}
                   className={cn(
                     "object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105",
-                    philosophy.image.positionClass
+                    philosophy.image.positionClass,
                   )}
                 />
               </div>

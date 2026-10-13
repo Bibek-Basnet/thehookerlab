@@ -19,7 +19,6 @@ export default function About() {
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        /* Portrait: mask opens upward, photo settles and drifts */
         gsap.fromTo(
           "[data-about-mask]",
           { clipPath: "inset(100% 0% 0% 0%)" },
@@ -28,7 +27,7 @@ export default function About() {
             duration: 1.3,
             ease: "power4.inOut",
             scrollTrigger: { trigger: "[data-about-mask]", start: "top 82%" },
-          }
+          },
         );
         gsap.fromTo(
           "[data-about-photo]",
@@ -43,10 +42,9 @@ export default function About() {
               end: "bottom 20%",
               scrub: true,
             },
-          }
+          },
         );
 
-        /* Eyebrow pill */
         gsap.fromTo(
           "[data-about-pill]",
           { autoAlpha: 0, x: -20 },
@@ -56,10 +54,9 @@ export default function About() {
             duration: 0.7,
             ease: "power3.out",
             scrollTrigger: { trigger: "[data-about-pill]", start: "top 90%" },
-          }
+          },
         );
 
-        /* Headline words rise out of masks */
         gsap.fromTo(
           "[data-about-word]",
           { yPercent: 115 },
@@ -68,11 +65,13 @@ export default function About() {
             duration: 1.1,
             ease: "power4.out",
             stagger: 0.14,
-            scrollTrigger: { trigger: "[data-about-heading]", start: "top 88%" },
-          }
+            scrollTrigger: {
+              trigger: "[data-about-heading]",
+              start: "top 88%",
+            },
+          },
         );
 
-        /* Statement lights up word by word */
         if (statementRef.current) {
           const split = SplitText.create(statementRef.current, {
             type: "words",
@@ -90,7 +89,7 @@ export default function About() {
                 end: "bottom 62%",
                 scrub: true,
               },
-            }
+            },
           );
         }
         gsap.fromTo(
@@ -101,11 +100,13 @@ export default function About() {
             y: 0,
             duration: 0.8,
             ease: "power3.out",
-            scrollTrigger: { trigger: "[data-about-closing]", start: "top 92%" },
-          }
+            scrollTrigger: {
+              trigger: "[data-about-closing]",
+              start: "top 92%",
+            },
+          },
         );
 
-        /* Stats: cards rise, numbers count */
         gsap.fromTo(
           "[data-about-stat]",
           { autoAlpha: 0, y: 36 },
@@ -116,7 +117,7 @@ export default function About() {
             ease: "power3.out",
             stagger: 0.12,
             scrollTrigger: { trigger: "[data-about-stats]", start: "top 88%" },
-          }
+          },
         );
         gsap.utils.toArray<HTMLElement>("[data-about-count]").forEach((el) => {
           const target = Number(el.dataset.aboutCount);
@@ -129,11 +130,10 @@ export default function About() {
               ease: "power2.out",
               snap: { textContent: 1 },
               scrollTrigger: { trigger: el, start: "top 92%", once: true },
-            }
+            },
           );
         });
 
-        /* Represented tiles: wipe up one after another */
         gsap.fromTo(
           "[data-about-tile]",
           { clipPath: "inset(100% 0% 0% 0%)" },
@@ -143,10 +143,9 @@ export default function About() {
             ease: "power4.out",
             stagger: 0.08,
             scrollTrigger: { trigger: "[data-about-tiles]", start: "top 90%" },
-          }
+          },
         );
 
-        /* Honours */
         gsap.fromTo(
           "[data-about-honour]",
           { autoAlpha: 0, y: 14 },
@@ -156,12 +155,15 @@ export default function About() {
             duration: 0.8,
             ease: "power3.out",
             stagger: 0.12,
-            scrollTrigger: { trigger: "[data-about-honours]", start: "top 94%" },
-          }
+            scrollTrigger: {
+              trigger: "[data-about-honours]",
+              start: "top 94%",
+            },
+          },
         );
       });
     },
-    { scope: sectionRef }
+    { scope: sectionRef },
   );
 
   return (
@@ -172,7 +174,6 @@ export default function About() {
       className="relative overflow-hidden bg-paper py-16 text-ink md:py-24"
     >
       <div className="mx-auto grid max-w-350 gap-10 px-5 md:px-10 lg:grid-cols-12 lg:gap-14">
-        {/* Portrait column: label sits above the photo */}
         <div className="flex flex-col lg:col-span-5">
           <span
             data-about-pill
@@ -210,10 +211,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* Story */}
         <div className="flex flex-col lg:col-span-7">
-          {/* Headline: wraps on phones, one line from desktop up.
-              Its size comes from the global "section h2" rule. */}
           <h2
             id="about-heading"
             data-about-heading
@@ -244,7 +242,6 @@ export default function About() {
             {about.closing}
           </p>
 
-          {/* Stats */}
           <dl data-about-stats className="mt-7 grid grid-cols-3 gap-3 md:gap-4">
             {about.stats.map(({ value, suffix, label }) => (
               <div key={label} data-about-stat className="flex">
@@ -261,7 +258,6 @@ export default function About() {
             ))}
           </dl>
 
-          {/* Represented: six equal cards, no numbers */}
           <div className="mt-7">
             <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-ink/80">
               {about.representedTitle}
@@ -276,18 +272,16 @@ export default function About() {
                 return (
                   <li key={team} data-about-tile className="flex">
                     <div className="flex min-h-32 w-full flex-col justify-between gap-3 bg-ink p-3.5 text-bone md:min-h-36 md:p-4">
-                      {/* Captain note: keeps the same height on cards without one */}
                       <span className="flex min-h-4 items-center text-[11px] font-semibold uppercase tracking-[0.18em] text-bone/80">
                         {note}
                       </span>
 
-                      {/* Logo and team name */}
                       <div className="flex flex-col items-start gap-2">
                         {logo && (
                           <div
                             className={cn(
                               "relative h-11 w-11 shrink-0 md:h-12 md:w-12",
-                              isTile && "rounded-md bg-white"
+                              isTile && "rounded-md bg-white",
                             )}
                           >
                             <Image
@@ -310,7 +304,6 @@ export default function About() {
             </ul>
           </div>
 
-          {/* Honours */}
           <ul data-about-honours className="mt-5 flex flex-wrap gap-2.5">
             {about.honours.map(({ title, year }) => (
               <li

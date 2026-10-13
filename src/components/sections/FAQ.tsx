@@ -12,7 +12,6 @@ export default function FAQ() {
   const ready = useRef(false);
   const [open, setOpen] = useState<string | null>(faq.items[0].id);
 
-  /* Entrance: hero timeline and parallax, then cards rise in on scroll */
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
@@ -24,25 +23,25 @@ export default function FAQ() {
             "[data-faq-img]",
             { scale: 1.12 },
             { scale: 1, duration: 2, ease: "power2.out" },
-            0
+            0,
           )
           .fromTo(
             "[data-faq-pill]",
             { autoAlpha: 0, x: -20 },
             { autoAlpha: 1, x: 0, duration: 0.7 },
-            0.1
+            0.1,
           )
           .fromTo(
             "[data-faq-word]",
             { yPercent: 115 },
             { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.14 },
-            0.2
+            0.2,
           )
           .fromTo(
             "[data-faq-intro]",
             { autoAlpha: 0, y: 20 },
             { autoAlpha: 1, y: 0, duration: 0.9 },
-            0.55
+            0.55,
           );
 
         gsap.to("[data-faq-bg]", {
@@ -73,14 +72,13 @@ export default function FAQ() {
         });
       });
     },
-    { scope: rootRef }
+    { scope: rootRef },
   );
 
-  /* Accordion: GSAP drives the height, fade and icon turn */
   useGSAP(
     () => {
       const reduce = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
+        "(prefers-reduced-motion: reduce)",
       ).matches;
       const animate = ready.current && !reduce;
 
@@ -88,7 +86,7 @@ export default function FAQ() {
         target: string,
         vars: gsap.TweenVars,
         duration: number,
-        ease = "power3.inOut"
+        ease = "power3.inOut",
       ) =>
         animate
           ? gsap.to(target, { ...vars, duration, ease, overwrite: "auto" })
@@ -106,32 +104,37 @@ export default function FAQ() {
               ScrollTrigger.refresh();
             },
           },
-          0.6
+          0.6,
         );
         go(
           `[data-faq-icon="${item.id}"]`,
           { rotate: isOpen ? 45 : 0 },
           0.5,
-          "power3.out"
+          "power3.out",
         );
 
         if (isOpen && animate) {
           gsap.fromTo(
             `[data-faq-text="${item.id}"]`,
             { y: 12, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.5, delay: 0.18, ease: "power3.out" }
+            {
+              y: 0,
+              autoAlpha: 1,
+              duration: 0.5,
+              delay: 0.18,
+              ease: "power3.out",
+            },
           );
         }
       });
 
       ready.current = true;
     },
-    { scope: rootRef, dependencies: [open] }
+    { scope: rootRef, dependencies: [open] },
   );
 
   return (
     <div ref={rootRef}>
-      {/* Hero with background image */}
       <section
         data-faq-hero
         aria-labelledby="faq-heading"
@@ -196,7 +199,6 @@ export default function FAQ() {
         </div>
       </section>
 
-      {/* Questions */}
       <section
         aria-label="Frequently asked questions"
         className="bg-paper py-14 text-ink md:py-24"
@@ -213,10 +215,9 @@ export default function FAQ() {
                       "group rounded-2xl transition-[background-color,box-shadow] duration-500",
                       isOpen
                         ? "bg-ink text-bone"
-                        : "bg-white text-ink hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35)]"
+                        : "bg-white text-ink hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35)]",
                     )}
                   >
-                    {/* <div> (not <h2>) so the global section h2 font-size rule doesn't apply */}
                     <div>
                       <button
                         type="button"
@@ -233,7 +234,7 @@ export default function FAQ() {
                         <span
                           className={cn(
                             "flex-1 font-display font-bold text-lg leading-tight transition-colors duration-300 md:text-2xl",
-                            !isOpen && "group-hover:text-accent"
+                            !isOpen && "group-hover:text-accent",
                           )}
                         >
                           {item.question}
@@ -243,7 +244,7 @@ export default function FAQ() {
                             "grid size-10 shrink-0 place-items-center rounded-full transition-colors duration-300",
                             isOpen
                               ? "bg-accent text-bone"
-                              : "bg-paper text-ink group-hover:bg-accent group-hover:text-bone"
+                              : "bg-paper text-ink group-hover:bg-accent group-hover:text-bone",
                           )}
                         >
                           <svg
@@ -273,7 +274,6 @@ export default function FAQ() {
                         data-faq-text={item.id}
                         className="px-5 pb-6 pl-[3.25rem] md:px-7 md:pb-7 md:pl-[4.25rem]"
                       >
-                        {/* Answer — body font, distinct from question */}
                         <p className="max-w-2xl font-body text-base leading-relaxed text-bone/80 md:text-lg">
                           {item.answer}
                         </p>

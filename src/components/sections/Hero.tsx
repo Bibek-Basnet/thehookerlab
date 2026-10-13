@@ -233,7 +233,7 @@ export default function Hero() {
           ))}
         </p>
 
-        {/* Enquire now — inline on mobile, absolute on desktop (moved right + up) */}
+        
         <div
           data-hero-hide
           data-hero-cta

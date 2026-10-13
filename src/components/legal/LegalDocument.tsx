@@ -14,11 +14,11 @@ const serif = Libre_Baskerville({
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://thehookerlab.co.nz";
 
-/* Site headings are uppercase display type. Legal headings use the document serif. */
 const headingReset =
   "[font-family:inherit] font-bold normal-case tracking-normal leading-tight";
 
-const bodyText = "text-[1.125rem] leading-8 md:text-[1.1875rem] md:leading-[2.1rem]";
+const bodyText =
+  "text-[1.125rem] leading-8 md:text-[1.1875rem] md:leading-[2.1rem]";
 
 const linkClass =
   "underline decoration-1 underline-offset-4 hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink";
@@ -45,13 +45,12 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
 
   return (
     <>
-      {/* Black band keeps the fixed navbar readable above the white document */}
       <div aria-hidden="true" className="h-[72px] bg-ink md:h-24" />
 
       <div
         className={cn(
           serif.className,
-          "bg-white text-ink selection:bg-ink selection:text-white"
+          "bg-white text-ink selection:bg-ink selection:text-white",
         )}
       >
         <script
@@ -70,10 +69,7 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
             </p>
             <h1
               id="legal-title"
-              className={cn(
-                headingReset,
-                "mt-5 text-4xl md:text-5xl"
-              )}
+              className={cn(headingReset, "mt-5 text-4xl md:text-5xl")}
             >
               {doc.title}
             </h1>
@@ -98,14 +94,12 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
             </div>
           </header>
 
-          {/* Introduction */}
           <div className={cn("mt-12 space-y-5", bodyText)}>
             {doc.intro.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
 
-          {/* Contents */}
           <nav
             aria-labelledby="legal-contents"
             className="mt-12 border-2 border-ink p-6 md:p-8"
@@ -127,7 +121,6 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
             </ol>
           </nav>
 
-          {/* Sections */}
           <div className="mt-14 space-y-14 md:mt-16 md:space-y-16">
             {sections.map((section) => (
               <section
@@ -176,7 +169,6 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
             ))}
           </div>
 
-          {/* End of document */}
           <footer className="mt-16 border-t-2 border-ink pt-8 text-center">
             <p className="text-base font-bold uppercase tracking-[0.2em]">
               End of {doc.title}

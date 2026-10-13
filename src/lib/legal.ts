@@ -47,6 +47,5 @@ export function numberSections(sections: LegalSection[]): NumberedSection[] {
   }));
 }
 
-/* (a), (b), (c) ... */
 export const itemLabel = (index: number) =>
   `(${String.fromCharCode(97 + index)})`;

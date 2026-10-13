@@ -2,7 +2,6 @@ export const faq = {
   eyebrow: "FAQ",
   headline: ["Questions,", "answered."],
   intro: "Everything you need to know about training with The Hooker Lab.",
-  /* Hero background: public/images/hero.jpg (change the extension if yours differs) */
   heroImage: "/images/FAQ.jpeg",
   items: [
     {
