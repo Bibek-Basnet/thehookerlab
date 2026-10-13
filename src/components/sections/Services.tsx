@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
@@ -8,15 +8,15 @@ import { ArrowRight, Check } from "@phosphor-icons/react";
 
 import { gsap, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-import { services } from "@/data/services";
+import RegistrationDialog from "@/components/ui/RegistrationDialog";
+import type { OnlineCopy, ProgramItem, ProgramsSection } from "@/lib/content/types";
 
-type Service = (typeof services.items)[number];
 
-const jsonLd = {
+const buildJsonLd = (items: ProgramItem[]) => ({
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "The Hooker Lab coaching services",
-  itemListElement: services.items.map((item, i) => ({
+  itemListElement: items.map((item, i) => ({
     "@type": "ListItem",
     position: i + 1,
     item: {
@@ -26,9 +26,9 @@ const jsonLd = {
       provider: { "@type": "Organization", name: "The Hooker Lab" },
     },
   })),
-};
+});
 
-function ServiceCard({ item }: { item: Service }) {
+function ServiceCard({ item, cta }: { item: ProgramItem; cta: ProgramsSection["cta"] }) {
   return (
     <motion.article
       initial="rest"
@@ -86,6 +86,14 @@ function ServiceCard({ item }: { item: Service }) {
           >
             {item.summary}
           </p>
+          {item.priceLabel && (
+            <p
+              data-svc-fade
+              className="mt-3 font-display text-2xl uppercase tracking-wide text-ink"
+            >
+              {item.priceLabel}
+            </p>
+          )}
         </div>
 
         {/* Bottom group: checklist and link, aligned across all cards */}
@@ -118,10 +126,10 @@ function ServiceCard({ item }: { item: Service }) {
             className="mt-7 flex items-center justify-between gap-4 border-t border-ink/10 pt-5"
           >
             <Link
-              href={services.cta.href}
+              href={cta.href}
               className="text-[13px] font-medium uppercase tracking-[0.2em] text-ink/65 transition-colors duration-300 after:absolute after:inset-0 group-hover:text-ink focus-visible:outline-none"
             >
-              {services.cta.label}
+              {cta.label}
               <span className="sr-only"> about {item.title}</span>
             </Link>
 
@@ -146,7 +154,9 @@ function ServiceCard({ item }: { item: Service }) {
   );
 }
 
-export default function Services() {
+export default function Services({ data, online }: { data: ProgramsSection; online: OnlineCopy }) {
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const jsonLd = buildJsonLd(data.items);
   const sectionRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -271,7 +281,7 @@ export default function Services() {
             data-svc-pill
             className="inline-block rounded-full bg-ink px-4 py-1.5 text-[11px] uppercase tracking-[0.28em] text-bone"
           >
-            {services.eyebrow}
+            {data.eyebrow}
           </span>
 
           <h2
@@ -279,7 +289,7 @@ export default function Services() {
             data-svc-heading
             className="mt-6 flex items-baseline gap-[0.28em] whitespace-nowrap text-[clamp(1.75rem,4.2vw,3rem)] leading-none"
           >
-            {services.headline.map((word, i) => (
+            {data.headline.map((word, i) => (
               <span key={word} className="block overflow-hidden py-[0.08em]">
                 <span
                   data-svc-word
@@ -294,13 +304,29 @@ export default function Services() {
 
         {/* Four equal cards */}
         <ul className="grid gap-6 lg:grid-cols-2 lg:gap-8">
-          {services.items.map((item) => (
+          {data.items.map((item) => (
             <li key={item.id} data-service-card className="flex">
-              <ServiceCard item={item} />
+              <ServiceCard item={item} cta={data.cta} />
             </li>
           ))}
         </ul>
+
+        {/* Online programme registration (dialog lives in RegistrationDialog) */}
+        <div className="mt-10 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setRegisterOpen(true)}
+            className="rounded-full border border-ink px-6 py-3 text-[12px] font-medium uppercase tracking-[0.2em] text-ink transition-colors duration-300 hover:bg-ink hover:text-bone focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+          >
+            {online.ctaLabel}
+          </button>
+        </div>
       </div>
+
+      <RegistrationDialog
+        open={registerOpen}
+        onClose={() => setRegisterOpen(false)}
+      />
     </section>
   );
 }

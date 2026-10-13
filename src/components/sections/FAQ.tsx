@@ -5,12 +5,12 @@ import Image from "next/image";
 
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-import { faq } from "@/data/faq";
+import type { FaqSection } from "@/lib/content/types";
 
-export default function FAQ() {
+export default function FAQ({ data }: { data: FaqSection }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const ready = useRef(false);
-  const [open, setOpen] = useState<string | null>(faq.items[0].id);
+  const [open, setOpen] = useState<string | null>(data.items[0]?.id ?? null);
 
   useGSAP(
     () => {
@@ -92,7 +92,7 @@ export default function FAQ() {
           ? gsap.to(target, { ...vars, duration, ease, overwrite: "auto" })
           : gsap.set(target, vars);
 
-      faq.items.forEach((item) => {
+      data.items.forEach((item) => {
         const isOpen = open === item.id;
 
         go(
@@ -147,7 +147,7 @@ export default function FAQ() {
         >
           <div data-faq-img className="absolute inset-0">
             <Image
-              src={faq.heroImage}
+              src={data.heroImage}
               alt=""
               fill
               priority
@@ -171,14 +171,14 @@ export default function FAQ() {
             data-faq-pill
             className="inline-block rounded-full bg-bone px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.28em] text-ink"
           >
-            {faq.eyebrow}
+            {data.eyebrow}
           </span>
 
           <h1
             id="faq-heading"
             className="mt-6 flex flex-wrap items-baseline gap-x-[0.28em] text-[clamp(2.75rem,9vw,7.5rem)] leading-none"
           >
-            {faq.headline.map((word, i) => (
+            {data.headline.map((word, i) => (
               <span key={word} className="block overflow-hidden py-[0.08em]">
                 <span
                   data-faq-word
@@ -194,7 +194,7 @@ export default function FAQ() {
             data-faq-intro
             className="mt-5 max-w-xl text-lg leading-relaxed text-bone/80 md:text-xl"
           >
-            {faq.intro}
+            {data.intro}
           </p>
         </div>
       </section>
@@ -205,7 +205,7 @@ export default function FAQ() {
       >
         <div className="mx-auto max-w-4xl px-5 md:px-10">
           <ul className="space-y-3">
-            {faq.items.map((item, i) => {
+            {data.items.map((item, i) => {
               const isOpen = open === item.id;
 
               return (

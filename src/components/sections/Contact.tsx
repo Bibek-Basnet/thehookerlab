@@ -12,6 +12,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { contact } from "@/data/contact";
+import type { ContactSection } from "@/lib/content/types";
 import {
   MESSAGE_MAX,
   emptyEnquiry,
@@ -89,7 +90,7 @@ function Divider() {
   return <div aria-hidden="true" className="h-px bg-ink/10" />;
 }
 
-export default function Contact() {
+export default function Contact({ data }: { data: ContactSection }) {
   const sectionRef = useRef<HTMLElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
   const successRef = useRef<HTMLHeadingElement>(null);
@@ -233,7 +234,7 @@ export default function Contact() {
             data-ct-pill
             className="inline-block rounded-full bg-ink px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.28em] text-bone"
           >
-            {contact.eyebrow}
+            {data.eyebrow}
           </span>
 
           <h2
@@ -241,7 +242,7 @@ export default function Contact() {
             data-ct-heading
             className="mt-6 flex items-baseline gap-[0.28em] whitespace-nowrap text-[clamp(1.75rem,4.2vw,3rem)] leading-none"
           >
-            {contact.headline.map((word, i) => (
+            {data.headline.map((word, i) => (
               <span key={word} className="block overflow-hidden py-[0.08em]">
                 <span
                   data-ct-word
@@ -255,15 +256,15 @@ export default function Contact() {
 
           <div data-ct-intro>
             <p className="mt-5 max-w-2xl text-lg font-medium leading-relaxed text-ink/75 md:mt-6 md:text-xl">
-              {contact.intro}
+              {data.intro}
             </p>
             <p className="mt-3 text-base font-medium text-ink/65 md:text-lg">
               {contact.emailNote}{" "}
               <a
-                href={`mailto:${contact.email}`}
+                href={`mailto:${data.email}`}
                 className="font-semibold text-ink underline underline-offset-4 transition-colors duration-300 hover:text-accent focus-visible:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
               >
-                {contact.email}
+                {data.email}
               </a>
             </p>
           </div>
@@ -720,10 +721,10 @@ export default function Contact() {
                           </p>
                           <p className="mt-1.5 text-base font-medium">
                             <a
-                              href={`mailto:${contact.email}`}
+                              href={`mailto:${data.email}`}
                               className="underline underline-offset-4 hover:text-accent"
                             >
-                              {contact.email}
+                              {data.email}
                             </a>
                           </p>
                         </div>

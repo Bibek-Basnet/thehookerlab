@@ -4,20 +4,19 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
-import { expertise } from "@/data/expertise";
+import type { ExpertiseSection } from "@/lib/content/types";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://thehookerlab.co.nz";
 
-const pillars = expertise.pillars;
 
-const jsonLd = {
+const buildJsonLd = (pillars: ExpertiseSection["pillars"]) => ({
   "@context": "https://schema.org",
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
   name: "The Hooker Lab",
   knowsAbout: pillars.flatMap((p) => p.skills.map((s) => s.name)),
-};
+});
 
 const chevron = (flip?: boolean) => (
   <svg
@@ -34,7 +33,9 @@ const chevron = (flip?: boolean) => (
   </svg>
 );
 
-export default function Expertise() {
+export default function Expertise({ data }: { data: ExpertiseSection }) {
+  const pillars = data.pillars;
+  const jsonLd = buildJsonLd(pillars);
   const [active, setActive] = useState(0);
   const [skill, setSkill] = useState<number[]>(() => pillars.map(() => 0));
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -66,14 +67,14 @@ export default function Expertise() {
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <span className="inline-block rounded-full bg-ink px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-bone">
-              {expertise.eyebrow}
+              {data.eyebrow}
             </span>
             <h2
               id="expertise-heading"
               className="mt-6 text-[clamp(2.25rem,6vw,4.5rem)] leading-none"
             >
-              {expertise.headline.plain}{" "}
-              <span className="text-accent">{expertise.headline.accent}</span>
+              {data.headline.plain}{" "}
+              <span className="text-accent">{data.headline.accent}</span>
             </h2>
           </div>
 

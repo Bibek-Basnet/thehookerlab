@@ -6,25 +6,19 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 
 import { gsap, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-import { testimonials } from "@/data/testimonials";
+import type { TestimonialItem, TestimonialsSection } from "@/lib/content/types";
 
-const { items } = testimonials;
 
-type Testimonial = (typeof items)[number];
+type Testimonial = TestimonialItem;
 
 
 const MAX_STATIC = 5;
-const showStatic = items.length <= MAX_STATIC;
 
 
 const COLLAPSED_REM = 6.875;
 
 
-const track = [...items, ...items];
 
-const MARQUEE_QUERY = showStatic
-  ? "(prefers-reduced-motion: no-preference) and (max-width: 1279px)"
-  : "(prefers-reduced-motion: no-preference)";
 
 function TestimonialCard({
   t,
@@ -192,7 +186,13 @@ function TestimonialCard({
   );
 }
 
-export default function Testimonials() {
+export default function Testimonials({ data }: { data: TestimonialsSection }) {
+  const items = data.items;
+  const showStatic = items.length <= MAX_STATIC;
+  const track = [...items, ...items];
+  const MARQUEE_QUERY = showStatic
+    ? "(prefers-reduced-motion: no-preference) and (max-width: 1279px)"
+    : "(prefers-reduced-motion: no-preference)";
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLUListElement>(null);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
@@ -329,14 +329,14 @@ export default function Testimonials() {
       <div className="mx-auto w-full max-w-350 px-5 md:px-10">
         <div data-t-header className="flex flex-col items-start gap-3">
           <span className="inline-block rounded-full bg-ink px-5 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-bone">
-            {testimonials.eyebrow}
+            {data.eyebrow}
           </span>
           <h2
             id="testimonials-heading"
             className="text-[clamp(2.5rem,7vw,5rem)] leading-none"
           >
-            {testimonials.headline.plain}{" "}
-            <span className="text-accent">{testimonials.headline.accent}</span>
+            {data.headline.plain}{" "}
+            <span className="text-accent">{data.headline.accent}</span>
           </h2>
         </div>
       </div>
