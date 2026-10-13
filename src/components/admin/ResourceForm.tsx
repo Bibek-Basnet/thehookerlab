@@ -6,6 +6,7 @@ import { useActionState } from "react";
 import type { FieldDef, FormValues, Pair } from "@/lib/admin/fields";
 import { fieldError, initialState, type ActionState } from "@/lib/admin/form";
 import { Field, Toggle, inputClass } from "./fields";
+import ImageField from "./ImageField";
 import ListEditor from "./ListEditor";
 import PairListEditor from "./PairListEditor";
 import SubmitButton from "./SubmitButton";
@@ -121,34 +122,17 @@ export default function ResourceForm({
                 />
               </Field>
             );
-          case "image": {
-            const src = str(f.name);
+          case "image":
             return (
               <Field
                 key={f.name}
                 label={f.label}
-                hint={f.hint ?? "A URL or a path under /images"}
+                hint={f.hint ?? "Upload a JPEG, PNG or WebP (up to 5 MB), or paste an https:// URL"}
                 error={error}
               >
-                <div className="flex gap-3">
-                  {src && (
-                    // eslint-disable-next-line @next/next/no-img-element -- admin preview of an arbitrary URL
-                    <img
-                      src={src}
-                      alt=""
-                      className="h-16 w-16 shrink-0 rounded-lg object-cover"
-                    />
-                  )}
-                  <input
-                    name={f.name}
-                    defaultValue={src}
-                    placeholder={f.placeholder}
-                    className={inputClass}
-                  />
-                </div>
+                <ImageField name={f.name} initial={str(f.name)} placeholder={f.placeholder} />
               </Field>
             );
-          }
           default:
             return (
               <Field key={f.name} label={f.label} hint={f.hint} error={error}>

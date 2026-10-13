@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 
 import { INBOX_STATUSES } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
@@ -49,24 +50,32 @@ export default function InboxList({
       ) : (
         <ul className="divide-y divide-line rounded-[1.25rem] border border-line bg-coal">
           {rows.map((r) => (
-            <li key={r.id}>
-              <Link
-                href={r.href}
-                className="flex items-center justify-between gap-4 px-5 py-4 hover:bg-steel/40"
-              >
-                <div className="min-w-0">
-                  <p className="truncate font-medium">{r.title}</p>
-                  <p className="truncate text-xs text-mist">{r.subtitle}</p>
-                </div>
-                <div className="flex shrink-0 items-center gap-2">
-                  {r.notifyError && (
-                    <span className="rounded-full border border-accent/40 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-accent">
-                      email failed
-                    </span>
-                  )}
-                  <StatusBadge status={r.status} />
-                </div>
-              </Link>
+            <li
+              key={r.id}
+              className="flex items-center justify-between gap-4 px-5 py-4 hover:bg-steel/40"
+            >
+              <div className="min-w-0">
+                <Link href={r.href} className="block truncate font-medium hover:underline">
+                  {r.title}
+                </Link>
+                <p className="truncate text-xs text-mist">{r.subtitle}</p>
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                {r.notifyError && (
+                  <span className="rounded-full border border-accent/40 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-accent">
+                    email failed
+                  </span>
+                )}
+                <StatusBadge status={r.status} />
+                <Link
+                  href={r.href}
+                  aria-label={`Open ${r.title}`}
+                  title="Open"
+                  className="rounded-lg p-1.5 text-mist hover:bg-steel hover:text-bone"
+                >
+                  <ArrowSquareOut size={16} />
+                </Link>
+              </div>
             </li>
           ))}
         </ul>

@@ -34,6 +34,7 @@ The contact form posts to `/api/enquiry` and the online programme dialog posts t
 - Section copy: eyebrow, headline and intro text for each section.
 - Enquiries and Registrations: inboxes with new, read and archived states and private notes.
 - Settings: contact email, notification email, email sender, currency and the global pricing switch.
+- Images: every image field has an upload button. Files are saved under `public/uploads/` on the server (not committed to git). That folder is only persistent on a host with a real disk; on Vercel the files are lost on redeploy, so use a storage service there or paste an https:// URL instead.
 
 ## Pricing
 

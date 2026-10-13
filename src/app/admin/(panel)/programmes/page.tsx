@@ -41,6 +41,7 @@ export default async function ProgrammesPage() {
           <RowControls
             id={row.id}
             label={row.title}
+            editHref={row.href}
             published={row.published}
             isFirst={i === 0}
             isLast={i === list.length - 1}

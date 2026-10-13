@@ -18,6 +18,9 @@ const bigShoulders = Big_Shoulders({
   subsets: ["latin"],
   variable: "--font-big-shoulders",
   display: "swap",
+  /* Next has no fallback metrics for this family and logs a warning on every
+     request while trying to compute them; the CSS fallback stack still applies. */
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {

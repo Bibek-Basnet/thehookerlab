@@ -1,11 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useTransition } from "react";
 import {
   ArrowDown,
   ArrowUp,
   Eye,
   EyeSlash,
+  PencilSimple,
   Trash,
 } from "@phosphor-icons/react";
 
@@ -15,6 +17,7 @@ import ConfirmDialog from "./ConfirmDialog";
 type Props = {
   id: number;
   label: string;
+  editHref: string;
   published?: boolean;
   isFirst: boolean;
   isLast: boolean;
@@ -29,6 +32,7 @@ const btn =
 export default function RowControls({
   id,
   label,
+  editHref,
   published,
   isFirst,
   isLast,
@@ -41,6 +45,9 @@ export default function RowControls({
 
   return (
     <div className="flex items-center gap-1">
+      <Link href={editHref} aria-label={`Edit ${label}`} title="Edit" className={btn}>
+        <PencilSimple size={16} />
+      </Link>
       <button
         type="button"
         aria-label="Move up"
