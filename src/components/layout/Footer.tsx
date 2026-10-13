@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { contact, navLinks, serviceLinks, socialLinks } from "@/data/nav";
+import { navLinks, serviceLinks, socialLinks } from "@/data/nav";
 
 const legalLinks = [
   { label: "Privacy Policy", href: "/privacy-policy" },
@@ -25,7 +25,7 @@ async function getYear() {
   return new Date().getFullYear();
 }
 
-export default async function Footer() {
+export default async function Footer({ contactEmail }: { contactEmail: string }) {
   const year = await getYear();
 
   return (
@@ -85,10 +85,10 @@ export default async function Footer() {
             <ul className="mt-5 space-y-3">
               <li>
                 <a
-                  href={`mailto:${contact.email}`}
+                  href={`mailto:${contactEmail}`}
                   className={`break-all ${link}`}
                 >
-                  {contact.email}
+                  {contactEmail}
                 </a>
               </li>
             </ul>
@@ -96,7 +96,7 @@ export default async function Footer() {
             <ul className="mt-5 flex gap-2.5">
               <li>
                 <a
-                  href={`mailto:${contact.email}`}
+                  href={`mailto:${contactEmail}`}
                   aria-label="Email"
                   className={iconButton}
                 >

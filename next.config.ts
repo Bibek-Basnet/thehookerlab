@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "i.pravatar.cc" },
-    ],
+  images: {
+    /* The admin can paste any https image URL, so allow every https host. */
+    remotePatterns: [{ protocol: "https", hostname: "**" }],
+    /* The site requests quality 85; Next 16 rejects unlisted qualities in production. */
+    qualities: [75, 85],
   },
   /* config options here */
   experimental: {

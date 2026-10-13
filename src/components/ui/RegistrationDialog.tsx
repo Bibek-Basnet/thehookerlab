@@ -203,6 +203,7 @@ function RegistrationForm({
         privacyAccepted: true,
         acceptedAt: new Date().toISOString(),
         source: "online-programme",
+        company,
       });
       onSuccess();
       setStatus("success");

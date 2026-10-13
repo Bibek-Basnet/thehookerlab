@@ -51,8 +51,8 @@ export const bookCta = {
   href: "/#contact",
 } as const;
 
-export const contact = {
-  email: "admin@thehookerlab.co.nz",
+/* The contact email lives in site settings (admin → Settings); only the tagline is static. */
+export const brand = {
   tagline: "Throw. Scrum. Lead.",
 } as const;
 

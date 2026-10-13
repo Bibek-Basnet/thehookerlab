@@ -15,7 +15,7 @@ const ctaClass =
 const ctaFillClass =
   "absolute inset-0 translate-y-full rounded-full bg-bone transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-focus-visible:translate-y-0";
 
-export default function Hero() {
+export default function Hero({ contactEmail }: { contactEmail: string }) {
   const sectionRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -251,7 +251,10 @@ export default function Hero() {
           className="invisible mt-6 lg:absolute lg:bottom-12 lg:right-10 lg:mt-0"
         >
           <SocialDock
-            items={hero.socials}
+            items={[
+              ...hero.socials,
+              { label: "Email", href: `mailto:${contactEmail}`, icon: hero.emailIcon },
+            ]}
             className="bg-transparent p-0 backdrop-blur-none"
           />
         </div>

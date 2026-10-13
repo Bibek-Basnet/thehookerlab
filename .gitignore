@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# keep the example env file
+!.env.example
+
+# admin image uploads live on the server, not in git
+/public/uploads/*
+!/public/uploads/.gitkeep

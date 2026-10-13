@@ -1,8 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Jost, Big_Shoulders } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/site";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -14,15 +18,10 @@ const bigShoulders = Big_Shoulders({
   subsets: ["latin"],
   variable: "--font-big-shoulders",
   display: "swap",
+  /* Next has no fallback metrics for this family and logs a warning on every
+     request while trying to compute them; the CSS fallback stack still applies. */
+  adjustFontFallback: false,
 });
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://thehookerlab.co.nz";
-const SITE_NAME = "The Hooker Lab";
-const DEFAULT_TITLE =
-  "The Hooker Lab | Specialist Rugby Hooker Coaching in New Zealand";
-const DEFAULT_DESCRIPTION =
-  "Specialist rugby hooker coaching in New Zealand with professional hooker Kurt Eklund. Throwing, lineout, scrummaging, mental skills and leadership for players, schools, clubs and unions.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -83,55 +82,12 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": `${SITE_URL}/#organization`,
-      name: SITE_NAME,
-      url: SITE_URL,
-      logo: `${SITE_URL}/logo/logo.png`,
-      email: "admin@thehookerlab.co.nz",
-      slogan: "Throw. Scrum. Lead.",
-      description: DEFAULT_DESCRIPTION,
-      areaServed: { "@type": "Country", name: "New Zealand" },
-      founder: { "@id": `${SITE_URL}/#kurt` },
-      sameAs: ["https://www.instagram.com/kurteklund05/"],
-    },
-    {
-      "@type": "Person",
-      "@id": `${SITE_URL}/#kurt`,
-      name: "Kurt Eklund",
-      jobTitle: "Professional Rugby Hooker and Specialist Hooker Coach",
-      worksFor: { "@id": `${SITE_URL}/#organization` },
-      sameAs: ["https://www.instagram.com/kurteklund05/"],
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: SITE_NAME,
-      inLanguage: "en-NZ",
-      publisher: { "@id": `${SITE_URL}/#organization` },
-    },
-  ],
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-NZ" className={`${jost.variable} ${bigShoulders.variable}`}>
-      <body className="bg-ink text-bone antialiased">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <Navbar />
-        <main id="main">{children}</main>
-        <Footer />
-      </body>
+      <body className="bg-ink text-bone antialiased">{children}</body>
     </html>
   );
 }
