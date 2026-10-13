@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Hooker Lab
 
-## Getting Started
+Marketing site with an admin panel. Next.js 16, Tailwind 4, Drizzle ORM on Neon Postgres, Resend for email.
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. `npm install`
+2. Copy `.env.example` to `.env.local` and fill it in (see the comments in the file).
+3. `npm run db:migrate` applies the migrations in `drizzle/`.
+4. `npm run db:seed` creates the site settings, section copy, the first admin (from `ADMIN_EMAIL` / `ADMIN_PASSWORD`) and the initial content. It is safe to run again.
+5. `npm run dev` and open http://localhost:3000. The admin is at http://localhost:3000/admin.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script | What it does |
+| --- | --- |
+| `npm run dev` / `build` / `start` | Next.js |
+| `npm test` | vitest unit tests |
+| `npm run db:generate` | generate a migration after editing `src/lib/db/schema.ts` |
+| `npm run db:migrate` | apply migrations |
+| `npm run db:seed` | idempotent seed |
+| `npm run db:studio` | Drizzle Studio |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How content flows
 
-## Learn More
+Public pages read through cached functions in `src/lib/content/queries.ts`, tagged per content type. Admin server actions in `src/lib/admin/actions/` write to Postgres and call `updateTag`, so edits appear on the site immediately. If the database is unreachable in production, the public site falls back to the static content in `src/data/`.
 
-To learn more about Next.js, take a look at the following resources:
+The contact form posts to `/api/enquiry` and the online programme dialog posts to `/api/online-registrations`. Both store the submission first and then email the notification address from Settings via Resend. If the email fails, the row is kept and the admin inbox shows an "email failed" badge with a resend button.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Admin
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Sign in at `/admin/login` with the seeded account, then change the password under Account.
+- Programmes, Expertise, Testimonials and FAQ: create, edit, reorder, publish or hide, delete.
+- Section copy: eyebrow, headline and intro text for each section.
+- Enquiries and Registrations: inboxes with new, read and archived states and private notes.
+- Settings: contact email, notification email, email sender, currency and the global pricing switch.
 
-## Deploy on Vercel
+## Pricing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+A programme price shows on the site only when Settings → "Show programme prices" is on **and** the programme's own "Show price" switch is on **and** a price is set. Both switches are off by default.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploying to Vercel
+
+Set every variable from `.env.example` in the Vercel project. `DATABASE_URL` is needed at build time because content is prerendered. Run `npm run db:migrate` against production before deploying a schema change; the build does not run migrations. `RESEND_FROM` and the sender email in Settings must be on a domain verified in Resend.
