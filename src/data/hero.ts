@@ -1,6 +1,6 @@
 import { SiGmail } from "react-icons/si";
 
-import { contact, socialLinks } from "@/data/nav";
+import { socialLinks } from "@/data/nav";
 
 export const hero = {
   image: {
@@ -12,8 +12,8 @@ export const hero = {
   seoHeading: "The Hooker Lab: ",
   headline: ["Specialist Position.", "Specialist Coaching."],
   body: "Specialist hooker coaching led by professional hooker Kurt Eklund. Throwing, lineout, scrummaging, mental skills and leadership for players, schools, clubs and unions across New Zealand.",
+  emailIcon: SiGmail,
   socials: [
     ...socialLinks,
-    { label: "Email", href: `mailto:${contact.email}`, icon: SiGmail },
   ],
 };

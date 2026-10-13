@@ -6,11 +6,13 @@ import Expertise from "@/components/sections/Expertise";
 import Testimonials from "@/components/sections/Testimonials";
 import Instagram from "@/components/sections/Instagram";
 import Contact from "@/components/sections/Contact";
+import { getSiteSettings } from "@/lib/content/queries";
 
-export default function Home() {
+export default async function Home() {
+  const { contactEmail } = await getSiteSettings();
   return (
     <>
-      <Hero />
+      <Hero contactEmail={contactEmail} />
       <Philosophy />
 
       <Services />

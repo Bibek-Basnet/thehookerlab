@@ -8,7 +8,7 @@ import { List, X } from "@phosphor-icons/react";
 
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-import { bookCta, contact, navLinks, socialLinks } from "@/data/nav";
+import { bookCta, brand, navLinks, socialLinks } from "@/data/nav";
 
 const MotionLink = motion.create(Link);
 
@@ -24,7 +24,7 @@ const ctaClass =
 const ctaFillClass =
   "absolute inset-0 translate-y-full rounded-full bg-accent transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-focus-visible:translate-y-0";
 
-export default function Navbar() {
+export default function Navbar({ contactEmail }: { contactEmail: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -284,10 +284,10 @@ export default function Navbar() {
             className="flex items-center justify-between border-t border-line pt-6"
           >
             <a
-              href={`mailto:${contact.email}`}
+              href={`mailto:${contactEmail}`}
               className="text-sm tracking-wide text-mist transition-colors duration-300 hover:text-bone"
             >
-              {contact.email}
+              {contactEmail}
             </a>
             <ul className="flex items-center gap-4">
               {socialLinks.map(({ label, href, icon: Icon }) => (
@@ -310,7 +310,7 @@ export default function Navbar() {
             data-menu-fade
             className="font-display text-sm font-bold uppercase tracking-[0.3em] text-mist"
           >
-            {contact.tagline}
+            {brand.tagline}
           </p>
         </div>
       </div>

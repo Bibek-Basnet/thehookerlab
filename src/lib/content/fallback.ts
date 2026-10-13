@@ -48,7 +48,10 @@ export const staticPrograms = () =>
   toProgramsSection(copyRow("programs"), withIds(seedPrograms), settingsRow);
 
 export const staticExpertise = () => {
-  const pillars = withIds(seedPillars.map(({ skills: _skills, ...p }) => p));
+  const pillars = withIds(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    seedPillars.map(({ skills: _skills, ...p }) => p),
+  );
   const skills = seedPillars.flatMap((p, pi) =>
     p.skills.map((s, si) => ({ id: pi * 100 + si + 1, pillarId: pi + 1, ...s })),
   );
