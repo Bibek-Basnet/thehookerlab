@@ -12,12 +12,18 @@ export function priceLabel(input: PriceInput): string | null {
   const amount = Number(input.price);
   if (!Number.isFinite(amount)) return null;
   const fractionDigits = Number.isInteger(amount) ? 0 : 2;
-  const formatted = new Intl.NumberFormat("en-NZ", {
-    style: "currency",
-    currency: input.currency,
-    minimumFractionDigits: fractionDigits,
-    maximumFractionDigits: fractionDigits,
-  }).format(amount);
+  let formatted: string;
+  try {
+    formatted = new Intl.NumberFormat("en-NZ", {
+      style: "currency",
+      currency: input.currency,
+      minimumFractionDigits: fractionDigits,
+      maximumFractionDigits: fractionDigits,
+    }).format(amount);
+  } catch {
+    /* An ill-formed currency code must hide the price, not break the page. */
+    return null;
+  }
   const note = input.priceNote?.trim();
   return note ? `${formatted} ${note}` : formatted;
 }

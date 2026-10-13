@@ -11,6 +11,8 @@ export type OnlineRegistration = {
   privacyAccepted: true;
   acceptedAt: string;
   source: "online-programme";
+  /* Honeypot; always empty for real people */
+  company?: string;
 };
 
 /* The backend team provides this endpoint. Override it per environment

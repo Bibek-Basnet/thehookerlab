@@ -24,6 +24,8 @@ export const registrationSchema = z.object({
   privacyAccepted: z.literal(true),
   acceptedAt: z.string().datetime(),
   source: z.literal("online-programme"),
+  /* Honeypot: hidden "company" field; a filled value means a bot. */
+  company: z.string().max(200).default(""),
 });
 
 export type RegistrationInput = z.infer<typeof registrationSchema>;

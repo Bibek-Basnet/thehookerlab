@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import { checkbox, formObject, jsonList, zodErrors } from "@/lib/admin/form";
+import { checkbox, fieldError, formObject, jsonList, zodErrors } from "@/lib/admin/form";
 
 describe("zodErrors", () => {
   it("keeps the first message per field, keyed by path", () => {
@@ -38,6 +38,15 @@ describe("jsonList", () => {
 
   it("rejects invalid JSON", () => {
     expect(jsonList.safeParse("nope").success).toBe(false);
+  });
+});
+
+describe("fieldError", () => {
+  it("returns the field's own error or the first nested one", () => {
+    const errors = { "points.1": "Keep it under 120 characters", title: "Title is required" };
+    expect(fieldError(errors, "title")).toBe("Title is required");
+    expect(fieldError(errors, "points")).toBe("Keep it under 120 characters");
+    expect(fieldError(errors, "summary")).toBeUndefined();
   });
 });
 

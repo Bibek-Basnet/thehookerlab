@@ -34,6 +34,10 @@ describe("priceLabel", () => {
     expect(priceLabel({ ...base, price: null })).toBeNull();
   });
 
+  it("returns null instead of throwing for an invalid currency code", () => {
+    expect(priceLabel({ ...base, currency: "12A" })).toBeNull();
+  });
+
   it("uses the settings currency", () => {
     expect(priceLabel({ ...base, currency: "AUD" })).toBe("A$150");
   });

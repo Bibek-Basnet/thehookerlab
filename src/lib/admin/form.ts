@@ -27,6 +27,16 @@ export function zodErrors(error: ZodError): Record<string, string> {
   return out;
 }
 
+/* The field's own error, or the first error inside it (e.g. "points.1"). */
+export function fieldError(
+  errors: Record<string, string>,
+  name: string,
+): string | undefined {
+  if (errors[name]) return errors[name];
+  const nested = Object.keys(errors).find((k) => k.startsWith(`${name}.`));
+  return nested ? errors[nested] : undefined;
+}
+
 /* Checkboxes arrive as "on" when ticked and are absent otherwise. */
 export const checkbox = z.preprocess(
   (v) => v === "on" || v === "true",

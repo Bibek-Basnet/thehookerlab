@@ -11,6 +11,12 @@ export async function POST(req: Request) {
   const read = await readJson(req);
   if (!read.ok) return read.response;
 
+  /* Honeypot: bots fill the hidden "company" field. Pretend it worked. */
+  const honeypot = (read.body as { company?: unknown } | null)?.company;
+  if (typeof honeypot === "string" && honeypot.trim()) {
+    return NextResponse.json({ ok: true }, { status: 200 });
+  }
+
   const parsed = registrationSchema.safeParse(read.body);
   if (!parsed.success) {
     return NextResponse.json(

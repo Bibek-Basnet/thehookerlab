@@ -2,18 +2,12 @@
 
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
-import { z } from "zod";
-
 import { fail, formObject, type ActionState } from "@/lib/admin/form";
+import { loginSchema } from "@/lib/admin/schemas";
 import { verifyPassword } from "@/lib/auth/password";
 import { getSession } from "@/lib/auth/session";
 import { getDb } from "@/lib/db/client";
 import { adminUsers } from "@/lib/db/schema";
-
-const loginSchema = z.object({
-  email: z.string().trim().toLowerCase().email("Enter a valid email address"),
-  password: z.string().min(1, "Enter your password"),
-});
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 

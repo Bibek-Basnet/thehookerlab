@@ -30,6 +30,29 @@ const email = z
   .toLowerCase()
   .email("Enter a valid email address");
 
+/* next/image throws at render for anything that is not a root path or an
+   https URL, which would take the public page down; reject it here. */
+const IMAGE = /^(\/|https:\/\/)/;
+const imageField = z
+  .string()
+  .trim()
+  .min(1, "Image is required")
+  .max(500, "Keep it under 500 characters")
+  .regex(IMAGE, "Use a path starting with / or an https:// URL");
+const optionalImage = z
+  .string()
+  .trim()
+  .max(500, "Keep it under 500 characters")
+  .default("")
+  .refine((v) => v === "" || IMAGE.test(v), {
+    message: "Use a path starting with / or an https:// URL",
+  });
+
+export const loginSchema = z.object({
+  email: z.string().trim().toLowerCase().email("Enter a valid email address"),
+  password: z.string().min(1, "Enter your password"),
+});
+
 export const slugField = z
   .string()
   .trim()
@@ -64,7 +87,7 @@ export const programSchema = z.object({
       .min(1, "Add at least one point")
       .max(8, "At most 8 points"),
   ),
-  imageSrc: str(500, "Image"),
+  imageSrc: imageField,
   imageAlt: str(200, "Image description"),
   price: priceField,
   priceNote: optional(60),
@@ -109,7 +132,7 @@ export const pillarSchema = z.object({
   word: str(40, "Word"),
   slug: slugField,
   summary: str(300, "Summary"),
-  imageSrc: str(500, "Image"),
+  imageSrc: imageField,
   imageAlt: str(200, "Image description"),
   panel: checkbox,
   published: checkbox,
@@ -121,7 +144,7 @@ export const testimonialSchema = z.object({
   name: str(80, "Name"),
   role: str(80, "Role"),
   org: str(80, "Organisation"),
-  imageSrc: str(500, "Image"),
+  imageSrc: imageField,
   quote: str(600, "Quote"),
   published: checkbox,
 });
@@ -142,7 +165,7 @@ export const sectionSchema = z.object({
   intro: optional(600),
   ctaLabel: optional(60),
   ctaHref: optional(200),
-  heroImage: optional(500),
+  heroImage: optionalImage,
 });
 export type SectionInput = z.infer<typeof sectionSchema>;
 
@@ -155,7 +178,7 @@ export const settingsSchema = z.object({
   currency: z
     .string()
     .trim()
-    .length(3, "Use a 3-letter currency code")
+    .regex(/^[A-Za-z]{3}$/, "Use a 3-letter currency code")
     .toUpperCase(),
 });
 export type SettingsInput = z.infer<typeof settingsSchema>;

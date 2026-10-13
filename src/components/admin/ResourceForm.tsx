@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 
 import type { FieldDef, FormValues, Pair } from "@/lib/admin/fields";
-import { initialState, type ActionState } from "@/lib/admin/form";
+import { fieldError, initialState, type ActionState } from "@/lib/admin/form";
 import { Field, Toggle, inputClass } from "./fields";
 import ListEditor from "./ListEditor";
 import PairListEditor from "./PairListEditor";
@@ -64,7 +64,7 @@ export default function ResourceForm({
         ))}
 
       {fields.map((f) => {
-        const error = errors[f.name];
+        const error = fieldError(errors, f.name);
         switch (f.kind) {
           case "toggle":
             return (

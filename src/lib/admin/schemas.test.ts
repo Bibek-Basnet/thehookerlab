@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   accountSchema,
   faqSchema,
+  loginSchema,
   passwordSchema,
   pillarSchema,
   programSchema,
@@ -56,6 +57,28 @@ describe("programSchema", () => {
   it("rejects a slug with spaces or capitals", () => {
     expect(programSchema.safeParse({ ...validProgram, slug: "Has Space" }).success).toBe(false);
   });
+
+  it("only accepts image paths starting with / or https://", () => {
+    for (const bad of ["images/kurt.jpg", "http://example.com/a.jpg", "kurt"]) {
+      const r = programSchema.safeParse({ ...validProgram, imageSrc: bad });
+      expect(r.success, bad).toBe(false);
+      if (!r.success) expect(r.error.issues[0].path).toEqual(["imageSrc"]);
+    }
+    expect(programSchema.safeParse({ ...validProgram, imageSrc: "https://cdn.example.com/a.jpg" }).success).toBe(true);
+  });
+
+  it("surfaces errors inside the points list", () => {
+    const r = programSchema.safeParse({ ...validProgram, points: JSON.stringify(["x".repeat(121)]) });
+    expect(r.success).toBe(false);
+    if (!r.success) expect(r.error.issues[0].path).toEqual(["points", 0]);
+  });
+});
+
+describe("loginSchema", () => {
+  it("trims and lowercases the email", () => {
+    const r = loginSchema.safeParse({ email: "  Admin@TheHookerLab.co.nz ", password: "x" });
+    expect(r.success && r.data.email).toBe("admin@thehookerlab.co.nz");
+  });
 });
 
 describe("pillarSchema", () => {
@@ -99,6 +122,12 @@ describe("sectionSchema", () => {
     }
   });
 
+  it("allows an empty hero image but rejects a relative one", () => {
+    const base = { key: "faq", eyebrow: "FAQ", headline: "Q" };
+    expect(sectionSchema.safeParse({ ...base, heroImage: "" }).success).toBe(true);
+    expect(sectionSchema.safeParse({ ...base, heroImage: "images/FAQ.jpeg" }).success).toBe(false);
+  });
+
   it("normalises CRLF line endings from browser textareas", () => {
     const r = sectionSchema.safeParse({
       key: "programs",
@@ -127,6 +156,18 @@ describe("settingsSchema", () => {
       expect(r.data.contactEmail).toBe("a@b.co");
       expect(r.data.showPricing).toBe(true);
     }
+  });
+
+  it("rejects a currency code that is not three letters", () => {
+    const r = settingsSchema.safeParse({
+      contactEmail: "a@b.co",
+      notificationEmail: "a@b.co",
+      fromEmail: "noreply@b.co",
+      fromName: "X",
+      currency: "12A",
+    });
+    expect(r.success).toBe(false);
+    if (!r.success) expect(r.error.issues[0].path).toEqual(["currency"]);
   });
 });
 

@@ -30,6 +30,13 @@ describe("registrationSchema", () => {
     expect(registrationSchema.safeParse({ ...valid, focusAreas: ["Juggling"] }).success).toBe(false);
   });
 
+  it("carries the honeypot field through, defaulting to empty", () => {
+    const r = registrationSchema.safeParse(valid);
+    expect(r.success && r.data.company).toBe("");
+    const spam = registrationSchema.safeParse({ ...valid, company: "Acme" });
+    expect(spam.success && spam.data.company).toBe("Acme");
+  });
+
   it("treats missing optional fields as empty strings", () => {
     const r = registrationSchema.safeParse({ ...valid, goal: undefined, phone: undefined });
     expect(r.success).toBe(true);
