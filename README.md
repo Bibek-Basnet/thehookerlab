@@ -42,4 +42,4 @@ A programme price shows on the site only when Settings → "Show programme price
 
 ## Deploying to Vercel
 
-Set every variable from `.env.example` in the Vercel project. `DATABASE_URL` is needed at build time because content is prerendered. Run `npm run db:migrate` against production before deploying a schema change; the build does not run migrations. The sender email in Settings must be on a domain verified in Resend; while testing, `onboarding@resend.dev` works but only delivers to your own Resend account address.
+Set every variable from `.env.example` in the Vercel project. The database URL may be named `MYDB_DATABASE_URL` (as the Neon integration creates it) or `DATABASE_URL`; it is needed at build time because content is prerendered. `SESSION_SECRET` (32+ characters) is required for the admin to work. Run `npm run db:migrate` against production before deploying a schema change; the build does not run migrations. The sender email in Settings must be on a domain verified in Resend; while testing, `onboarding@resend.dev` works but only delivers to your own Resend account address.
