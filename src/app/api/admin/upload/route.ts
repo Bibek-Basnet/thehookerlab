@@ -1,8 +1,8 @@
 import { createHash } from "node:crypto";
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { NextResponse } from "next/server";
 
+import { storeImage } from "@/lib/admin/storage";
+import { uploadFailureMessage } from "@/lib/admin/storage-rules";
 import {
   MAX_UPLOAD_BYTES,
   uploadFileName,
@@ -10,10 +10,8 @@ import {
 } from "@/lib/admin/upload";
 import { getCurrentAdmin } from "@/lib/auth/dal";
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
-
-/* Saves an admin-uploaded image under public/uploads and returns its public path.
-   Files live on the server's disk, so this suits a persistent host, not Vercel. */
+/* Saves an admin-uploaded image (Vercel Blob when connected, else public/uploads)
+   and returns the URL to store on the row. */
 export async function POST(req: Request) {
   if (!(await getCurrentAdmin())) {
     return NextResponse.json({ error: "Sign in required" }, { status: 401 });
@@ -42,12 +40,12 @@ export async function POST(req: Request) {
   const name = uploadFileName(file.name, file.type, hash);
 
   try {
-    await mkdir(UPLOAD_DIR, { recursive: true });
-    await writeFile(path.join(UPLOAD_DIR, name), bytes);
+    const url = await storeImage(name, bytes, file.type);
+    return NextResponse.json({ url }, { status: 201 });
   } catch (err) {
-    console.error("[api/admin/upload] write failed", err);
-    return NextResponse.json({ error: "Could not save the image" }, { status: 500 });
+    console.error("[api/admin/upload] store failed", err);
+    const message = uploadFailureMessage(err);
+    const status = message.startsWith("Could not") ? 500 : 503;
+    return NextResponse.json({ error: message }, { status });
   }
-
-  return NextResponse.json({ url: `/uploads/${name}` }, { status: 201 });
 }
