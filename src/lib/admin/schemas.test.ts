@@ -37,6 +37,13 @@ describe("programSchema", () => {
     }
   });
 
+  it("reads the From switch like the other checkboxes", () => {
+    const on = programSchema.safeParse({ ...validProgram, priceFrom: "on" });
+    expect(on.success && on.data.priceFrom).toBe(true);
+    const off = programSchema.safeParse(validProgram);
+    expect(off.success && off.data.priceFrom).toBe(false);
+  });
+
   it("accepts a decimal price and normalises it", () => {
     const r = programSchema.safeParse({ ...validProgram, price: "149.5" });
     expect(r.success && r.data.price).toBe("149.50");

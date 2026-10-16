@@ -3,6 +3,7 @@ export type PriceInput = {
   showPrice: boolean;
   price: string | null;
   priceNote: string | null;
+  priceFrom: boolean;
   currency: string;
 };
 
@@ -25,5 +26,6 @@ export function priceLabel(input: PriceInput): string | null {
     return null;
   }
   const note = input.priceNote?.trim();
-  return note ? `${formatted} ${note}` : formatted;
+  const amountWithNote = note ? `${formatted} ${note}` : formatted;
+  return input.priceFrom ? `From ${amountWithNote}` : amountWithNote;
 }

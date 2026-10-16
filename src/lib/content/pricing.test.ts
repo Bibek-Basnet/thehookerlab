@@ -6,6 +6,7 @@ const base = {
   showPrice: true,
   price: "150.00",
   priceNote: null,
+  priceFrom: false,
   currency: "NZD",
 };
 
@@ -20,6 +21,15 @@ describe("priceLabel", () => {
 
   it("appends the note", () => {
     expect(priceLabel({ ...base, priceNote: "per week" })).toBe("$150 per week");
+  });
+
+  it("prefixes 'From' when the programme asks for it", () => {
+    expect(priceLabel({ ...base, price: "199", priceNote: "per session", priceFrom: true })).toBe(
+      "From $199 per session",
+    );
+    expect(priceLabel({ ...base, price: "99", priceNote: "per week", priceFrom: false })).toBe(
+      "$99 per week",
+    );
   });
 
   it("is null when the global switch is off", () => {

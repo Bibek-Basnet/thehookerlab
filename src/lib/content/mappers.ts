@@ -57,6 +57,7 @@ export function toProgramsSection(
         showPrice: r.showPrice,
         price: r.price,
         priceNote: r.priceNote,
+        priceFrom: r.priceFrom,
         currency: settings.currency,
       }),
     }));

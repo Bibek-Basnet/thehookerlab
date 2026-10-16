@@ -35,6 +35,7 @@ const program = (over: Partial<ProgramRow>): ProgramRow => ({
   imageAlt: "alt",
   price: null,
   priceNote: null,
+  priceFrom: true,
   showPrice: false,
   published: true,
   createdAt: now,
@@ -79,8 +80,18 @@ describe("toProgramsSection", () => {
     expect(out.cta).toEqual({ label: "Get in touch", href: "/#contact" });
   });
 
+  it("passes the From switch through to the price label", () => {
+    const rows = [program({ price: "199", priceNote: "per session", showPrice: true, priceFrom: true })];
+    const out = toProgramsSection(copy("programs"), rows, {
+      ...seedSettings,
+      showPricing: true,
+      updatedAt: now,
+    });
+    expect(out.items[0].priceLabel).toBe("From $199 per session");
+  });
+
   it("resolves the price label through the pricing rule", () => {
-    const rows = [program({ price: "90", showPrice: true })];
+    const rows = [program({ price: "90", showPrice: true, priceFrom: false })];
     const out = toProgramsSection(copy("programs"), rows, {
       ...seedSettings,
       showPricing: true,

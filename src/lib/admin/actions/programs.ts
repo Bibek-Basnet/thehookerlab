@@ -49,6 +49,7 @@ export async function saveProgram(
     imageAlt: data.imageAlt,
     price: data.price,
     priceNote: data.priceNote || null,
+    priceFrom: data.priceFrom,
     showPrice: data.showPrice,
     published: data.published,
     updatedAt: new Date(),
