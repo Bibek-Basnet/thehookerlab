@@ -38,6 +38,12 @@ export const programFields: FieldDef[] = [
   },
   {
     kind: "toggle",
+    name: "priceFrom",
+    label: "Show \"From\" before the price",
+    hint: "On: \"From $199 per session\". Off: \"$99 per week\".",
+  },
+  {
+    kind: "toggle",
     name: "showPrice",
     label: "Show price on the site",
     hint: "Also needs the global pricing switch in Settings.",

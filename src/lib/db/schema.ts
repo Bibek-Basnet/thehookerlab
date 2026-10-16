@@ -76,6 +76,8 @@ export const programs = pgTable("programs", {
   imageAlt: text("image_alt").notNull(),
   price: numeric("price", { precision: 10, scale: 2 }),
   priceNote: text("price_note"),
+  /* Renders "From $199 per session" when true. */
+  priceFrom: boolean("price_from").notNull().default(true),
   showPrice: boolean("show_price").notNull().default(false),
   published: boolean("published").notNull().default(true),
   createdAt,

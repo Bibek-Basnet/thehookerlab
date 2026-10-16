@@ -8,6 +8,13 @@
       "when": 1791905886125,
       "tag": "0000_premium_venus",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792119693705,
+      "tag": "0001_brainy_silver_fox",
+      "breakpoints": true
     }
   ]
 }

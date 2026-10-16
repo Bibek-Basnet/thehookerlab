@@ -91,6 +91,7 @@ export const programSchema = z.object({
   imageAlt: str(200, "Image description"),
   price: priceField,
   priceNote: optional(60),
+  priceFrom: checkbox,
   showPrice: checkbox,
   published: checkbox,
 });

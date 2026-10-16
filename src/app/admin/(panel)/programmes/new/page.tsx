@@ -19,6 +19,7 @@ export default async function NewProgrammePage() {
           initial={{
             listTitle: "At a glance",
             published: true,
+            priceFrom: true,
             showPrice: false,
             points: [],
           }}

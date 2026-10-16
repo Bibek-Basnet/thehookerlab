@@ -84,6 +84,8 @@ export const seedPrograms = services.items.map((item, i) => ({
   imageAlt: item.image.alt,
   price: null as string | null,
   priceNote: null as string | null,
+  /* Session-based programmes say "From"; the weekly online programme does not. */
+  priceFrom: item.id !== "online-one-on-one",
   showPrice: false,
   published: true,
 }));
