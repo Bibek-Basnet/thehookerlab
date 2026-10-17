@@ -27,7 +27,7 @@ const represented: RepresentedTeam[] = [
   {
     team: "All Blacks XV",
     note: "",
-    logo: "/logo/allblack.svg",
+    logo: "/logo/all_blacks_xv.jpeg",
   },
 ];
 
