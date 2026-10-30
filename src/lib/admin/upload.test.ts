@@ -15,8 +15,9 @@ describe("validateUpload", () => {
   it("rejects other types and oversized files with a clear message", () => {
     expect(validateUpload("application/pdf", 10)).toMatch(/JPEG, PNG, WebP, GIF or AVIF/);
     expect(validateUpload("image/svg+xml", 10)).toMatch(/JPEG, PNG/);
-    expect(validateUpload("image/jpeg", MAX_UPLOAD_BYTES + 1)).toMatch(/5 MB/);
+    expect(validateUpload("image/jpeg", MAX_UPLOAD_BYTES + 1)).toMatch(/4 MB or smaller \(this one is 4\.0 MB\)/);
     expect(validateUpload("image/jpeg", 0)).toMatch(/empty/i);
+    expect(validateUpload("image/heic", 10)).toMatch(/this file is image\/heic/);
   });
 });
 

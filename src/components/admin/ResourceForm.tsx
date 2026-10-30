@@ -127,7 +127,10 @@ export default function ResourceForm({
               <Field
                 key={f.name}
                 label={f.label}
-                hint={f.hint ?? "Upload a JPEG, PNG or WebP (up to 5 MB), or paste an https:// URL"}
+                hint={
+                  f.hint ??
+                  "Upload a JPEG, PNG, WebP, GIF or AVIF (large photos are resized automatically), or paste an https:// URL"
+                }
                 error={error}
               >
                 <ImageField name={f.name} initial={str(f.name)} placeholder={f.placeholder} />
