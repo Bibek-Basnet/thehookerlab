@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { navLinks, serviceLinks, socialLinks } from "@/data/nav";
+import { navLinks, socialLinks } from "@/data/nav";
+import { getProgramsSection } from "@/lib/content/queries";
 
 const legalLinks = [
   { label: "Privacy Policy", href: "/privacy-policy" },
@@ -26,7 +27,11 @@ async function getYear() {
 }
 
 export default async function Footer({ contactEmail }: { contactEmail: string }) {
-  const year = await getYear();
+  /* Same published programmes, in the same order, as the Services section. */
+  const [year, { items: programmes }] = await Promise.all([
+    getYear(),
+    getProgramsSection(),
+  ]);
 
   return (
     <footer className="bg-ink text-bone">
@@ -70,10 +75,10 @@ export default async function Footer({ contactEmail }: { contactEmail: string })
           <nav aria-label="Services" className="lg:col-span-3">
             <h2 className={heading}>Services</h2>
             <ul className="mt-5 space-y-3">
-              {serviceLinks.map((s) => (
-                <li key={s.title}>
+              {programmes.map((p) => (
+                <li key={p.id}>
                   <Link href="/#programmes" className={link}>
-                    {s.title}
+                    {p.title}
                   </Link>
                 </li>
               ))}
