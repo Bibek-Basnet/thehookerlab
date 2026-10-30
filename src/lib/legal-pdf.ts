@@ -10,7 +10,8 @@ type Style = "normal" | "bold" | "italic";
 
 export function downloadLegalPdf(slug: LegalSlug) {
   const doc = legalDocuments[slug];
-  const sections = numberSections(doc.sections);
+  const layout = doc.layout ?? "numbered";
+  const sections = numberSections(doc.sections, layout);
 
   const pdf = new jsPDF({ unit: "mm", format: "a4", compress: true });
   const pageW = pdf.internal.pageSize.getWidth();
@@ -67,8 +68,9 @@ export function downloadLegalPdf(slug: LegalSlug) {
   const clause = (label: string, text: string, items: string[]) => {
     const size = 11;
     const h = leading(size);
-    const labelW = 13;
-    const itemIndent = 9;
+    /* Plain-layout clauses have no label, so the text starts at the margin. */
+    const labelW = label ? 13 : 0;
+    const itemIndent = layout === "plain" ? 6 : 9;
 
     setFont("normal", size);
     const lines = pdf.splitTextToSize(text, contentW - labelW) as string[];
@@ -91,7 +93,7 @@ export function downloadLegalPdf(slug: LegalSlug) {
       ) as string[];
       ensure(h * Math.min(itemLines.length, 2));
 
-      pdf.text(itemLabel(i), margin + labelW, y + size * PT);
+      pdf.text(itemLabel(i, layout), margin + labelW, y + size * PT);
       itemLines.forEach((line, k) => {
         if (k > 0) ensure(h);
         pdf.text(line, margin + labelW + itemIndent, y + size * PT);

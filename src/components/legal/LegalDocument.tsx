@@ -24,7 +24,8 @@ const linkClass =
   "underline decoration-1 underline-offset-4 hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink";
 
 export default function LegalDocument({ doc }: { doc: LegalDoc }) {
-  const sections = numberSections(doc.sections);
+  const layout = doc.layout ?? "numbered";
+  const sections = numberSections(doc.sections, layout);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -137,14 +138,19 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
                 </h2>
 
                 <ol className={cn("mt-7 space-y-6", bodyText)}>
-                  {section.clauses.map((clause) => (
+                  {section.clauses.map((clause, j) => (
                     <li
-                      key={clause.label}
-                      className="grid grid-cols-[3.25rem_1fr] gap-x-2 md:grid-cols-[4rem_1fr]"
+                      key={clause.label || j}
+                      className={cn(
+                        clause.label &&
+                          "grid grid-cols-[3.25rem_1fr] gap-x-2 md:grid-cols-[4rem_1fr]",
+                      )}
                     >
-                      <span className="font-bold tabular-nums">
-                        {clause.label}
-                      </span>
+                      {clause.label && (
+                        <span className="font-bold tabular-nums">
+                          {clause.label}
+                        </span>
+                      )}
                       <div>
                         <p>{clause.text}</p>
 
@@ -153,9 +159,16 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
                             {clause.items.map((item, i) => (
                               <li
                                 key={item}
-                                className="grid grid-cols-[2.5rem_1fr] gap-x-2"
+                                className={cn(
+                                  "grid gap-x-2",
+                                  layout === "plain"
+                                    ? "grid-cols-[1.5rem_1fr]"
+                                    : "grid-cols-[2.5rem_1fr]",
+                                )}
                               >
-                                <span>{itemLabel(i)}</span>
+                                <span aria-hidden={layout === "plain" || undefined}>
+                                  {itemLabel(i, layout)}
+                                </span>
                                 <span>{item}</span>
                               </li>
                             ))}

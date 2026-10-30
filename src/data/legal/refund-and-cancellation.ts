@@ -11,7 +11,7 @@ export const refundAndCancellation: LegalDoc = {
     "How cancellations, rescheduling and refunds work for The Hooker Lab coaching, workshops and online programme, including your rights under New Zealand consumer law.",
   intro: [
     `This policy explains how cancellations, rescheduling and refunds work for the Services provided by ${legal.operatorLine}. It forms part of our Terms and Conditions.`,
-    `Nothing in this policy limits your rights under the Consumer Guarantees Act 1993 or the Fair Trading Act 1986.`,
+    `Unless otherwise stated, nothing in this policy limits your rights under the Consumer Guarantees Act 1993 or the Fair Trading Act 1986.`,
   ],
   sections: [
     {
@@ -19,17 +19,17 @@ export const refundAndCancellation: LegalDoc = {
       title: "About this policy",
       clauses: [
         `This policy applies to every booking for individual coaching, small group coaching, school and club coaching, provincial and union development, workshops and the Online Programme.`,
-        `Words used in this policy have the same meaning as in our Terms and Conditions. A "working day" means a day other than a Saturday, a Sunday or a public holiday in ${legal.country}.`,
-        `Where a written quote or booking confirmation sets out different cancellation terms for a particular booking, those terms apply to that booking.`,
+        `Words used in this policy have the same meaning as in our Terms and Conditions. A "working day" means a day other than a Saturday, a Sunday or a public holiday in Tauranga, New Zealand.`,
+        `Where a written quote or booking confirmation sets out different or additional cancellation terms for a particular booking, those terms apply to that booking.`,
       ],
     },
     {
       id: "individual",
       title: "Cancelling an individual or small group session",
       clauses: [
-        `If you give us at least ${policy.individualNoticeHours} hours' notice before the start of the Session, you will receive a full refund or, if you prefer, a credit or a new time.`,
-        `If you give us less than ${policy.individualNoticeHours} hours' notice, we may charge up to the full Session fee, because the time was reserved for you and could not be offered to anyone else.`,
-        `Notice must be given by email or message to ${legal.email} or ${legal.whatsapp}. The notice period is counted from the time we receive your message.`,
+        `If you give us at least ${policy.individualNoticeHours} hours' notice before the start of the Session, you will receive a full refund or, if you prefer, a credit or a booking for an equivalent Session at a new time.`,
+        `If you give us less than ${policy.individualNoticeHours} hours' notice, we may charge up to the full Session fee. Booked Sessions are reserved for you and we may not be able to offer it to anyone else.`,
+        `Notice must be given by email or message to ${legal.email} or ${legal.whatsapp}. The notice period is counted from the time we receive your message, provided that any notice received after 6.00pm will be deemed received at 9.00am on the next day for the purpose of calculating the ${policy.individualNoticeHours}-hour notice period.`,
         `We may waive a late cancellation charge in a genuine emergency, such as illness, injury or a family emergency, at our discretion.`,
       ],
     },
@@ -37,8 +37,8 @@ export const refundAndCancellation: LegalDoc = {
       id: "group",
       title: "Cancelling a workshop, school, club, academy or union booking",
       clauses: [
-        `If you give us at least ${policy.groupNoticeDays} days' notice before the start of the booking, you will receive a full refund of the fees you have paid, less any non-refundable costs we have already incurred and told you about in writing.`,
-        `If you give us less than ${policy.groupNoticeDays} days' notice, we may charge a cancellation fee that reflects the time reserved and the costs incurred, up to the full fee. We will tell you how that fee is worked out before we confirm the booking.`,
+        `If you give us at least ${policy.groupNoticeDays} days' notice before the start of a workshop, school, club, academy or union booking, you will receive a full refund of the fees you have paid, less any non-refundable costs we have already incurred and told you about in writing.`,
+        `If you give us less than ${policy.groupNoticeDays} days' notice, we may charge a cancellation fee that reflects the time reserved and the costs incurred, up to the full fee.`,
         `If a deposit is required, it will be stated in the quote. A deposit is treated as part payment and is refunded in line with the clauses above, unless the quote says it is non-refundable.`,
         `If fewer Participants attend than were booked, the fee is as quoted for the booking, unless we agree otherwise in writing before the Session.`,
       ],
@@ -92,7 +92,7 @@ export const refundAndCancellation: LegalDoc = {
       clauses: [
         `If a Participant is injured or unwell, please tell us as soon as possible. We will consider a new time or a credit instead of charging the Session fee.`,
         `For a refund outside the notice periods above, we may reasonably ask for evidence, such as a medical certificate.`,
-        `Participants must not attend a Session if they are contagious.`,
+        `Participants must not attend a Session if they are contagious with an infectious disease.`,
       ],
     },
     {
@@ -109,7 +109,6 @@ export const refundAndCancellation: LegalDoc = {
       title: "Online Programme",
       clauses: [
         `The Online Programme is in development. Refund terms for it will be published on its purchase page before it is offered for sale, and will apply together with this policy.`,
-        `Whatever those terms say, if the Online Programme is faulty, does not match its description, or cannot be accessed, you have the remedies that the Consumer Guarantees Act 1993 gives you, which may include repair, replacement or a refund.`,
         `The law does not require a refund if you simply change your mind about digital content. If we offer a change-of-mind refund period, it will be stated clearly at the time of purchase and we will honour it.`,
         `If a subscription is offered, you may cancel at any time and cancellation takes effect at the end of the current billing period. We do not refund part-used periods unless the purchase page says so or the law requires it.`,
       ],
@@ -118,9 +117,9 @@ export const refundAndCancellation: LegalDoc = {
       id: "rights",
       title: "Your rights under consumer law",
       clauses: [
-        `Under the Consumer Guarantees Act 1993, services must be provided with reasonable care and skill, must be fit for any particular purpose you have made known to us, and must be provided within a reasonable time.`,
-        `If a service does not meet these guarantees, you may be entitled to have the problem fixed, to a reduction in price, or to cancel the service and receive a refund, depending on how serious the problem is.`,
-        `If you acquire Services for the purposes of a business, clause 13 of our Terms and Conditions, which deals with consumer guarantees and liability, applies.`,
+        `Under the Consumer Guarantees Act 1993, services must be provided with reasonable care and skill, must be reasonably fit for any particular purpose you have made known to us, and must be provided within a reasonable time.`,
+        `If a Service does not meet these guarantees, you may be entitled to have the problem fixed, to a reduction in price, or to cancel the service and receive a refund, depending on how serious the problem is.`,
+        `If you acquire Services for the purposes of a business, clause 13.2 of our Terms and Conditions, which deals with consumer guarantees and liability, applies.`,
         `This policy does not apply to the extent that it is inconsistent with the law.`,
       ],
     },
@@ -131,7 +130,7 @@ export const refundAndCancellation: LegalDoc = {
         {
           text: `Please email ${legal.email}, or message ${legal.whatsapp}, and include:`,
           items: [
-            `your name and the name of the Participant`,
+            `your name (as Client) and the name of the Participant`,
             `the date and time of the booking`,
             `the reason, if you wish to give one`,
             `whether you would like a refund, a credit or a new time`,
@@ -161,7 +160,7 @@ export const refundAndCancellation: LegalDoc = {
       id: "contact",
       title: "Contact us",
       clauses: [
-        `${legal.operatorLine}. Email: ${legal.email}. WhatsApp: ${legal.whatsapp}.`,
+        `The Hooker Lab, operated by Kurt Eklund. Email: ${legal.email}. WhatsApp: ${legal.whatsapp}.`,
       ],
     },
   ],
