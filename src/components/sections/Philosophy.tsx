@@ -60,22 +60,6 @@ export default function Philosophy() {
             scrollTrigger: { trigger: "[data-ph-mask]", start: "top 88%" },
           },
         );
-        gsap.fromTo(
-          "[data-ph-photo]",
-          { scale: 1.2, yPercent: -3 },
-          {
-            scale: 1.05,
-            yPercent: 3,
-            ease: "none",
-            scrollTrigger: {
-              trigger: "[data-ph-mask]",
-              start: "top 90%",
-              end: "bottom 20%",
-              scrub: true,
-            },
-          },
-        );
-
         /* Quote: the mark pops in, the lines rise from their masks, then the credit */
         gsap.fromTo(
           "[data-ph-quote-mark]",
@@ -125,39 +109,41 @@ export default function Philosophy() {
       aria-labelledby="philosophy-heading"
       className="relative overflow-hidden bg-paper-deep py-16 text-ink md:py-24"
     >
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-        <header>
-          <span
-            data-ph-pill
-            className="inline-block rounded-full bg-ink px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.28em] text-bone"
-          >
-            {philosophy.eyebrow}
-          </span>
-
-          <h2
-            id="philosophy-heading"
-            data-ph-heading
-            className="mt-5 flex flex-wrap items-baseline gap-x-[0.28em] text-[clamp(1.9rem,5.2vw,4.5rem)] leading-none md:flex-nowrap"
-          >
-            {philosophy.headline.map((phrase, i) => (
+      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 md:px-10 lg:grid-cols-12 lg:gap-14">
+        {/* Copy column: heading and text at the top, quote at the bottom, so it spans
+            the same height as the photo beside it. */}
+        <div className="flex flex-col lg:col-span-6 lg:justify-between">
+          <div>
+            <header>
               <span
-                key={phrase}
-                className="block overflow-hidden whitespace-nowrap py-[0.08em]"
+                data-ph-pill
+                className="inline-block rounded-full bg-ink px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.28em] text-bone"
               >
-                <span
-                  data-ph-word
-                  className={cn("block", i === 1 && "text-accent")}
-                >
-                  {phrase}
-                </span>
+                {philosophy.eyebrow}
               </span>
-            ))}
-          </h2>
-        </header>
 
-        <div className="mt-10 grid gap-10 md:mt-14 lg:grid-cols-12 lg:items-stretch lg:gap-14">
-          <div className="flex flex-col lg:col-span-6 lg:justify-between">
-            <div>
+              <h2
+                id="philosophy-heading"
+                data-ph-heading
+                className="mt-5 flex flex-wrap items-baseline gap-x-[0.28em] text-[clamp(1.9rem,5.2vw,4.5rem)] leading-none md:flex-nowrap"
+              >
+                {philosophy.headline.map((phrase, i) => (
+                  <span
+                    key={phrase}
+                    className="block overflow-hidden whitespace-nowrap py-[0.08em]"
+                  >
+                    <span
+                      data-ph-word
+                      className={cn("block", i === 1 && "text-accent")}
+                    >
+                      {phrase}
+                    </span>
+                  </span>
+                ))}
+              </h2>
+            </header>
+
+            <div className="mt-10 md:mt-14">
               <p
                 data-ph-text
                 className="max-w-xl text-2xl font-medium leading-snug md:text-[1.75rem]"
@@ -177,66 +163,63 @@ export default function Philosophy() {
                 {philosophy.coaching}
               </p>
             </div>
-
-            <figure
-              data-ph-quote
-              className="group relative mt-12 lg:mt-0 lg:pt-12"
-            >
-              <span
-                aria-hidden="true"
-                className="inline-block origin-bottom-left text-accent transition-transform duration-500 ease-out group-hover:-rotate-6"
-              >
-                <svg
-                  data-ph-quote-mark
-                  viewBox="0 0 48 36"
-                  className="block h-9 w-12 fill-current md:h-12 md:w-16"
-                >
-                  <path d="M0 36V21.6C0 9.6 7.2 2.4 19.2 0l2.4 4.8C14.4 7.2 11.6 11.2 11.2 16.8H21.6V36H0Zm26.4 0V21.6C26.4 9.6 33.6 2.4 45.6 0l2.4 4.8C40.8 7.2 38 11.2 37.6 16.8H48V36H26.4Z" />
-                </svg>
-              </span>
-
-              <blockquote className="mt-5 font-display text-[7vw] font-extrabold uppercase leading-[0.95] sm:text-[clamp(2rem,5vw,3rem)] lg:text-[clamp(2rem,3.5vw,3.25rem)]">
-                <span className="block overflow-hidden whitespace-nowrap py-[0.06em]">
-                  <span data-ph-quote-line className="block">
-                    {philosophy.goal.lines[0]}
-                  </span>
-                </span>
-
-                <span className="block overflow-hidden whitespace-nowrap py-[0.06em] text-accent transition-transform duration-500 ease-out group-hover:translate-x-3">
-                  <span data-ph-quote-line className="block">
-                    {philosophy.goal.lines[1]}
-                  </span>
-                </span>
-              </blockquote>
-
-              <figcaption
-                data-ph-quote-by
-                className="mt-5 text-sm font-medium uppercase tracking-[0.22em] text-ink/60"
-              >
-                The Hooker Lab
-              </figcaption>
-            </figure>
           </div>
 
-          <div className="lg:col-span-6 lg:flex">
-            <div
-              data-ph-mask
-              className="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-ink sm:aspect-[4/3] lg:aspect-auto lg:min-h-[32rem]"
+          <figure
+            data-ph-quote
+            className="group relative mt-12 lg:mt-0 lg:pt-12"
+          >
+            <span
+              aria-hidden="true"
+              className="inline-block origin-bottom-left text-accent transition-transform duration-500 ease-out group-hover:-rotate-6"
             >
-              <div data-ph-photo className="absolute inset-0">
-                <Image
-                  src={philosophy.image.src}
-                  alt={philosophy.image.alt}
-                  fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  quality={85}
-                  className={cn(
-                    "object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105",
-                    philosophy.image.positionClass,
-                  )}
-                />
-              </div>
-            </div>
+              <svg
+                data-ph-quote-mark
+                viewBox="0 0 48 36"
+                className="block h-9 w-12 fill-current md:h-12 md:w-16"
+              >
+                <path d="M0 36V21.6C0 9.6 7.2 2.4 19.2 0l2.4 4.8C14.4 7.2 11.6 11.2 11.2 16.8H21.6V36H0Zm26.4 0V21.6C26.4 9.6 33.6 2.4 45.6 0l2.4 4.8C40.8 7.2 38 11.2 37.6 16.8H48V36H26.4Z" />
+              </svg>
+            </span>
+
+            <blockquote className="mt-5 font-display text-[7vw] font-extrabold uppercase leading-[0.95] sm:text-[clamp(2rem,5vw,3rem)] lg:text-[clamp(2rem,3.5vw,3.25rem)]">
+              <span className="block overflow-hidden whitespace-nowrap py-[0.06em]">
+                <span data-ph-quote-line className="block">
+                  {philosophy.goal.lines[0]}
+                </span>
+              </span>
+
+              <span className="block overflow-hidden whitespace-nowrap py-[0.06em] text-accent transition-transform duration-500 ease-out group-hover:translate-x-3">
+                <span data-ph-quote-line className="block">
+                  {philosophy.goal.lines[1]}
+                </span>
+              </span>
+            </blockquote>
+
+            <figcaption
+              data-ph-quote-by
+              className="mt-5 text-sm font-medium uppercase tracking-[0.22em] text-ink/60"
+            >
+              The Hooker Lab
+            </figcaption>
+          </figure>
+        </div>
+
+        {/* The whole photo at its own ratio: no cropping and no zoom. */}
+        <div className="lg:col-span-6">
+          <div
+            data-ph-mask
+            className="mx-auto w-full max-w-xl overflow-hidden rounded-2xl bg-ink lg:max-w-none"
+          >
+            <Image
+              src={philosophy.image.src}
+              alt={philosophy.image.alt}
+              width={philosophy.image.width}
+              height={philosophy.image.height}
+              sizes="(min-width: 1024px) 50vw, (min-width: 640px) 36rem, 100vw"
+              quality={85}
+              className="block h-auto w-full"
+            />
           </div>
         </div>
       </div>
