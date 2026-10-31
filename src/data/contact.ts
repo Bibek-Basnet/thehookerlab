@@ -88,10 +88,9 @@ export const contact = {
   ] as Option[],
 
   ageGroups: [
-    { id: "under-12", label: "Under 12" },
-    { id: "12-14", label: "12 to 14" },
-    { id: "15-18", label: "15 to 18" },
-    { id: "adult", label: "19 and over" },
+    { id: "14-15", label: "14 to 15" },
+    { id: "16-18", label: "16 to 18" },
+    { id: "19-plus", label: "19 and over" },
     { id: "mixed", label: "Mixed ages" },
   ] as Option[],
 

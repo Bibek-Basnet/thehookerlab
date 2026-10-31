@@ -2,11 +2,11 @@ export const philosophy = {
   eyebrow: "Philosophy",
   headline: ["Coaching built for", "hookers."],
   image: {
-    src: "/images/philoshopy-image.jpeg",
-    alt: "A coach in The Hooker Lab cap and T-shirt holding a rugby ball on a training field",
+    src: "/images/hooker.jpg",
+    alt: "A hooker preparing to throw at lineout time",
     /* Intrinsic size: the section shows the whole photo at this ratio, uncropped. */
-    width: 1200,
-    height: 1600,
+    width: 1179,
+    height: 1389,
   },
 
   lead: "Hooker is one of the most technical positions on the rugby field.",

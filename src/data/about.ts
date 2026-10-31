@@ -35,9 +35,10 @@ export const about = {
   eyebrow: "About your coach",
   headline: ["Toughness.", "Consistency.", "Leadership."],
   image: {
-    src: "/images/about.jpg",
-    alt: "Kurt Eklund, professional rugby hooker and founder of The Hooker Lab",
-    positionClass: "object-center",
+    src: "/images/philoshopy-image.jpeg",
+    alt: "Kurt Eklund, founder of The Hooker Lab, holding a rugby ball on a training field",
+    /* Portrait photo: keep his face in frame when the box crops it. */
+    positionClass: "object-[50%_30%]",
   },
   caption: { name: "Kurt Eklund", detail: "Ngāti Kahu" },
   statement:

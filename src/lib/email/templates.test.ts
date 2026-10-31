@@ -17,7 +17,7 @@ const enquiry: EnquiryRow = {
   organisation: null,
   contactMethod: "email",
   phone: null,
-  ageGroup: "15-18",
+  ageGroup: "16-18",
   level: "school",
   groupSize: null,
   location: "Auckland",

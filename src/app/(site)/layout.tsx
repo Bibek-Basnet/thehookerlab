@@ -18,7 +18,7 @@ function organisationJsonLd(email: string) {
         description: DEFAULT_DESCRIPTION,
         areaServed: { "@type": "Country", name: "New Zealand" },
         founder: { "@id": `${SITE_URL}/#kurt` },
-        sameAs: ["https://www.instagram.com/kurteklund05/"],
+        sameAs: ["https://www.instagram.com/hookerlab/"],
       },
       {
         "@type": "Person",
@@ -26,7 +26,7 @@ function organisationJsonLd(email: string) {
         name: "Kurt Eklund",
         jobTitle: "Professional Rugby Hooker and Specialist Hooker Coach",
         worksFor: { "@id": `${SITE_URL}/#organization` },
-        sameAs: ["https://www.instagram.com/kurteklund05/"],
+        sameAs: ["https://www.instagram.com/hookerlab/"],
       },
       {
         "@type": "WebSite",

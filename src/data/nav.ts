@@ -61,7 +61,7 @@ type Social = { label: string; href: string; icon: IconType };
 export const socialLinks: Social[] = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/kurteklund05/",
+    href: "https://www.instagram.com/hookerlab/",
     icon: SiInstagram,
   },
 ];
