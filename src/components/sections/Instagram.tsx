@@ -14,9 +14,9 @@ declare global {
 
 
 const posts = [
-  "https://www.instagram.com/p/DXQmYEtDxLd/",
-  "https://www.instagram.com/p/DdhxO6wAXOu/",
-  "https://www.instagram.com/p/DbnEpcfMnu3/",
+  "https://www.instagram.com/p/DfOd3lNvSTX/",
+  "https://www.instagram.com/p/DfJHuqZxsau/",
+  "https://www.instagram.com/p/DfLXDh-H9JV/",
 ] as const;
 
 export default function Instagram() {
