@@ -1,3 +1,5 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import { getSiteSettings } from "@/lib/content/queries";
@@ -55,6 +57,7 @@ export default async function SiteLayout({
       <Navbar contactEmail={contactEmail} />
       <main id="main">{children}</main>
       <Footer contactEmail={contactEmail} />
+      <GoogleAnalytics gaId="G-EV7Q44BZZR" />
     </>
   );
 }
