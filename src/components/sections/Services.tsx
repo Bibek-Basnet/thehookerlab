@@ -187,6 +187,21 @@ export default function Services({ data, online }: { data: ProgramsSection; onli
             scrollTrigger: { trigger: "[data-svc-heading]", start: "top 88%" },
           }
         );
+        /* Only rendered when pricing is on */
+        if (sectionRef.current?.querySelector("[data-svc-price]")) {
+          gsap.fromTo(
+            "[data-svc-price]",
+            { autoAlpha: 0, y: 16 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              delay: 0.3,
+              scrollTrigger: { trigger: "[data-svc-heading]", start: "top 88%" },
+            }
+          );
+        }
 
         /* Cards */
         const cards = gsap.utils.toArray<HTMLElement>("[data-service-card]");
@@ -275,7 +290,7 @@ export default function Services({ data, online }: { data: ProgramsSection; onli
       />
 
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-        {/* Header */}
+        {/* Header: headline with the "starting from" price as its subtitle */}
         <div className="mb-10 md:mb-14">
           <span
             data-svc-pill
@@ -300,6 +315,19 @@ export default function Services({ data, online }: { data: ProgramsSection; onli
               </span>
             ))}
           </h2>
+
+          {data.startingFrom && (
+            <p
+              data-svc-price
+              className="mt-4 text-xl leading-snug text-ink/70 md:text-2xl"
+            >
+              Starting from{" "}
+              <strong className="font-display text-[1.4em] font-extrabold uppercase leading-none text-ink">
+                {data.startingFrom.amount}
+              </strong>
+              {data.startingFrom.note && <> {data.startingFrom.note}</>}
+            </p>
+          )}
         </div>
 
         {/* Four equal cards */}

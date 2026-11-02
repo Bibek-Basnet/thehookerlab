@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { priceLabel } from "@/lib/content/pricing";
+import { priceLabel, startingPrice } from "@/lib/content/pricing";
 
 const base = {
   showPricing: true,
@@ -50,5 +50,33 @@ describe("priceLabel", () => {
 
   it("uses the settings currency", () => {
     expect(priceLabel({ ...base, currency: "AUD" })).toBe("A$150");
+  });
+});
+
+describe("startingPrice", () => {
+  const settings = { showPricing: true, currency: "NZD" };
+  const rows = [
+    { price: "199.00", priceNote: "per session" },
+    { price: "99.00", priceNote: " per session " },
+    { price: null, priceNote: null },
+  ];
+
+  it("picks the lowest price and keeps its note", () => {
+    expect(startingPrice(rows, settings)).toEqual({ amount: "$99", note: "per session" });
+  });
+
+  it("is null when the global switch is off", () => {
+    expect(startingPrice(rows, { ...settings, showPricing: false })).toBeNull();
+  });
+
+  it("is null when no programme has a price", () => {
+    expect(startingPrice([{ price: null, priceNote: null }], settings)).toBeNull();
+  });
+
+  it("skips prices that are not numbers", () => {
+    expect(startingPrice([{ price: "tbc", priceNote: null }, { price: "150", priceNote: "" }], settings)).toEqual({
+      amount: "$150",
+      note: null,
+    });
   });
 });

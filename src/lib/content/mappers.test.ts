@@ -99,6 +99,20 @@ describe("toProgramsSection", () => {
     });
     expect(out.items[0].priceLabel).toBe("$90");
   });
+
+  it("takes the starting price from published programmes, even with card prices hidden", () => {
+    const rows = [
+      program({ id: 1, slug: "a", price: "50", published: false }),
+      program({ id: 2, slug: "b", price: "199", priceNote: "per session" }),
+      program({ id: 3, slug: "c", price: "99", priceNote: "per session" }),
+    ];
+    const out = toProgramsSection(copy("programs"), rows, {
+      ...seedSettings,
+      showPricing: true,
+      updatedAt: now,
+    });
+    expect(out.startingFrom).toEqual({ amount: "$99", note: "per session" });
+  });
 });
 
 describe("toExpertiseSection", () => {

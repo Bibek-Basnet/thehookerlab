@@ -7,7 +7,7 @@ import type {
   SkillRow,
   TestimonialRow,
 } from "@/lib/db/schema";
-import { priceLabel } from "./pricing";
+import { priceLabel, startingPrice } from "./pricing";
 import type {
   AccentHeadline,
   ContactSection,
@@ -40,30 +40,29 @@ export function toProgramsSection(
   rows: ProgramRow[],
   settings: SiteSettingsRow,
 ): ProgramsSection {
-  const items = rows
-    .filter((r) => r.published)
-    .sort(bySort)
-    .map((r, i) => ({
-      id: r.slug,
-      number: programNumber(i),
-      format: r.format,
-      title: r.title,
-      summary: r.summary,
-      listTitle: r.listTitle,
-      points: r.points,
-      image: { src: r.imageSrc, alt: r.imageAlt },
-      priceLabel: priceLabel({
-        showPricing: settings.showPricing,
-        showPrice: r.showPrice,
-        price: r.price,
-        priceNote: r.priceNote,
-        priceFrom: r.priceFrom,
-        currency: settings.currency,
-      }),
-    }));
+  const published = rows.filter((r) => r.published).sort(bySort);
+  const items = published.map((r, i) => ({
+    id: r.slug,
+    number: programNumber(i),
+    format: r.format,
+    title: r.title,
+    summary: r.summary,
+    listTitle: r.listTitle,
+    points: r.points,
+    image: { src: r.imageSrc, alt: r.imageAlt },
+    priceLabel: priceLabel({
+      showPricing: settings.showPricing,
+      showPrice: r.showPrice,
+      price: r.price,
+      priceNote: r.priceNote,
+      priceFrom: r.priceFrom,
+      currency: settings.currency,
+    }),
+  }));
   return {
     eyebrow: copy.eyebrow,
     headline: headlineLines(copy.headline),
+    startingFrom: startingPrice(published, settings),
     cta: {
       label: copy.ctaLabel ?? "Get in touch",
       href: copy.ctaHref ?? "/#contact",

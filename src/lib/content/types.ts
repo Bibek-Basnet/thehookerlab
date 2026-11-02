@@ -1,3 +1,5 @@
+import type { StartingPrice } from "./pricing";
+
 export type AccentHeadline = { plain: string; accent: string };
 
 export type ProgramItem = {
@@ -15,6 +17,8 @@ export type ProgramItem = {
 export type ProgramsSection = {
   eyebrow: string;
   headline: string[];
+  /* Lowest published price for the heading; null hides it. */
+  startingFrom: StartingPrice | null;
   cta: { label: string; href: string };
   items: ProgramItem[];
 };
